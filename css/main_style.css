@@ -10,16 +10,12 @@ html,  #map-canvas{
     margin-right:auto;
 }
 
-#titulo-ruta{
-    margin : 10px;
-}
-
-#titulo-peticion{
-    text-align : right;
-    margin : 10px
+.titulo{
+    margin-right : 10px
 }
 .columna{
     float:left;
+    height:100%;
     width:200px;
 }
 .navbar {
@@ -30,6 +26,15 @@ html,  #map-canvas{
     color: white;
 }
 
+.navbar-inverse{
+    background-color : #089de3;
+    border : 0px;
+}
+
+.nav .active a{
+    background: #08c2e3!important
+}
+
 .nav-btn{
     margin: 15px;
  }
@@ -38,3 +43,9 @@ html,  #map-canvas{
     margin-right : 65px;
     margin-top : 10px
  }
+
+ .search-box{
+   position : absolute;
+   margin : 5px;
+   bottom : 5px; 
+}
