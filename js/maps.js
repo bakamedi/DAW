@@ -31,6 +31,7 @@ function finishNewRoute(){
 	google.maps.event.clearListeners(map, 'click');
 	$('.mensaje').fadeOut(function(){
 		$('.mensaje').remove();
+		nombrarRuta();
 	});
 }
 function addLatLng(event){
@@ -100,10 +101,56 @@ function escogerDestino(){
 	$("#navbar-left").append(message);
 }
 
+function guardarRuta(){
+	var name = $('#formName').val()	;
+	console.log("valor: " + name);
+	if (name.length > 0)
+		$('.bar-item').fadeOut(function(){
+			$('.bar-item').remove();
+			console.log("guardandoruta");
+			var a = document.createElement("a");
+			a.setAttribute("href", "#");
+			a.innerHTML = name;
+			var li = document.createElement("li");
+			li.appendChild(a);
+			$("#rutasUL").append(li);
+
+		});
+}
+function nombrarRuta(){
+	console.log("nombrarRuta");
+	var form = document.createElement("form");
+	form.setAttribute("class", "navbar-form navbar-left bar-item");
+	form.setAttribute("role", "search");
+	form.setAttribute("onsubmit", "return false"); //Estupido hack para que no se reinice la ventana
+	var div = document.createElement("div");	
+	div.setAttribute("class", "input-group");
+	var input = document.createElement("input");	
+	input.setAttribute("type", "text");
+	input.setAttribute("class", "form-control");
+	input.setAttribute("id", "formName");
+	input.setAttribute("placeholder", "Nombre para esta ruta");
+	var button = document.createElement("button");
+	button.setAttribute("class", "btn btn-default");
+	button.setAttribute("type", "submit");
+	button.setAttribute("id", "submitName");
+	button.innerHTML = "Guardar";
+	div.appendChild(input);
+	form.appendChild(div);
+	form.appendChild(button);
+	$("#navbar-left").append(form);
+
+
+}
+
 $(document).ready( function(){
 	$("button").click( function(){
 		escogerDestino();
 		google.maps.event.addListener(map, 'click', addLatLng);
+	});
+
+	$("body").on('click', '#submitName', function(){
+		guardarRuta();
 	});
 });
 google.maps.event.addDomListener(window, 'load', initializeMap);

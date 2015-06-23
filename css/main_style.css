@@ -1,5 +1,5 @@
 html, body{
-    height:90%;
+    height:95%;
     width:100%;
 		margin-right: auto;
 		margin-left: auto;
@@ -65,6 +65,14 @@ html, body{
 	position: relative;
 	color : #FFFFFF;
 	left: 5%;
+	-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 1s; /* Firefox < 16 */
+}
+
+.bar-item {
+	margin-top : 17px;
+	margin-left : 40px;
+	margin-bottom : 0px;
 	-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: fadein 1s; /* Firefox < 16 */
 }
