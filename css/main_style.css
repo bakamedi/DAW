@@ -94,4 +94,153 @@ html, body{
     to   { opacity: 1; }
 }
 
+#imagen{
+    padding: 10px 15px 15px 5px;
+    border-radius: 25px;
+    width: 200px;
+    height: 200px;
+}
 
+#imagen_seguidores{
+	padding: 10px 15px 15px 5px;
+    border-radius: 25px;
+	margin-top: -7%;
+    width: 200px;
+    height: 200px;
+}
+
+#imagen_seguidos{
+    padding: 10px 15px 15px 5px;
+    border-radius: 25px;
+    width: 48px;
+    height: 48px;
+}
+
+#Usu_Seguir{
+	margin-bottom:auto;
+}
+
+#Usu_Seguir p{
+	font-family: "tu fuente", sans-serif !important;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+#Usu_Seguir h5{
+	font-family: fantasy !important;
+	font-size: 20px;
+}
+
+#Usu_Seguir_sub{
+	top: -180px;
+	font-family: fantasy !important;
+}
+
+#Usu_Seguir_sub h5 {
+	font-family: fantasy !important;
+	font-size: 20px;
+}
+
+#Usu_Seguidos {
+	float:left;
+	height:80px;
+}
+
+#Usu_Seguidos p{
+	font: oblique bold 120% cursive !important;
+	font-style: italic;
+    font-size: 25px;
+}
+
+#Usu_seguidos_sub {
+	padding: 3px;
+}
+
+#Usu_seguidos_sub h5 {
+	font-family: "tu fuente", sans-serif !important;
+	font-size: 20px;
+}
+
+#Usu_seguidos_sub p {
+	font-family: "tu fuente", sans-serif !important;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.input_txt{
+	border-radius: 15px;
+}
+
+@font-face {
+    font-family: "tu fuente";
+    src: url("../font/02.TTF") format("truetype");
+}
+
+.modal label{
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.resize img{
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.resize {
+    height: 55%;
+    width: 30%;
+}
+
+.modal-dialog {
+    width: 65%;
+}
+
+.modal-title{
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 40px;
+    font-weight: bold;
+    color: #337ab7;
+}
+
+.nav .dropdown-menu{
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.nav h3{
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.columna li a{
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.glyphicon-menu-hamburger {
+    color: #fff;
+    font-size: 2em;
+}
+
+
+@media screen and (max-width: 1800px) {
+    #imgUs {
+        height: 55%;
+        text-align:center;
+        width: 100%;
+    }    
+}
+
+#contSeguidores {
+    padding-top: 15px;
+}
+
+#Usu_Seguidos{
+    border-radius: 15px;
+    border-color: #337ab7;
+    padding: 5px 5px 5px 5px;
+}

@@ -1,0 +1,51 @@
+body {
+    background-image: url("../img/01.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color:#464646;
+    opacity: 0.9;
+}
+
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 2px;
+}
+
+@media screen and (max-width: 1200px) {
+    #descripcion {
+    visibility: hidden;
+    display: none;
+    }
+}
+
+@font-face {
+    font-family: "tu fuente";
+    src: url("../font/02.TTF") format("truetype");
+}
+
+h1,h4 { 
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+
+
+.form-group label {
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.form-control , .checkbox{
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 20px;
+    font-weight: bold;
+}

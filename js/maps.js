@@ -144,7 +144,7 @@ function nombrarRuta(){
 }
 
 $(document).ready( function(){
-	$("button").click( function(){
+	$("#nuevaRuta").click( function(){
 		escogerDestino();
 		google.maps.event.addListener(map, 'click', addLatLng);
 	});
