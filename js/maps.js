@@ -1,30 +1,54 @@
 var map;
 var waypts = [];
+var locations = [];
+var myRoutes = [];
+
 var start;
 var end;
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
+var agregandoRuta = false;
+var message;
 
+function addDefaultRoutes(){
+		myRoutes["Home"] = [new google.maps.LatLng(-2.1445351790, -79.96751056), new google.maps.LatLng(-2.140574, -79.864637)];
+		myRoutes["Trabajo"] = [new google.maps.LatLng(-2.1445351790, -79.96751056), new google.maps.LatLng(-2.160446, -79.899795)];
+}
 function initializeMap(){
     directionsDisplay = new google.maps.DirectionsRenderer();
     navigator.geolocation.getCurrentPosition(function (position) {
 			 
         var espol = new google.maps.LatLng(position.coords.latitude,
-         position.coords.longitude);
-	 //Opciones del mapa
-	var mapOptions = {
-	    zoom: 17,
-	    center: espol
-	}
+        position.coords.longitude);
+	 			//Opciones del mapa
+				var mapOptions = {
+	    			zoom: 17,
+	    			center: espol
+				}
 
         //Muestra el mapa
-	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-	directionsDisplay.setMap(map);
- 	//Agrega un manejador del evento click sobre el mapa
-	//google.maps.event.addListener(map, 'click', addLatLng);
-	navigator.geolocation.getCurrentPosition(marksFromCurrentPos);
+				map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+				directionsDisplay.setMap(map);
+ 				//Agrega un manejador del evento click sobre el mapa
+				//google.maps.event.addListener(map, 'click', addLatLng);
+				navigator.geolocation.getCurrentPosition(marksFromCurrentPos);
 	});	   
 }
+
+function isValidAlphaNumericName(str) {
+  var code, i, len;
+
+  for (i = 0, len = str.length; i < len; i++) {
+    code = str.charCodeAt(i);
+    if (!(code > 47 && code < 58 && i > 0) && // numeric (0-9)
+        !(code > 64 && code < 91) && // upper alpha (A-Z)
+        !(code > 96 && code < 123)) { // lower alpha (a-z)
+      return false;
+    }
+  }
+  return true;
+}
+
 
 function finishNewRoute(){
 	console.log("finish");
@@ -36,32 +60,32 @@ function finishNewRoute(){
 }
 function addLatLng(event){
     //Agrega un nuevo marcador en el mapa
+		//
     var marker = new google.maps.Marker({
-    position: new google.maps.LatLng(event.latLng.A, event.latLng.F),
-	title: '#',
-	draggable:true,
-	map: map
+    		position: new google.maps.LatLng(event.latLng.A, event.latLng.F),
+				title: '#',
+				draggable:true,
+				map: map
     });
 
     if(start == null){
-	start = new google.maps.LatLng(event.latLng.A, event.latLng.F);
-	return;
+				start = marker;
+				message.innerHTML = "Selecciona el destino de la nueva ruta";
+				return;
     }
     else if (end == null){
-			end = new google.maps.LatLng(event.latLng.A, event.latLng.F);    
+			end = marker;
 			finishNewRoute();
 		}
     else {
-	waypts.push({
-	    location:end,
-	    stopover:false
-	});
-         end = new google.maps.LatLng(event.latLng.A, event.latLng.F);
-    }
+				waypts.push(marker);
+				locations.push(marker.position);
+				end = marker;
+		}
 
     var request = {
-	origin: start,
-	destination: end,
+	origin: start.position,
+	destination: end.position,
 	waypoints: waypts,
 	optimizeWaypoints: true,
 	travelMode: google.maps.TravelMode.DRIVING
@@ -77,6 +101,48 @@ function addLatLng(event){
     
 }
 
+function clearRuta(){
+	if(start != null)
+		start.setMap(null);
+		if(end != null)
+		end.setMap(null);
+	start = null;
+	end = null;
+	waypts = []
+}
+
+function addRouteMarkers(pos1, pos2){
+    //Agrega un nuevo marcador en el mapa
+		//
+    var marker1 = new google.maps.Marker({
+    		position: pos1,
+				title: '#',
+				draggable:true,
+				map: map
+    });
+    var marker2 = new google.maps.Marker({
+    		position: pos2,
+				title: '#',
+				draggable:true,
+				map: map
+    });
+
+    var request = {
+			origin: pos1,
+			destination: pos2,
+			waypoints: waypts,
+			optimizeWaypoints: true,
+			travelMode: google.maps.TravelMode.DRIVING
+    };
+
+		directionsService.route(request, function (response, status) {
+        if(status == google.maps.DirectionsStatus.OK){
+            directionsDisplay.setDirections(response);
+				}
+		});
+
+}
+
 
 function marksFromCurrentPos(position){
     var x = position.coords.latitude;
@@ -84,19 +150,19 @@ function marksFromCurrentPos(position){
     console.log('latitude :' + x);
     console.log('longitude :' + y);
     var marker1 = new google.maps.Marker({
-	    position: new google.maps.LatLng(x,y),
-	     title: '#',
-	     draggable:true,
-	     map: map
-        });
-	start = new google.maps.LatLng(x, y);
+	    	position: new google.maps.LatLng(x,y),
+	    	title: '#',
+	    	draggable:true,
+	    	map: map
+    });
+		start = marker1;
 
 }
 
-function escogerDestino(){
-	console.log("escogerDestino");
-	var message = document.createElement("h3");	
-	message.innerHTML = "Selecciona el destino de la nueva ruta."
+function escogerInicio(){
+	agregandoRuta = true;
+	message = document.createElement("h3");	
+	message.innerHTML = "Selecciona el inicio de la nueva ruta."
 	message.setAttribute("class", "mensaje");
 	$("#navbar-left").append(message);
 }
@@ -104,7 +170,7 @@ function escogerDestino(){
 function guardarRuta(){
 	var name = $('#formName').val()	;
 	console.log("valor: " + name);
-	if (name.length > 0)
+	if (name.length > 0 && isValidAlphaNumericName(name))
 		$('.bar-item').fadeOut(function(){
 			$('.bar-item').remove();
 			console.log("guardandoruta");
@@ -114,6 +180,7 @@ function guardarRuta(){
 			var li = document.createElement("li");
 			li.appendChild(a);
 			$("#rutasUL").append(li);
+			myRoutes[name] = [start, end];
 
 		});
 }
@@ -143,14 +210,33 @@ function nombrarRuta(){
 
 }
 
+function showRuta(name){
+	console.log("ruta: " + name);
+	console.log(myRoutes["Trabajo"]);
+	var pos = myRoutes[name];
+	addRouteMarkers(pos[0], pos[1]);
+}
+	
+
 $(document).ready( function(){
 	$("#nuevaRuta").click( function(){
-		escogerDestino();
+		if(agregandoRuta)
+			return;
+		clearRuta();
+		escogerInicio();
 		google.maps.event.addListener(map, 'click', addLatLng);
+		agregandoRuta = false;
 	});
 
 	$("body").on('click', '#submitName', function(){
 		guardarRuta();
 	});
+
+	$("body").on('click', 'li', function(){
+		showRuta($(this).text());
+		$('li.misRutas').removeClass("active");
+		$(this).toggleClass("active");
+	});
 });
 google.maps.event.addDomListener(window, 'load', initializeMap);
+addDefaultRoutes();
