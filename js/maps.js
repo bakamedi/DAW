@@ -2,7 +2,7 @@ var map;
 var waypts = [];
 var locations = [];
 var myRoutes = [];
-
+var whitespace = "NbSp1";
 var start;
 var end;
 var directionsDisplay;
@@ -57,6 +57,14 @@ function finishNewRoute(){
 		$('.mensaje').remove();
 		nombrarRuta();
 	});
+}
+
+function replaceWhitespace(name){
+		return name.replace(' ', whitespace);
+}
+
+function returnWhitespace(name){
+		return name.replace(whitespace, " ");
 }
 function addLatLng(event){
     //Agrega un nuevo marcador en el mapa
@@ -171,7 +179,9 @@ function escogerInicio(){
 function guardarRuta(){
 	var name = $('#formName').val()	;
 	console.log("valor: " + name);
-	if (name.length > 0 && isValidAlphaNumericName(name))
+	var keyname = replaceWhitespace(name);
+	//Si el nombre es valido, agrego la ruta
+	if (name.length > 0 && isValidAlphaNumericName(keyname))
 		$('.bar-item').fadeOut(function(){
 			$('.bar-item').remove();
 			console.log("guardandoruta");
@@ -183,7 +193,7 @@ function guardarRuta(){
 			li.appendChild(a);
 			$("#rutasUL").append(li);
 			//guardar posiciones
-			myRoutes[name] = [start.position, end.position];
+			myRoutes[keyname] = [start.position, end.position];
 
 		});
 }
@@ -222,7 +232,7 @@ function showRuta(name){
 		console.log(name + " no esta en lista");
 }
 	
-
+//JQuery Events
 $(document).ready( function(){
 	$("#nuevaRuta").click( function(){
 		if(agregandoRuta)
@@ -239,7 +249,7 @@ $(document).ready( function(){
 
 	$("body").on('click', 'li', function(){
 		clearRuta();
-		showRuta($(this).text());
+		showRuta(replaceWhitespace($(this).text()));
 		$('li.misRutas').removeClass("active");
 		$(this).toggleClass("active");
 	});
