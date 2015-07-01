@@ -126,7 +126,8 @@ function addRouteMarkers(pos1, pos2){
 				draggable:true,
 				map: map
     });
-
+		start = marker1;
+		end = marker2;
     var request = {
 			origin: pos1,
 			destination: pos2,
@@ -178,9 +179,11 @@ function guardarRuta(){
 			a.setAttribute("href", "#");
 			a.innerHTML = name;
 			var li = document.createElement("li");
+			li.setAttribute("class", "misRutas");
 			li.appendChild(a);
 			$("#rutasUL").append(li);
-			myRoutes[name] = [start, end];
+			//guardar posiciones
+			myRoutes[name] = [start.position, end.position];
 
 		});
 }
@@ -212,9 +215,11 @@ function nombrarRuta(){
 
 function showRuta(name){
 	console.log("ruta: " + name);
-	console.log(myRoutes["Trabajo"]);
 	var pos = myRoutes[name];
-	addRouteMarkers(pos[0], pos[1]);
+	if(pos != null)
+		addRouteMarkers(pos[0], pos[1]);
+	else
+		console.log(name + " no esta en lista");
 }
 	
 
@@ -233,6 +238,7 @@ $(document).ready( function(){
 	});
 
 	$("body").on('click', 'li', function(){
+		clearRuta();
 		showRuta($(this).text());
 		$('li.misRutas').removeClass("active");
 		$(this).toggleClass("active");
