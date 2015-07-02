@@ -250,15 +250,14 @@ html, body{
 	display : inline;
 	max-width : 120px;
 }
-@media only screen and (max-width: 985px) {
+@media only screen and (max-width: 950px) {
     .label-success{
 		margin-top : 8px;
 		margin-left : 10px;
-		display : block;
 		}
 
 }
-@media only screen and (min-width: 985px) {
+@media only screen and (min-width: 950px) {
     .label-success{
 			position : fixed;
 			right : 8px;

@@ -43,6 +43,22 @@ function processMyRoutes(jArray){
 	console.log(out);
 	document.getElementById('rutasUL').innerHTML = out;
 }
+function processMyFollowers(jArray){
+	var i;
+	var start = '<div onmouseover="this.style.backgroundColor="#CEF6F5"" onmouseout="this.style.backgroundColor="#FFFFFF"" id="Usu_seguidos_sub" class="col-md-3"><img src="';
+	var preName = '" id="imagen_seguidos"/><p>';
+	var preFollowers = '</p><h5><strong>Seguidores:</strong> ';
+	var preFollowing = '</h5><h5><strong>Siguiendo:</strong> ';
+	var end = '</h5></div>';
+	var out = "";
+	for (i=0; i<jArray.length; i++){
+		var jObject = jArray[i];
+		out += start + jObject.avatar + preName + jObject.name + preFollowers + jObject.followers + preFollowing + jObject.following + end;
+	}
+	console.log(out);
+	document.getElementById('followersRow').innerHTML = out;
+}
+
 
 function getMyRoutes(){
 	handleJSON('json/myRoutes.json', processMyRoutes);
@@ -51,6 +67,10 @@ function getMyRoutes(){
 
 function getFollowersNotifications(){
 	handleJSON('json/followersNotifications.json', processFollowersNotifications);
+}
+
+function getMyFollowers(){
+	handleJSON('json/followers.json', processMyFollowers);
 }
 
 function clearFollowersNotification(){

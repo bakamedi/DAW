@@ -246,7 +246,7 @@ $(document).ready( function(){
 		guardarRuta();
 	});
 
-	$("body").on('click', 'li', function(){
+	$("body").on('click', 'li.misRutas', function(){
 		clearRuta();
 		clearFollowersNotification();
 		showRuta(replaceWhitespace($(this).text()));
@@ -257,3 +257,4 @@ $(document).ready( function(){
 });
 google.maps.event.addDomListener(window, 'load', initializeMap);
 getMyRoutes();
+getMyFollowers();
