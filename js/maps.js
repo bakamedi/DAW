@@ -1,7 +1,6 @@
 var map;
 var waypts = [];
 var locations = [];
-var myRoutes = [];
 var whitespace = "NbSp1";
 var start;
 var end;
@@ -9,11 +8,11 @@ var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var agregandoRuta = false;
 var message;
-
+/*
 function addDefaultRoutes(){
 		myRoutes["Home"] = [new google.maps.LatLng(-2.1445351790, -79.96751056), new google.maps.LatLng(-2.140574, -79.864637)];
 		myRoutes["Trabajo"] = [new google.maps.LatLng(-2.1445351790, -79.96751056), new google.maps.LatLng(-2.160446, -79.899795)];
-}
+}*/
 function initializeMap(){
     directionsDisplay = new google.maps.DirectionsRenderer();
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -249,10 +248,12 @@ $(document).ready( function(){
 
 	$("body").on('click', 'li', function(){
 		clearRuta();
+		clearFollowersNotification();
 		showRuta(replaceWhitespace($(this).text()));
 		$('li.misRutas').removeClass("active");
 		$(this).toggleClass("active");
+		getFollowersNotifications();
 	});
 });
 google.maps.event.addDomListener(window, 'load', initializeMap);
-addDefaultRoutes();
+getMyRoutes();

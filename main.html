@@ -9,6 +9,7 @@
   	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+	    <script src="js/clientAPI.js"></script>
 	    <script src="js/maps.js"></script>
     </head>
     <body>
@@ -43,8 +44,6 @@
 </nav>
         <nav id="rutas-nav" class="columna">
             <ul id="rutasUL" class="nav nav-pills nav-stacked">
-                <li class="misRutas"><a href="#">Home</a></li>
-                <li class="misRutas" ><a  href="#">Trabajo</a></li>
             </ul>
             
     <!-- popup perfil -->
@@ -116,10 +115,7 @@
         <div id="map-canvas" >
         </div>     
         <nav id="follower-nav" class="columna">
-            <ul class="nav nav-pills nav-stacked">
-                <li><a href="#">Carlos</a></li>
-                <li><a href="#">Jorge</a></li>
-                <li><a href="#">Andrea</a></li>
+            <ul id="active-follower-list" class="nav nav-pills nav-stacked">
             </ul>
 	    <div class="form-group search-box">
           	<input type="text" class="form-control" placeholder="Search">

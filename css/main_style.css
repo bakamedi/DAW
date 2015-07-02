@@ -244,3 +244,36 @@ html, body{
     border-color: #337ab7;
     padding: 5px 5px 5px 5px;
 }
+
+.nearby-fllwr{
+	float : left;
+	display : inline;
+	max-width : 120px;
+}
+@media only screen and (max-width: 985px) {
+    .label-success{
+		margin-top : 8px;
+		margin-left : 10px;
+		display : block;
+		}
+
+}
+@media only screen and (min-width: 985px) {
+    .label-success{
+			position : fixed;
+			right : 8px;
+			margin-top : 8px;
+		}
+}
+
+
+.near-container{
+	width:100%;
+	overflow: hidden;
+	margin : 5px;
+}
+
+hr{
+	margin-top : 5px;
+	margin-bottom : 5px;
+}
