@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <title>Rapidin</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum.scale=1.0">
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+        <link rel="stylesheet" href="css/index.css">
+
+        <script src="js/val_login.js"></script>
+
+    </head>
+    <body>
+
+        <div class="container-fluid" style="padding-top: 10%;">
+            <div class="row">
+                <div id="descripcion" class="col-lg-4 col-md-offset-2" style="background-color: #fff; border-radius: 15px">
+                    <h1 class="text-primary">Bienvenido a Rapidin ESPOL</h1>
+                    <div style="color: black" class="text-justify">
+                        <dl>
+                            <dt>Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, 
+                                eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. 
+                                Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt 
+                                incorrupte definitionem, vis mutat affert percipit cu, eirmod consectetuer signiferumque eu per. 
+                                In usu latine equidem dolores. Quo no falli viris intellegam, ut fugit veritus placerat per.</dt>
+                        </dl>
+                    </div>
+                </div>
+                <div id="inicio" class="col-lg-3 col-md-offset-1" style="background-color: #fff; border-radius: 15px;">
+                    <h1 class="text-primary text-center">Inicio Seci&oacute;n</h1>
+                    <form>
+                    <div id="formUsuario"class="form-group text-left">
+                        <h6></h6>
+                        <label for="InputUsuario">Usuario</label>
+                        <input id="Email" type="text" class="form-control" placeholder="Usuario" autofocus="true" required>
+                    </div>
+                    <div id="formPassword" class="form-group text-left">
+                        <label for="exampleInputPassword1">Contraseña</label>
+                        <input id="Password" type="password" class="form-control" placeholder="Password" required>
+                    </div>
+                    <div id="formCheck" class="form-group text-left">
+                        <div class="checkbox">
+                            <label>
+                                <strong>
+                                <input type="checkbox"> Remember me
+                                </strong>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button id="btnIngresar" type="submit" class="btn btn-primary text-left">Ingresar</button>
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal" onclick="limpiarCampos();">Registrate es Gratis!!</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-primary" id="myModalLabel">Registrate</h4>
+                    </div>
+                        <div class="modal-body">
+                            <div id="formRegistro" class="container-fluid">
+                                <form class="form-horizontal" onsubmit="return validarPlacaDetener()">
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-4 control-label">Usuario</label>
+                                        <div class="col-sm-8">
+                                            <input id="inUsuario"type="text" class="form-control" placeholder="Usuario ESPOL" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-4 control-label">Contraseña</label>
+                                        <div class="col-sm-8"> 
+                                            <input id="inContraseña" type="password" class="form-control" placeholder="Contraseña ESPOL" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-4 control-label">Nombre</label>
+                                        <div class="col-sm-8">
+                                            <input id="inNombre" type="text" class="form-control" placeholder="Nombre" readonly="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-4 control-label">Apellido</label>
+                                        <div class="col-sm-8">
+                                            <input id="inApellido" type="text" class="form-control" placeholder="Apellido" readonly="" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-4 control-label">Contraseña</label>
+                                        <div class="col-sm-8">
+                                            <input id="inNewContraseña" type="password" class="form-control" placeholder="Contraseña" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-4 control-label">Confirmar Contraseña</label>
+                                        <div class="col-sm-8">
+                                            <input id="inConNewContraseña" type="password" class="form-control" placeholder="Confirmar Contraseña" required>
+                                        </div>
+                                    </div>
+                                    <div class="radio">
+                                        <label  class="col-sx-12 col-sm-offset-5 ">
+                                            <input id="rbTengo" type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked onclick="validarTengoCarro();"> Tengo Carro
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label class="col-sx-12 col-sm-offset-5 ">
+                                            <input id="rbNoTengo" type="radio" name="optionsRadios" id="optionsRadios1" value="option1" onclick="validarNoTengoCarro();"> No tengo Carro
+                                        </label>
+                                    </div>
+                                    <div id="formPlaca" class="form-group" style="padding-top: 5px;">
+                                        <label for="inputEmail3" class="col-sm-4 control-label">Placa</label>
+                                        <div class="col-sm-8">
+                                            <input id="inPlaca" type="text" class="form-control" placeholder="Placa (Ej:ABC0123)" required onkeyup="validarPlaca();">
+                                            <p><span id="msmError" style="color:blue"></span></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" style="text-align:right">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="limpiarCampos();">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary" onclick="validarPlaca();">Unirse</button></button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="http://code.jquery.com/jquery-2.1.4.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </body>
+</html>
