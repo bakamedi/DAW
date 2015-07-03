@@ -48,13 +48,25 @@ function isValidAlphaNumericName(str) {
   return true;
 }
 
+function placeForm(){
+	var res = '<form style="margin:6px" onsubmit="return false"><h3 class="form-text">Nueva Ruta</h3><span class="form-text">Nombre:</span><br><input type="text" style="width:100%" id="routename"><br><span class="form-text">Hora de partida:</span><br><input type="text"style="width:100%" id="routetime"><br>';
+	res += '<input type="checkbox" id="checkLunes" name="Lunes"><span class="form-text"> Lunes</span><br>';
+	res += '<input type="checkbox" id="checkMartes" name="Martes"><span class="form-text"> Martes</span><br>';
+	res += '<input type="checkbox" id="checkMiercoles" name="Miércoles"><span class="form-text"> Mi&eacutercoles</span><br>';
+	res += '<input type="checkbox" id="checkJueves" name="Jueves"><span class="form-text"> Jueves</span><br>';
+	res += '<input type="checkbox" id="checkViernes" name="Viernes"><span class="form-text"> Viernes</span><br>';
+	res += '<input type="checkbox" id="checkSabado" name="Sábado"><span class="form-text"> S&aacutebado</span><br>';
+	res += '<input type="checkbox" id="checkDomingo" name="Domingo"><span class="form-text"> Domingo</span><br>';
+	res += '<input type="submit" class="form-text" id="submitRoute" style="margin:8px" value="Submit"></form>';
+	document.getElementById('rutasUL').innerHTML = res;
+}	
 
 function finishNewRoute(){
 	console.log("finish");
 	google.maps.event.clearListeners(map, 'click');
 	$('.mensaje').fadeOut(function(){
 		$('.mensaje').remove();
-		nombrarRuta();
+		placeForm();
 	});
 }
 
@@ -230,7 +242,45 @@ function showRuta(name){
 	else
 		console.log(name + " no esta en lista");
 }
-	
+
+function checkDay(day){
+	if($('#check' + day).val())
+		return '1';
+	else 
+		return '0';
+}
+function constructDays(){
+	var out = "";
+	out += checkDay('Lunes');
+	out += checkDay('Martes');
+	out += checkDay('Miercoles');
+	out += checkDay('Jueves');
+	out += checkDay('Viernes');
+	out += checkDay('Sabado');
+	out += checkDay('Domingo');
+	return out;
+}
+
+function isValidHour(time){
+	var i;
+	for(i = 0; i < time.length; i++){
+		var c = time.charAt(i);
+		var code = time.charCodeAt(i);
+		if (!(code > 47 && code < 58 ) && !(c == ':'))
+			return false;
+	}
+	if(time.indexOf(':') == -1)
+		return false;
+	var arr = time.split(':');
+	if(arr.length > 2)
+		return false;
+	/*
+	if((parseInt(arr[0]) < 0) || (parseInt(arr[0]) > 23))
+		return false;
+	if((parseInt(arr[1]) < 0) || (parseInt(arr[1]) > 59))
+		return false;*/
+return true;
+}
 //JQuery Events
 $(document).ready( function(){
 	$("#nuevaRuta").click( function(){
@@ -245,11 +295,31 @@ $(document).ready( function(){
 	$("body").on('click', '#submitName', function(){
 		guardarRuta();
 	});
+$("body").on('click', '#submitRoute', function(){
+	//Validar contenidos de la ruta;
+	var newRoute = [];
+	newRoute.name = $('#routename').val();
+	if(!isValidAlphaNumericName(replaceWhitespace(name))){
+		console.log("wrong name");
+		return;
+	}
+	newRoute.hora = $('#routetime').val();
+	if(!isValidHour(newRoute.hora)){
+		console.log("wrong time");
+		return;
+	}
+	newRoute.dias = constructDays();
+	myRoutes[replaceWhitespace(newRoute.name)] = [start.position, end.position];
+	clearRutasColumn();
+	addRoute(newRoute);
+	getMyRoutes();
+	});
+
 
 	$("body").on('click', 'li.misRutas', function(){
 		clearRuta();
 		clearFollowersNotification();
-		showRuta(replaceWhitespace($(this).text()));
+		showRuta(replaceWhitespace($(this).attr('data-name')));
 		$('li.misRutas').removeClass("active");
 		$(this).toggleClass("active");
 		getFollowersNotifications();

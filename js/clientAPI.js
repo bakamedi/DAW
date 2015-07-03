@@ -30,19 +30,66 @@ function processFollowersNotifications(jArray){
 	document.getElementById('active-follower-list').innerHTML = out;
 }
 
+function getDias(binary){
+	var out = "";
+	if(binary == "0000000")
+		return "N/A";
+	if(binary == "1111111")
+		return "Todos";
+	else if(binary == "1111100")
+		return "Lunes a Viernes";
+	else{
+		if(binary.charAt(0) == '1')
+			out += "Lunes, ";
+		if(binary.charAt(1) == '1')
+			out += "Martes, ";		
+		if(binary.charAt(2) == '1')
+			out += "Miercoles, ";
+		if(binary.charAt(3) == '1')
+			out += "Jueves, ";
+		if(binary.charAt(4) == '1')
+			out += "Viernes, ";
+		if(binary.charAt(5) == '1')
+			out += "Sabado, ";
+		if(binary.charAt(6) == '1')
+			out += "Domingo, ";
+		return out.substring(0, out.length-2);
+	}
+	return null;
+}
+
 function processMyRoutes(jArray){
 	var i;
-	var start = '<li class="misRutas"><a href="#">';	
-	var end = '</a></li>';
+	var start = '<li class="misRutas" data-name="';
+	var preName = '"><a href="#"><span style="font-size:28px">';	
+	var preHora = '</span><dd><span class="column-text" style="font-size:16px;">Hora de Partida:</span><span class="column-text" style="font-weight:lighter;font-size:14px;">';
+	var preDias = '</span></dd><dd><span class="column-text" style="font-size:16px;">Dias:</span><span class="column-text" style="font-weight:lighter;font-size:14px;">';
+	var end = '</span></dd></a></li>';
 	var out = "";
 	for (i=0; i<jArray.length; i++){
 		var jObject = jArray[i];
 		myRoutes[jObject.name] = [new google.maps.LatLng(jObject.startX, jObject.startY), new google.maps.LatLng(jObject.endX, jObject.endY)];
-		out += start + jObject.name + end;
+		out += start + jObject.name + preName + jObject.name + preHora + jObject.hora + preDias + getDias(jObject.dias) + end;
 	}
 	console.log(out);
-	document.getElementById('rutasUL').innerHTML = out;
+	document.getElementById('rutasUL').innerHTML += out;
 }
+
+function addRoute(jObject){
+	var i;
+	var start = '<li class="misRutas" data-name="';
+	var preName = '"><a href="#"><span style="font-size:28px">';	
+	var preHora = '</span><dd><span class="column-text" style="font-size:16px;">Hora de Partida:</span><span class="column-text" style="font-weight:lighter;font-size:14px;">';
+	var preDias = '</span></dd><dd><span class="column-text" style="font-size:16px;">Dias:</span><span class="column-text" style="font-weight:lighter;font-size:14px;">';
+	var end = '</span></dd></a></li>';
+	var out = "";
+//	myRoutes[jObject.name] = [new google.maps.LatLng(jObject.startX, jObject.startY), new google.maps.LatLng(jObject.endX, jObject.endY)];
+	out = start + jObject.name + preName + jObject.name + preHora + jObject.hora + preDias + getDias(jObject.dias) + end;
+	
+	console.log(" new : " + out);
+	document.getElementById('rutasUL').innerHTML += out;
+}
+
 function processMyFollowers(jArray){
 	var i;
 	var start = '<div onmouseover="this.style.backgroundColor="#CEF6F5"" onmouseout="this.style.backgroundColor="#FFFFFF"" id="Usu_seguidos_sub" class="col-md-3"><img src="';
@@ -77,4 +124,7 @@ function clearFollowersNotification(){
 	document.getElementById('active-follower-list').innerHTML = "";
 }
 
+function clearRutasColumn(){
+	document.getElementById('rutasUL').innerHTML = "";
+}
 
