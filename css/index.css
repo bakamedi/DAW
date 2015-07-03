@@ -20,8 +20,8 @@ hr {
 
 @media screen and (max-width: 1200px) {
     #descripcion {
-    visibility: hidden;
-    display: none;
+        visibility: hidden;
+        display: none;
     }
 }
 
@@ -36,16 +36,52 @@ h1,h4 {
     font-weight: bold;
 }
 
-
-
-.form-group label {
+#formUsuario label {
     font-family: "tu fuente", sans-serif !important;
     font-size: 20px;
     font-weight: bold;
 }
 
-.form-control , .checkbox{
+#formPassword label {
     font-family: "tu fuente", sans-serif !important;
     font-size: 20px;
+    font-weight: bold;
+}
+
+#formRegistro label {
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#formUsuario input {
+    font-family: "Times New Roman", sans-serif !important;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#formRegistro input {
+    font-family: "Times New Roman", sans-serif !important;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#formRegistro input {
+    font-family: "Times New Roman", sans-serif !important;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#formCheck {
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 20px;
+    font-weight: bold;
+    
+}
+
+
+#msmError {
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 16px;
     font-weight: bold;
 }
