@@ -276,3 +276,12 @@ hr{
 	margin-top : 5px;
 	margin-bottom : 5px;
 }
+
+.column-text{
+	font-family:"Helvetica";
+}
+
+.form-text{
+    color : #089de3;
+    
+}
