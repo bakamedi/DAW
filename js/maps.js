@@ -64,8 +64,8 @@ function placeForm(){
 function finishNewRoute(){
 	console.log("finish");
 	google.maps.event.clearListeners(map, 'click');
-	$('.mensaje').fadeOut(function(){
-		$('.mensaje').remove();
+	$('#pickRoute').fadeOut(function(){
+		$('#pickRoute').toggleClass("invisible");
 		placeForm();
 	});
 }
@@ -89,7 +89,7 @@ function addLatLng(event){
 
     if(start == null){
 				start = marker;
-				message.innerHTML = "Selecciona el destino de la nueva ruta";
+				pickRoute.innerHTML = "Selecciona el destino de la nueva ruta";
 				return;
     }
     else if (end == null){
@@ -181,10 +181,7 @@ function marksFromCurrentPos(position){
 
 function escogerInicio(){
 	agregandoRuta = true;
-	message = document.createElement("h3");	
-	message.innerHTML = "Selecciona el inicio de la nueva ruta."
-	message.setAttribute("class", "mensaje");
-	$("#navbar-left").append(message);
+	$("#pickRoute").toggleClass("invisible");
 }
 
 function guardarRuta(){
@@ -233,6 +230,8 @@ function nombrarRuta(){
 
 
 }
+
+
 
 function showRuta(name){
 	console.log("ruta: " + name);
