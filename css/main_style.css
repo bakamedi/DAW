@@ -285,3 +285,14 @@ hr{
     color : #089de3;
     
 }
+
+#emptyNotif{
+		color:grey;
+		text-align:center;
+		margin-top:10px;
+}
+
+#active-follower-list{
+		height:100%;
+}
+

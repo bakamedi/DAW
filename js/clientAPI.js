@@ -27,6 +27,7 @@ function processFollowersNotifications(jArray){
 		else
 			out += start + jArray[i].name + mid1 + 'A ' + jArray[i].dist + 'm de la ruta'	+ end + '<hr>';
 	}
+	console.log(out);
 	document.getElementById('active-follower-list').innerHTML = out;
 }
 
@@ -71,7 +72,7 @@ function processMyRoutes(jArray){
 		myRoutes[jObject.name] = [new google.maps.LatLng(jObject.startX, jObject.startY), new google.maps.LatLng(jObject.endX, jObject.endY)];
 		out += start + jObject.name + preName + jObject.name + preHora + jObject.hora + preDias + getDias(jObject.dias) + end;
 	}
-	console.log(out);
+	//console.log(out);
 	document.getElementById('rutasUL').innerHTML += out;
 }
 
