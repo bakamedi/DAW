@@ -327,4 +327,5 @@ $("body").on('click', '#submitRoute', function(){
 });
 google.maps.event.addDomListener(window, 'load', initializeMap);
 getMyRoutes();
-getMyFollowers();
+//getMyFollowers();
+
