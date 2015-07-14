@@ -31,21 +31,22 @@
       <nav class="mdl-navigation mdl-layout--large-screen-only">
       <div id="nuevaRuta" class="icon material-icons">add</div>
 		<div class="mdl-tooltip" for="nuevaRuta">Nueva Ruta</div>
-      <div id="followers-btn" class="icon material-icons">people</div>
+      <div id="followers-btn" data-toggle="modal" data-target="#myModal_Seguidores" class="icon material-icons">people</div>
 		<div class="mdl-tooltip" for="followers-btn">Seguidores</div>
-      <div id="walking" class="icon material-icons">directions_run</div>
-		<div class="mdl-tooltip" for="walking">No tengo carro...</div>
+      <div id="walking" onclick="location.href='walk.html'" class="icon material-icons">directions_run</div>
+		<div class="mdl-tooltip"  for="walking">No tengo carro...</div>
       <div id="miPerfil" class="icon material-icons">account_circle</div>
 		<div class="mdl-tooltip" for="miPerfil">Mi Perfil</div>
       </nav>
     </div>
   </header>
   <div class="mdl-layout__drawer">
-    <span class="mdl-layout-title">Title</span>
+    <span class="mdl-layout-title">Rapid&iacuten Espol</span>
     <nav class="mdl-navigation">
       <a class="mdl-navigation__link" href="">Perfil</a>
-      <a class="mdl-navigation__link" href="">No tengo carro</a>
+      <a class="mdl-navigation__link" href="walk.html">No tengo carro</a>
       <a class="mdl-navigation__link" href="">Seguidores</a>
+      <a class="mdl-navigation__link" href="">Siguiendo</a>
       <a class="mdl-navigation__link" href="login.html">Cerrar Sesi&oacuten</a>
     </nav>
   </div>
@@ -71,6 +72,84 @@
         </nav>
 
 		
+		<!--popup seguidores-->
+		<div class="container">
+		  <!-- Modal -->
+		  <div class="modal fade" id="myModal_Seguidores" role="dialog">
+			<div class="modal-dialog">
+			
+			  <!-- Modal content-->
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Seguidores</h4>
+				</div>
+				<div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+						    <div id="bus_seguidores" class="col-xs-12">
+							    <input type="text" placeholder=" Buscar...." class="input_txt"><span class="glyphicon glyphicon-search"></span></input>
+						    </div>
+					    </div>
+                       
+                        <div id="contSeguidores" class="row">
+						    <div class="col-md-4">
+								<select multiple class="form-control">
+								    <option>
+									<div id="Usu_Seguidores" class="col-md-4">
+										<p>Luis Andrade</p>
+									</div>
+								    </option>
+								    <option>
+									<div id="Usu_Seguidores" class="col-md-4">
+										<p>hector Jupiter</p>
+									</div>
+								    </option>
+								    <option>
+									<div id="Usu_Seguidores" class="col-md-4">
+										<p>Gabriel Aumala</p>
+									</div>
+								    </option>
+								    <option>
+									<div id="Usu_Seguidores" class="col-md-4">
+										<p>Bakke Andres</p>
+									</div>
+								    </option>
+								    <option>
+									<div id="Usu_Seguidores" class="col-md-4">
+										<p>Batman</p>
+									</div>
+								    </option>
+								</select>
+							    
+						    </div>
+                            <div class="col-md-8" id="Usu_Seguir">
+                                <div id="imgUs" class="resize col-md-7 text-center">
+						            <img src="img/user.jpg" id="imagen" />
+					            </div>
+								<div class="col-xs-12 col-lg-12 text-center">
+                                    <p>Luis Andrade del Pezo</p>
+									<h5>seguidores: 9000</h5>
+									<h5>siguiendo: 0</h5>
+                                </div>
+								
+							</div>
+					    </div>
+
+                    </div>
+					
+					
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			  </div>
+			  
+			</div>
+		  </div>
+		  
+		</div>
+		<!--ffin del popup Seguidores-->
 	</div>	
    </main>
 </div>        

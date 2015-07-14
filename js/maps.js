@@ -30,7 +30,7 @@ function initializeMap(){
 				directionsDisplay.setMap(map);
  				//Agrega un manejador del evento click sobre el mapa
 				//google.maps.event.addListener(map, 'click', addLatLng);
-				navigator.geolocation.getCurrentPosition(marksFromCurrentPos);
+				//navigator.geolocation.getCurrentPosition(marksFromCurrentPos);
 	});	   
 }
 
@@ -326,5 +326,5 @@ $("body").on('click', '#submitRoute', function(){
 });
 google.maps.event.addDomListener(window, 'load', initializeMap);
 getMyRoutes();
-//getMyFollowers();
+getMyFollowers();
 
