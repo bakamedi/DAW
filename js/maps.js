@@ -323,7 +323,17 @@ $("body").on('click', '#submitRoute', function(){
 		$(this).toggleClass("active");
 		getFollowersNotifications();
 	});
+
+	$('#followers-btn').click(function(){
+		console.log("click");
+		$('#myModal_siguiendo').modal('show');
+	});
+
+	$('#myModal_siguiendo').modal({ show: false});
+
 });
+
+
 google.maps.event.addDomListener(window, 'load', initializeMap);
 getMyRoutes();
 getMyFollowers();
