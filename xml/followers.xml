@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<followers>
+    <profile>
+        <id>seguidor1</id>
+        <name>Luis Andrade</name>
+        <followers>9000</followers>
+        <following>0</following>
+        <avatar>img/user2.jpg</avatar>
+    </profile>
+     <profile>
+        <id>seguidor2</id>
+        <name>Bakke Medina</name>
+        <followers>3431</followers>
+        <following>151</following>
+        <avatar>img/user3.jpg</avatar>
+    </profile>
+    <profile>
+        <id>seguidor3</id>
+        <name>Hector Júpiter</name>
+        <followers>2457</followers>
+        <following>1531</following>
+        <avatar>img/user4.jpg</avatar>
+    </profile>
+</followers>

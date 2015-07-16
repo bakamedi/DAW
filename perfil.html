@@ -1,369 +1,147 @@
 <!DOCTYPE html>
 <html lang="es"> 
     <head>
-
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum.scale=1.0">
-
+	    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.blue-pink.min.css">
+        <script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/main_style.css">
-        <link rel="stylesheet" href="css/perfil_style.css">
+        <link rel="stylesheet" href="css/main_style.css">
   	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+	    <script src="js/clientAPI.js"></script>
 	    <script src="js/maps.js"></script>
+        <script src="js/maps.js"></script>
         <script src="js/validaciones.js"></script>
-        
     </head>
     <body>
         
-        <nav class="navbar navbar-inverse navbar-static-top">
-  <div class="container-fluid">
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div id="navbar-left" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul  class="nav navbar-nav">
-            <li><h3>Rutas<h3></li>
-            <li>
-                <button id="nuevaRuta" type="button" class="btn btn-default nav-btn" aria-label="Left Align">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                </button>
-            </li>
-        </ul>
-      <ul class="nav navbar-nav navbar-right" >
-        <li class="dropdown nav-drop">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#" data-toggle="modal" data-target="#myModal">Perfil</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#myModal_Seguidores">Seguir a...</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#myModal_siguiendo">Seguidores</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Cerrar Sesi&oacuten</a></li>
-          </ul>
-        </li> 
-	<li><h3 class="titulo">Seguidores</h3></li>
-     </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-        <nav id="rutas-nav" class="columna">
-            <ul id="rutasUL" class="nav nav-pills nav-stacked">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Casa</a></li>
-                <li><a href="#">Trabajo</a></li>
-                <li><a href="#">ESPOL</a></li>
-            </ul>
-            
-    <!-- popup perfil -->
-            <!-- Modal -->
-	<div id="myModal" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
+        <!-- Always shows a header, even in smaller screens. -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">Rapid&iacuten Espol</span>
 
-		<!-- Modal content-->
-		<div class="modal-content">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-			<h4 class="modal-title">Perfil</h4>
-		  </div>
-
-		  <div class="modal-body">
-			<div class="container-fluid">
-				<div class="row">
-					<div id="imgUs" class="resize col-md-5 text-center">
-						<img src="img/user.jpg" id="imagen" />
-                        <div class="text-center"><label>Seguidores 1</label></div>
-                        <div class="text-center"><label>Siguiendo 0</label></div>
-					</div>
-					<div class="col-md-6 col-md-offset-1">
-						<div class="container-fluid">
-                            <div class="row">
-                                <form role="form">
-                                   <div class="form-group">
-                                      <label for="nombre">Nombre:</label>
-                                      <input type="text" class="form-control" id="nombre" placeholder="Nombre">
-                                   </div>
-                                   <div class="form-group">
-                                      <label for="apellido">Apellido:</label>
-                                      <input type="text" class="form-control" id="apellido" placeholder="Apellido">
-                                   </div>
-                                   <div class="form-group">
-                                      <label for="email">Email:</label>
-                                      <input type="email" class="form-control" id="email" placeholder="Enter email">
-                                   </div>
-                                   <div class="form-group">
-                                       <label for="carro">Tiene Carro:</label>
-                                       <div class="checkbox">
-                                           <label><input type="checkbox"> Si</label>
-                                           <label><input type="checkbox"> No</label>
-                                       </div>
-                                   </div>
-                                   <div class="form-group">
-                                      <label for="placa">Placa:</label>
-                                      <input type="text" class="form-control" id="placa" placeholder="GEU-000">
-                                   </div>
-                                   
-                                        
-                                   </div>
-                                </form>
-                            </div>
-                            
-                        </div>
-					</div>
-				</div>
-			</div>
-
-			</div>
-
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
+      <span id="pickRoute" class="subtitulo invisible">Escoge tu ruta:</span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+      <!-- Navigation. We hide it in small screens. -->
+      <nav class="mdl-navigation mdl-layout--large-screen-only">
+      <div id="nuevaRuta" class="icon material-icons">add</div>
+		<div class="mdl-tooltip" for="nuevaRuta">Nueva Ruta</div>
+      <div id="followers-btn" data-toggle="modal" data-target="#myModal_Seguidores" class="icon material-icons" onclick="seguidores();" >people</div>
+		<div class="mdl-tooltip" for="followers-btn">Seguidores</div>
+      <div id="walking" onclick="location.href='walk.html'" class="icon material-icons">directions_run</div>
+		<div class="mdl-tooltip"  for="walking">No tengo carro...</div>
+      <div id="miPerfil" class="icon material-icons" onclick="perfil();">account_circle</div>
+		<div class="mdl-tooltip" for="miPerfil">Mi Perfil</div>
+      </nav>
     </div>
-                
- </div>
-<!-- fin del popup perfil --> 
-        </nav>
-
-
-        <!-- perfil usuario/seguidor-->
-        <div class="columna" style="height: 30%;width: 70%;">
-                <div class="row">
-                    <div id="imagenPerfil" class=" col-xs-12 text-center">
-                      
-                        <div class="ex1">
-                            <img alt="#" id="ima" src="http://lorempixel.com/250/250/" class="img-responsive center-block img-circle text-center"></img>
-                        </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Rapid&iacuten Espol</span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" href="perfil.html">Perfil</a>
+      <a class="mdl-navigation__link" href="walk.html">No tengo carro</a>
+      <a class="mdl-navigation__link" href="main_seguidores.html">Seguidores</a>
+      <a class="mdl-navigation__link" href="main_siguiendo.html">Siguiendo</a>
+      <a class="mdl-navigation__link" href="login.html">Cerrar Sesi&oacuten</a>
+    </nav>
+  </div>
+  <main class="mdl-layout__content">
+    <div class="page-content">
+		<!--Google Map -->	
+		<!-- perfil usuario/seguidor-->
+        <div id="perfil" class="columna" style="height: 50%;width: 85%;">
+            <div class="row">
+                <div id="imagenPerfil" class=" col-xs-12 text-center">
+                    <div>
+                        <img alt="Imagen Perfil" id="imaUser"  class="img-responsive center-block img-circle text-center">
+                    </div>
                         
-                        <div id="labelSeguidores-Siguiendo" style="padding:10px;">
-                            <button id="btnEditar" type="button" class="btn btn-default" onclick="ocultaBoton();">Editar
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </button>
-                            <button id="editarFoto" type="button" class="btn btn-default" >Cambiar Foto
-                                <span class="glyphicon glyphicon-open" aria-hidden="true"></span>
-                            </button>
-                            <hr>
-                            <div class="text-center"><label>Seguidores 1</label></div>
-                            <div class="text-center"><label>Siguiendo 0</label></div>
-                            <hr>
-                        </div>
+                    <div id="labelSeguidores-Siguiendo" style="padding:10px;">
+                        <button id="btnEditar" type="button" class="btn btn-default" onclick="ocultaBoton();">Editar
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </button>
+                        <button id="editarFoto" type="button" class="btn btn-default" >Cambiar Foto
+                            <span class="glyphicon glyphicon-open" aria-hidden="true"></span>
+                        </button>
+                        <hr>
+                        <div  class="text-center"><label id="labelSeguidores" ></label></div>
+                        <div  class="text-center"><label id="labelSiguiendo" ></label></div>
+                        <hr>
                     </div>
                 </div>
-                <div class="row col-xs-12 text-center center-block">
-                    <form id="formularioPerfil" class="form-horizontal" name="formularioContacto">
-                        <div class="form-group">
-                            <div id="nombrePerfil" class="col-xs-12 text-center">
-                                <label id="labelNombre" for="labelNombre" class="block-center control-label ">Bakke </label>
-                            </div>
-                            <div class="col-xs-offset-4 col-md-4  ">
-                                <input id="inputNombre" type="text" class="form-control " id="inputNombre" name="nombre" placeholder="Nombre" style='display:none;'>
-                                <p>
-                                    <span id="msmErrorNombre" style="color:blue"></span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-12 text-center">
-                                <label id="apellidoPerfil" for="labelApellido" class="block-center control-label ">Medina</label>
-                            </div>
-                            <div class="col-xs-offset-4 col-md-4">
-                                <input id="inputApellido" type="text" class="form-control" name="apellidoPerfil"  placeholder="Apellido" style='display:none;' >
-                                <p>
-                                    <span id="msmErrorApellido" style="color:blue"></span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-12 text-center block-center">
-                                <label id="carroPerfil" for="carroPerfil" class="block-center  control-label ">Carro:</label>
-                            </div>
-                            
-                            
-
-                            <div id="input-Carro" class="radio col-xs-offset-4 col-md-4" style='display:none;'>
-                                <label  class=" ">
-                                    <input id="rbTengo" type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked onclick="validarTengoCarro();"> Tengo Carro
-                                </label>
-                                <label class="">
-                                    <input id="rbNoTengo" type="radio" name="optionsRadios" id="optionsRadios1" value="option1" onclick="validarNoTengoCarro();"> No tengo Carro
-                                </label>
-                            </div>
-                            
-                        </div>
-                        <div id="input-Placa" class="form-group">
-                            <div class="col-xs-12 text-center">
-                                <label id="placaPerfil" for="inputCarro" class="block-center control-label ">Placa</label>
-                                <label id="input-placa-Perfil" for="input-Carro" class="block-center control-label ">GEU-000</label>
-                            </div>
-                            <div class="col-xs-offset-4 col-md-4">
-                                <input id="inputPlaca" type="text" class="form-control" id="inputPlaca" placeholder="GEU-000" style='display:none;' onkeyup="validarPlaca();">
-                                <p>
-                                    <span id="msmError" style="color:blue"></span>
-                                </p>
-                            </div>
-                        </div>
-                        <hr>
-						<div id="guardar" class="form-group">
-							<div class="col-offset-4 col-md-8 col-lg-12 center-block">
-								<input id="btnCancelar" type="reset" class="btn btn-danger text-center" value="Cancelar" onclick="ocultaCancelar();">
-								<input id="btnGuardar" type="button" class="btn btn-primary" value="Guardar">
-							</div>
-						</div>
-                    </form>
-				</div>
-                
-                
-
             </div>
-        </div>  
-        <nav id="follower-nav" class="columna">
-            <ul id="nav-seguidores" class="nav nav-pills nav-stacked">
-                <li id="seguidores" ><a href="#">Carlos</a></li>
-                <li id="seguidores"><a href="#">Jorge</a></li>
-                <li id="seguidores"><a href="#">Andrea</a></li>
-                
-            </ul>
-	    <div class="form-group search-box">
-          	<input type="text" class="form-control" placeholder="Search">
-            </div>
-        </nav>
-		
-		<!--popup seguidores-->
-		<div class="container">
-		  <!-- Modal -->
-		  <div class="modal fade" id="myModal_Seguidores" role="dialog">
-			<div class="modal-dialog">
-			
-			  <!-- Modal content-->
-			  <div class="modal-content">
-				<div class="modal-header">
-				  <button type="button" class="close" data-dismiss="modal">&times;</button>
-				  <h4 class="modal-title">Seguidores</h4>
-				</div>
-				<div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-						    <div id="bus_seguidores" class="col-xs-12">
-							    <input type="text" placeholder=" Buscar...." class="input_txt"><span class="glyphicon glyphicon-search"></span></input>
-						    </div>
-					    </div>
-                       
-                        <div id="contSeguidores" class="row">
-						    <div class="col-md-4">
-								<select multiple class="form-control">
-								    <option>
-									<div id="Usu_Seguidores" class="col-md-4">
-										<p>Luis Andrade</p>
-									</div>
-								    </option>
-								    <option>
-									<div id="Usu_Seguidores" class="col-md-4">
-										<p>hector Jupiter</p>
-									</div>
-								    </option>
-								    <option>
-									<div id="Usu_Seguidores" class="col-md-4">
-										<p>Gabriel Aumala</p>
-									</div>
-								    </option>
-								    <option>
-									<div id="Usu_Seguidores" class="col-md-4">
-										<p>Bakke Andres</p>
-									</div>
-								    </option>
-								    <option>
-									<div id="Usu_Seguidores" class="col-md-4">
-										<p>Batman</p>
-									</div>
-								    </option>
-								</select>
-							    
-						    </div>
-                            <div class="col-md-8" id="Usu_Seguir">
-                                <div id="imgUs" class="resize col-md-7 text-center">
-						            <img src="img/user.jpg" id="imagen" />
-					            </div>
-								<div class="col-xs-12 col-lg-12 text-center">
-                                    <p>Luis Andrade del Pezo</p>
-									<h5>seguidores: 9000</h5>
-									<h5>siguiendo: 0</h5>
-                                </div>
-								
-							</div>
-					    </div>
-
+            <div class="row col-xs-12 text-center center-block">
+                <form id="formularioPerfil" class="form-horizontal" name="formularioContacto">
+                    <div class="form-group">
+                        <div id="nombrePerfil" class="col-xs-12 text-center">
+                            <label id="labelNombre" class="block-center control-label ">Bakke </label>
+                        </div>
+                        <div class="col-xs-offset-4 col-md-4  ">
+                            <input id="inputNombre" type="text" class="form-control " name="nombre" placeholder="Nombre" style='display:none;'>
+                            <p>
+                                <span id="msmErrorNombre" style="color:blue"></span>
+                            </p>
+                        </div>
                     </div>
-					
-					
-				</div>
-				<div class="modal-footer">
-				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			  </div>
-			  
-			</div>
-		  </div>
-		  
-		</div>
-		<!--ffin del popup Seguidores-->
-		
-		<!--popup siguiendo-->
-		<div class="container">
+                    <div class="form-group">
+                        <div class="col-xs-12 text-center">
+                            <label id="apellidoPerfil" class="block-center control-label ">Medina</label>
+                        </div>
+                        <div class="col-xs-offset-4 col-md-4">
+                            <input id="inputApellido" type="text" class="form-control" name="apellidoPerfil"  placeholder="Apellido" style='display:none;' >
+                            <p>
+                                <span id="msmErrorApellido" style="color:blue"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12 text-center block-center">
+                            <label id="carroPerfil" class="block-center  control-label "></label>
+                        </div>
+                            
+                            
 
-		  <!-- Modal -->
-		  <div class="modal fade" id="myModal_siguiendo" role="dialog">
-			<div class="modal-dialog">
-			
-			  <!-- Modal content-->
-			  <div class="modal-content">
-				<div class="modal-header">
-				  <button type="button" class="close" data-dismiss="modal">&times;</button>
-				  <h4 class="modal-title">Seguidores</h4>
-				</div>
-				<div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-						<div id="bus_seguidores" class="col-md-9">
-							<input type="text" placeholder=" Buscar....." class="input_txt"><span class="glyphicon glyphicon-search"></span></input>
+                        <div id="input-Carro" class="radio col-xs-offset-4 col-md-4" style='display:none;'>
+                            <label  class=" ">
+                                <input id="rbTengo" type="radio" name="optionsRadios"  value="Si" checked onclick="validarTengoCarro();"> Tengo Carro
+                            </label>
+                            <label class="">
+                                <input id="rbNoTengo" type="radio" name="optionsRadios" value="No" onclick="validarNoTengoCarro();"> No tengo Carro
+                            </label>
+                        </div>
+                            
+                    </div>
+                    <div id="input-Placa" class="form-group">
+                        <div class="col-xs-12 text-center">
+                            <label id="placaPerfil" class="block-center control-label ">Placa</label>
+                            <label id="input-placa-Perfil" class="block-center control-label ">GEU-000</label>
+                        </div>
+                        <div class="col-xs-offset-4 col-md-4">
+                            <input id="inputPlaca" type="text" class="form-control" placeholder="GEU-000" style='display:none;' onkeyup="validarPlaca();">
+                            <p>
+                                <span id="msmError" style="color:blue"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
+					<div id="guardar" class="form-group">
+						<div class="col-offset-4 col-md-8 col-lg-12 center-block">
+							<input id="btnCancelar" type="reset" class="btn btn-danger text-center" value="Cancelar" onclick="ocultaCancelar();">
+							<input id="btnGuardar" type="button" class="btn btn-primary" value="Guardar">
 						</div>
 					</div>
-					<div class="row">
-							<div onmouseover="this.style.backgroundColor='#CEF6F5'" onmouseout="this.style.backgroundColor='#FFFFFF'" id="Usu_seguidos_sub" class="col-md-3">
-                                <img src="img/user.jpg" id="imagen_seguidos"/>
-								<p>Luis Andrade</p>
-								<h5>seguidores: 9000</h5>
-								<h5>siguiendo: 0</h5>
-							</div>
-							<div onmouseover="this.style.backgroundColor='#CEF6F5'" onmouseout="this.style.backgroundColor='#FFFFFF'" id="Usu_seguidos_sub" class="col-md-3">
-                                    <img src="img/user.jpg" id="imagen_seguidos"/>
-								    <p>asfdasdfsd</p>
-									<h5>seguidores: 9000</h5>
-									<h5>siguiendo: 0</h5>
-							</div>
-                        <div onmouseover="this.style.backgroundColor='#CEF6F5'" onmouseout="this.style.backgroundColor='#FFFFFF'" id="Usu_seguidos_sub" class="col-md-3">
-                                <img src="img/user.jpg" id="imagen_seguidos"/>
-								<p>Luis </p>
-								<h5>seguidores: 9000</h5>
-								<h5>siguiendo: 0</h5>
-							</div>
-							<div onmouseover="this.style.backgroundColor='#CEF6F5'" onmouseout="this.style.backgroundColor='#FFFFFF'" id="Usu_seguidos_sub" class="col-md-3">
-                                    <img src="img/user.jpg" id="imagen_seguidos"/>
-								    <p>Andres</p>
-									<h5>seguidores: 9000</h5>
-									<h5>siguiendo: 0</h5>
-							</div>
-					</div>
-                    </div>
-					
-				</div>
-				<div class="modal-footer">
-				  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			  </div>
-			  
+                </form>
 			</div>
-		  </div>
-		  
-		</div>
-		<!-- fin del popup seguidores-->
-    </body>
+		</div> 
+	</div>	
+   </main>
+</div>        
+</body>
 </html>
 
