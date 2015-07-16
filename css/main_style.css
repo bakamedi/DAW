@@ -51,9 +51,11 @@ html, body{
  }
 
  .search-box{
-   position : absolute;
-   margin : 5px;
-   bottom : 5px; 
+     width: auto;
+     margin : 5px;
+     float : bottom;
+     position: absolute;
+     bottom : 0px
 }
 .darken {
 		opacity: 0.5;
@@ -297,7 +299,7 @@ hr{
 }
 
 #active-follower-list{
-		height:100%;
+		position:relative
 }
 
 div.material-icons{
