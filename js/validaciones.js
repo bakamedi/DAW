@@ -1,12 +1,12 @@
-var userProfileList = [];
-
 function inicializar() {
     var btnGuardar = document.getElementById("btnGuardar");
     btnGuardar.addEventListener('click',guardaDatosLabel, false);
     var btnEditar = document.getElementById("btnEditar");
     btnEditar.addEventListener('click',habilitaBotonesPerfil, false);
     var btnGuardar = document.getElementById("guardar");
-    btnGuardar.setAttribute("style", "display: none;")
+    btnGuardar.setAttribute("style", "display: none;");
+    cargarDatosUsuarioPerfil();
+    obtenerUser();
 }
 
 function habilitaBotonesPerfil(){
@@ -171,24 +171,69 @@ function ocultaCancelar(){
     inputPlaca.innerHTML = 'none';
 }
 
-function obtenerDatosPerfil(){
-    var id,nombre,apellido,imagenSrc,seguidores,seguidos,tieneCarro,placa;
-    nombre = document.getElementById("labelNombre");
-    apellido = document.getElementById("apellidoPerfil");
-    seguidores = document.getElementById("labelSeguidores");
-    seguidos = document.getElementById("labelSiguiendo");
-    tieneCarro = document.getElementById("carroPerfil");
-    placa = document.getElementById("input-placa-Perfil");
-    imagenSrc = document.getElementById("imaUser");
-    
-    nombre.innerHTML = userProfileList[0];
-    apellido.innerHTML = userProfileList[1];
-    seguidores.innerHTML = userProfileList[2];
-    seguidos.innerHTML = userProfileList[3];
-    imagenSrc.setAttribute("src", userProfileList[5]);
-    if(userProfileList[4]=="si" || userProfileList[4]=="Si"){
-        placa.innerHTML = userProfileList[6];
+function cargarDatosUsuarioPerfil(){
+    var request = new XMLHttpRequest;
+    request.addEventListener('load',obtenerDatosPerfil,false);
+    request.open('GET',"xml/login.xml",true);
+    request.send(null);
+}
+
+function obtenerDatosPerfil(evt){
+
+    var response = evt.target.responseXML;
+    var usuarios = response.getElementsByTagName("usuario");
+
+    var url = document.URL;
+    var url1 = url.split("=");
+    var array = [url1];
+    alert(array[1]);
+
+    for(var i = 0 ; i < usuarios.length ;i++){
+        if(usuarios[i].getElementsByTagName("nick")[0].firstChild.nodeValue == array[1]){
+            var id,nombre,apellido,imagenSrc,seguidores,seguidos,tieneCarro,placa;
+            var nombreUsu, apellidoUsu, followersUsu, followingUsu, avatarSrcUsu, carroUsu, placaUsu;
+
+            nombreUsu = usuarios[i].getElementsByTagName("nombre")[0].firstChild.nodeValue;
+            apellidoUsu = usuarios[i].getElementsByTagName("apellido")[0].firstChild.nodeValue;
+            followersUsu = usuarios[i].getElementsByTagName("followers")[0].firstChild.nodeValue;
+            followingUsu = usuarios[i].getElementsByTagName("following")[0].firstChild.nodeValue;
+            avatarSrcUsu = usuarios[i].getElementsByTagName("avatar")[0].firstChild.nodeValue;
+            carroUsu = usuarios[i].getElementsByTagName("carro")[0].firstChild.nodeValue;
+            placaUsu = usuarios[i].getElementsByTagName("placa")[0].firstChild.nodeValue;
+
+
+
+            nombre = document.getElementById("labelNombre");
+            apellido = document.getElementById("apellidoPerfil");
+            seguidores = document.getElementById("labelSeguidores");
+            seguidos = document.getElementById("labelSiguiendo");
+            tieneCarro = document.getElementById("carroPerfil");
+            placa = document.getElementById("input-placa-Perfil");
+            imagenSrc = document.getElementById("imaUser");
+
+            nombre.innerHTML = nombreUsu;
+            apellido.innerHTML = apellidoUsu;
+            seguidores.innerHTML = followersUsu;
+            seguidos.innerHTML = followingUsu;
+            imagenSrc.setAttribute("src", avatarSrcUsu);
+            if(carroUsu=="si" || carroUsu=="Si"){
+                placa.innerHTML = placa;
+            }else{
+                placa.innerHTML = " ";
+            }
+
+
+        }
     }
+
+    
+    
+    
+}
+
+function obtenerUser(){
+    
+
 }
 
 function perfil() {
@@ -198,5 +243,6 @@ function perfil() {
 function seguidores() { 
     location.href = "main_seguidores.html";
 }
+
 
 window.addEventListener('load', inicializar, false);
