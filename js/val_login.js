@@ -133,8 +133,12 @@ function validarPlacaDetener() {
 function limpiarCampos() { 
     var inUsuario = document.getElementById("inUsuario").value = "";
     var inContraseña = document.getElementById("inContraseña").value = "";
-    var inNombre = document.getElementById("inNombre").value = "";
-    var inApellido = document.getElementById("inApellido").value = "";
+    var inNombre = document.getElementById("inNombre");
+    var inApellido = document.getElementById("inApellido");
+
+    inNombre.setAttribute("placeholder","Nombre");
+    inApellido.setAttribute("placeholder","Apellido");
+
     var inNewContraseña = document.getElementById("inNewContraseña").value = "";
     var inConNewContraseña = document.getElementById("inConNewContraseña").value = "";
     var rb1 = document.getElementById("rbTengo").checked = true;
@@ -221,6 +225,9 @@ function datos(evt) {
         cont = rest[i].getElementsByTagName("contraseña")[0].firstChild.nodeValue;
         nombre = rest[i].getElementsByTagName("nombre")[0].firstChild.nodeValue;
         apellido = rest[i].getElementsByTagName("apellido")[0].firstChild.nodeValue;
+
+
+
         //alert(usuario==usu);
         //alert(contraseña==cont);
         //alert(contraseña == cont + " "+);
@@ -232,6 +239,7 @@ function datos(evt) {
             tApellido.setAttribute("placeholder",apellido);
             //tNombre.innerHTML = "asdasdasdas";
             //tApellido.innnerHTML = apellido;
+
         }
     }
 }
