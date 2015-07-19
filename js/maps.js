@@ -58,19 +58,19 @@ function placeForm(){
     $("#newRouteForm").toggleClass("invisible");
     }
 function blinker() {
-    $('.blink_me').fadeOut(500);
-    $('.blink_me').fadeIn(500);
+    $('.blink_me').fadeOut(800);
+    $('.blink_me').fadeIn(800);
     console.log("blink");
 }
 
 function finishNewRoute(){
-	console.log("finish");
 	google.maps.event.clearListeners(map, 'click');
         if(blinkHandler != null){
-            console.log("chao blink");
+            console.log("finish");
             window.clearInterval(blinkHandler);
         }
 	$('#pickRoute').fadeOut(function(){
+            console.log("invinsible out");
 		$('#pickRoute').toggleClass("invisible");
 		placeForm();
 	});
@@ -128,13 +128,14 @@ function addLatLng(event){
 }
 
 function clearRuta(){
-	if(start != null)
-		start.setMap(null);
-		if(end != null)
-		end.setMap(null);
-	start = null;
-	end = null;
-	waypts = []
+    if(start != null)
+        start.setMap(null);
+    if(end != null)
+        end.setMap(null);
+    console.log("routes cleared");
+    start = null;
+    end = null;
+    waypts = []
 }
 
 function addRouteMarkers(pos1, pos2){
@@ -171,48 +172,13 @@ function addRouteMarkers(pos1, pos2){
 }
 
 
-function marksFromCurrentPos(position){
-    var x = position.coords.latitude;
-    var y = position.coords.longitude;
-    console.log('latitude :' + x);
-    console.log('longitude :' + y);
-    var marker1 = new google.maps.Marker({
-	    	position: new google.maps.LatLng(x,y),
-	    	title: '#',
-	    	draggable:true,
-	    	map: map
-    });
-		start = marker1;
-
-}
-
 function escogerInicio(){
 	agregandoRuta = true;
+        $("#pickRoute").attr("style", "");
 	$("#pickRoute").toggleClass("invisible");
-        blinkHandler = setInterval(blinker, 1000);
+        blinkHandler = setInterval(blinker, 1600);
 }
 
-function guardarRuta(){
-	var name = $('#formName').val()	;
-	console.log("valor: " + name);
-	var keyname = replaceWhitespace(name);
-	//Si el nombre es valido, agrego la ruta
-	if (name.length > 0 && isValidAlphaNumericName(keyname))
-		$('.bar-item').fadeOut(function(){
-			$('.bar-item').remove();
-			console.log("guardandoruta");
-			var a = document.createElement("a");
-			a.setAttribute("href", "#");
-			a.innerHTML = name;
-			var li = document.createElement("li");
-			li.setAttribute("class", "misRutas");
-			li.appendChild(a);
-			$("#rutasUL").append(li);
-			//guardar posiciones
-			myRoutes[keyname] = [start.position, end.position];
-
-		});
-}
 function nombrarRuta(){
 	console.log("nombrarRuta");
 	var form = document.createElement("form");
@@ -288,45 +254,65 @@ function isValidHour(time){
 		return false;*/
 return true;
 }
+
+function nuevaRuta(){
+    console.log("nuevaRuta");
+    if(!agregandoRuta){
+
+        clearRuta();
+        escogerInicio();
+        google.maps.event.addListener(map, 'click', addLatLng);
+    }
+}
+
+function cleanNewRouteForm(){
+    $('#routetime').val("");
+    $('#routename').val("");
+    $('#checkLunes').prop('checked', false);
+    $('#checkMartes').prop('checked', false);
+    $('#checkMiercoles').prop('checked', false);
+    $('#checkJueves').prop('checked', false);
+    $('#checkViernes').prop('checked', false);
+    $('#checkSabado').prop('checked', false);
+    $('#checkDomingo').prop('checked', false);
+}
+
+function abortNewRoute(){
+    $('#pickRoute').addClass('invisible');
+    agregandoRuta = false;
+}
+
 //JQuery Events
 $(document).ready( function(){
-	$("#nuevaRuta").click( function(){
+        //Guardar la nueva ruta
+        $("body").on('click', '#submitRoute', function(){
+                //Validar contenidos de la ruta;
+                var newRoute = [];
+                newRoute.name = $('#routename').val();
+                if(!isValidAlphaNumericName(replaceWhitespace(name))){
+                        console.log("wrong name");
+                        return;
+                }
+                newRoute.hora = $('#routetime').val();
+                if(!isValidHour(newRoute.hora)){
+                        console.log("wrong time");
+                        return;
+                }
 
-		if(agregandoRuta)
-			return;
+                newRoute.dias = constructDays();
+                myRoutes[replaceWhitespace(newRoute.name)] = [start.position, end.position];
+                clearRutasColumn();
+                addRoute(newRoute);
+                //getMyRoutes();
+                agregandoRuta = false;
+                console.log("chao " + agregandoRuta);
+                cleanNewRouteForm();
+                });
 
-		clearRuta();
-		escogerInicio();
-		google.maps.event.addListener(map, 'click', addLatLng);
-	});
-
-	$("body").on('click', '#submitName', function(){
-		guardarRuta();
-		agregandoRuta = false;
-	});
-$("body").on('click', '#submitRoute', function(){
-	//Validar contenidos de la ruta;
-	var newRoute = [];
-	newRoute.name = $('#routename').val();
-	if(!isValidAlphaNumericName(replaceWhitespace(name))){
-		console.log("wrong name");
-		return;
-	}
-	newRoute.hora = $('#routetime').val();
-	if(!isValidHour(newRoute.hora)){
-		console.log("wrong time");
-		return;
-	}
-	newRoute.dias = constructDays();
-	myRoutes[replaceWhitespace(newRoute.name)] = [start.position, end.position];
-	clearRutasColumn();
-	addRoute(newRoute);
-	getMyRoutes();
-	});
-
-
-	$("body").on('click', 'li.misRutas', function(){
-		clearRuta();
+        //Mostrar gente cerca cuando das click a una ruta
+	$("body").on('click', 'li.misRutas', function(){                
+                abortNewRoute();
+                clearRuta();
 		clearFollowersNotification();
 		showRuta(replaceWhitespace($(this).attr('data-name')));
 		$('li.misRutas').removeClass("active");
@@ -334,6 +320,7 @@ $("body").on('click', '#submitRoute', function(){
 		getFollowersNotifications();
 	});
 
+        //Mostrar el popup de followers cuando das click en el boton
 	$('#followers-btn').click(function(){
 		console.log("click");
 		$('#myModal_siguiendo').modal('show');

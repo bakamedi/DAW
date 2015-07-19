@@ -127,7 +127,7 @@ function clearFollowersNotification(){
 }
 
 function clearRutasColumn(){
-	document.getElementById('rutasUL').innerHTML = "";
+	//document.getElementById('rutasUL').innerHTML = "";
         $("#newRouteForm").toggleClass("invisible");
         $("#rutasUL").toggleClass("invisible");
 }
