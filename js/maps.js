@@ -8,6 +8,7 @@ var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var agregandoRuta = false;
 var message;
+var blinkHandler = null;
 /*
 function addDefaultRoutes(){
 		myRoutes["Home"] = [new google.maps.LatLng(-2.1445351790, -79.96751056), new google.maps.LatLng(-2.140574, -79.864637)];
@@ -48,26 +49,32 @@ function isValidAlphaNumericName(str) {
   return true;
 }
 
-function placeForm(){
-	var res = '<form style="margin:6px" onsubmit="return false"><h3 class="form-text">Nueva Ruta</h3><span class="form-text">Nombre:</span><br><input type="text" style="width:100%" id="routename"><br><span class="form-text">Hora de partida:</span><br><input type="text"style="width:100%" id="routetime"><br>';
-	res += '<input type="checkbox" id="checkLunes" name="Lunes"><span class="form-text"> Lunes</span><br>';
-	res += '<input type="checkbox" id="checkMartes" name="Martes"><span class="form-text"> Martes</span><br>';
-	res += '<input type="checkbox" id="checkMiercoles" name="Miércoles"><span class="form-text"> Mi&eacutercoles</span><br>';
-	res += '<input type="checkbox" id="checkJueves" name="Jueves"><span class="form-text"> Jueves</span><br>';
-	res += '<input type="checkbox" id="checkViernes" name="Viernes"><span class="form-text"> Viernes</span><br>';
-	res += '<input type="checkbox" id="checkSabado" name="Sábado"><span class="form-text"> S&aacutebado</span><br>';
-	res += '<input type="checkbox" id="checkDomingo" name="Domingo"><span class="form-text"> Domingo</span><br>';
-	res += '<input type="submit" class="form-text" id="submitRoute" style="margin:8px" value="Submit"></form>';
-	document.getElementById('rutasUL').innerHTML = res;
+function removeForm(){
+    $("#newRouteForm").toggleClass("invisible");
+    $("#rutasUL").toggleClass("invisible");
 }	
+function placeForm(){
+    $("#rutasUL").toggleClass("invisible");
+    $("#newRouteForm").toggleClass("invisible");
+    }
+function blinker() {
+    $('.blink_me').fadeOut(500);
+    $('.blink_me').fadeIn(500);
+    console.log("blink");
+}
 
 function finishNewRoute(){
 	console.log("finish");
 	google.maps.event.clearListeners(map, 'click');
+        if(blinkHandler != null){
+            console.log("chao blink");
+            window.clearInterval(blinkHandler);
+        }
 	$('#pickRoute').fadeOut(function(){
 		$('#pickRoute').toggleClass("invisible");
 		placeForm();
 	});
+
 }
 
 function replaceWhitespace(name){
@@ -182,6 +189,7 @@ function marksFromCurrentPos(position){
 function escogerInicio(){
 	agregandoRuta = true;
 	$("#pickRoute").toggleClass("invisible");
+        blinkHandler = setInterval(blinker, 1000);
 }
 
 function guardarRuta(){
@@ -283,16 +291,18 @@ return true;
 //JQuery Events
 $(document).ready( function(){
 	$("#nuevaRuta").click( function(){
+
 		if(agregandoRuta)
 			return;
+
 		clearRuta();
 		escogerInicio();
 		google.maps.event.addListener(map, 'click', addLatLng);
-		agregandoRuta = false;
 	});
 
 	$("body").on('click', '#submitName', function(){
 		guardarRuta();
+		agregandoRuta = false;
 	});
 $("body").on('click', '#submitRoute', function(){
 	//Validar contenidos de la ruta;

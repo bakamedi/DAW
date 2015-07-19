@@ -314,12 +314,32 @@ div.material-icons{
     font-size: 16px;
     font-weight: 600;
     text-transform: uppercase;
-    -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: fadein 1s; /* Firefox < 16 */
+
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+
+    -moz-animation-name: blinker;
+    -moz-animation-duration: 1s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+
+    animation-name: blinker;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
+    /*-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+  /*-moz-animation: fadein 1s; /* Firefox < 16 */
 }
 
 .invisible {
     display : none;
+}
+
+.newroute-form{
+    width:100%;
 }
 
 .mdl-card  {
@@ -335,6 +355,15 @@ a.card-title {
     font-size: 16px;
 }
 
+button.savebtn{
+    margin-left : auto;
+    margin-right : auto;
+    width : 60%;
+    display:block;
+    min-width:90px;
+    margin-top : 10px;
+}
+
 a.card {
     font-family: "Roboto","Helvetica","Arial",sans-serif !important;
  
@@ -347,5 +376,61 @@ a.card {
     display: inline;
     float:right;
 }
+.blink_me {
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
 
+    -moz-animation-name: blinker;
+    -moz-animation-duration: 1s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+
+    animation-name: blinker;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@-moz-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+blink_me {
+    color:black;
+ 
+    }
+
+@-moz-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
 
