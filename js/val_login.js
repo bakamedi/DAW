@@ -172,7 +172,7 @@ function ingresar(evt) {
         //alert(usuario==usu);
         //alert(contraseña == cont);
         if(usuario == usu && contraseña == cont){
-            location.href = "main.html?"+"nombre="+usu;
+            location.href = "perfil.html?"+"nombre="+usu;
             break;
         }
     }
@@ -224,13 +224,14 @@ function datos(evt) {
         //alert(usuario==usu);
         //alert(contraseña==cont);
         //alert(contraseña == cont + " "+);
-        if(usuario == usu && contraseña == cont){
-            alert("hola");
+        if(usuario == usu && contraseña == cont){                                               
             var tNombre = document.getElementById("inNombre");
             var tApellido = document.getElementById("inApellido");
-            alert(nombre+" "+apellido);
-            tNombre.innerHTML = "asdasdasdas";
-            tApellido.innnerHTML = apellido;
+            //alert(nombre+" "+apellido);
+            tNombre.setAttribute("placeholder",nombre);
+            tApellido.setAttribute("placeholder",apellido);
+            //tNombre.innerHTML = "asdasdasdas";
+            //tApellido.innnerHTML = apellido;
         }
     }
 }
