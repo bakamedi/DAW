@@ -8,7 +8,7 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
       <link rel="stylesheet" href="css/main_style.css">
-      <link rel="stylesheet" href="css/main_style.css">
+      <link rel="stylesheet" href="css/perfil_style.css">
   	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
@@ -56,7 +56,7 @@
     <div class="page-content">
 		<!--Google Map -->
 		<!-- perfil usuario/seguidor-->
-        <div id="perfil" class="columna" style="height: 50%;width: 85%;">
+        <div id="perfil" class="columna" style="height: 50%;width: 40%;">
             <div class="row">
                 <div id="imagenPerfil" class=" col-xs-12 text-center">
                     <div>
@@ -146,6 +146,81 @@
           </form>
 			</div>
 		</div>
+        <nav id="rutas-nav" class="columna">
+            <div id="rutaPerfil">
+                <span class="glyphicon glyphicon-map-marker">
+                    MIS RUTAS RECIENTES
+                </span>
+            </div>
+            <ul id="rutasUL" class="nav nav-pills nav-stacked">
+                <li class="misRutas" data-name="Casa">
+                    <a href="#">
+                        <div class="row">
+                            <div class="text-left col-md-3">
+                                <img alt="Imagen GoogleMaps" id=""  class="img-responsive img-circle" src="img/icon.png" > 
+                            </div>
+                            <div class="text-center col-md-9">
+                                <span>ESPOL - PUERTO MORO</dt>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <hr>
+                <li>
+                    <a href="#">
+                        <div class="row">
+                            <div class="text-left col-md-3">
+                                <img alt="Imagen GoogleMaps" id=""  class="img-responsive img-circle" src="img/icon.png" > 
+                            </div>
+                            <div class="text-center col-md-9">
+                                <span>ESPOL - FIEC</dt>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <nav id="rutas-nav" class="columna">
+            <div id="rutaPerfil">
+                <span class="glyphicon glyphicon-map-marker">
+                    RUTAS DE MIS SEGUIDORES
+                </span>
+            </div>
+            <ul id="rutasUL" class="nav nav-pills nav-stacked">
+                <li class="misRutas" data-name="Casa">
+                    <a href="#">
+                        <div class="row">
+                            <div class="text-left col-md-3">
+                                <img alt="Imagen GoogleMaps" id=""  class="img-responsive img-circle" src="img/user2.jpg" > 
+                            </div>
+                            <div class="text-center col-md-9">
+                                <span>BAKKE MEDINA</span><br>
+                                <span>GUAYACANES - ESPOL</dt>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <hr>
+                <li>
+                    <a href="#">
+                        <div class="row">
+                            <div class="text-left col-md-3">
+                                <img alt="Imagen GoogleMaps" id=""  class="img-responsive img-circle" src="img/user4.jpg" > 
+                            </div>
+                            <div class="text-center col-md-9">
+                                <span>LUIS ANDRADE</span><br>
+                                <span>LIBERTAD - ESPOL</dt>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
 	</div>
    </main>
 </div>
