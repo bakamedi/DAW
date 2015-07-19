@@ -150,5 +150,90 @@ function limpiarCampos() {
 
 }
 
+function cargarUsuarios(){
+    var request = new XMLHttpRequest;
+    request.addEventListener('load',ingresar,false);
+    request.open('GET',"xml/login.xml",true);
+    request.send(null);
+}
+
+function ingresar(evt) {
+    var usuario = document.getElementById("Email").value;
+    var contraseña = document.getElementById("Password").value;
+
+    var response = evt.target.responseXML;
+    var rest = response.getElementsByTagName("usuario");
+
+    var usu,cont,bandera=0;
+    //alert(usuario + " "+contraseña);
+    for (i = 0; i<rest.length;i++){
+        usu = rest[i].getElementsByTagName("nick")[0].firstChild.nodeValue;
+        cont = rest[i].getElementsByTagName("contraseña")[0].firstChild.nodeValue;
+        //alert(usuario==usu);
+        //alert(contraseña == cont);
+        if(usuario == usu && contraseña == cont){
+            location.href = "main.html?"+"nombre="+usu;
+            break;
+        }
+    }
+
+}
+
+function nuevapagina() {
+    xmlDoc=loadXMLDoc("xml/login.xml");
+    x=xmlDoc.getElementsByTagName("usuario")[0].childNodes[0];
+    x.nodeValue="Easy Cooking";
+}
+
+function loadXMLDoc(filename){
+    if (window.XMLHttpRequest){
+        xhttp=new XMLHttpRequest();
+    }
+    else {  // code for IE5 and IE6
+        xhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xhttp.open("GET",filename,false);
+    xhttp.send();
+    return xhttp.responseXML;
+}
+
+function cargarDatosUsuario(){
+    var request = new XMLHttpRequest;
+    request.addEventListener('load',datos,false);
+    request.open('GET',"xml/login.xml",true);
+    request.send(null);
+}
+
+
+function datos(evt) {
+    var usuario = document.getElementById("inUsuario").value;
+    var contraseña = document.getElementById("inContraseña").value;
+
+    var response = evt.target.responseXML;
+    var rest = response.getElementsByTagName("usuario");
+
+    var usu,cont,bandera=0;
+
+    var nombre, apellido;
+    //alert(usuario + " "+contraseña);
+    for (i = 0; i<rest.length;i++){
+        usu = rest[i].getElementsByTagName("nick")[0].firstChild.nodeValue;
+        cont = rest[i].getElementsByTagName("contraseña")[0].firstChild.nodeValue;
+        nombre = rest[i].getElementsByTagName("nombre")[0].firstChild.nodeValue;
+        apellido = rest[i].getElementsByTagName("apellido")[0].firstChild.nodeValue;
+        //alert(usuario==usu);
+        //alert(contraseña==cont);
+        //alert(contraseña == cont + " "+);
+        if(usuario == usu && contraseña == cont){
+            alert("hola");
+            var tNombre = document.getElementById("inNombre");
+            var tApellido = document.getElementById("inApellido");
+            alert(nombre+" "+apellido);
+            tNombre.innerHTML = "asdasdasdas";
+            tApellido.innnerHTML = apellido;
+        }
+    }
+}
+
 
 window.addEventListener('load', inicializar, false);
