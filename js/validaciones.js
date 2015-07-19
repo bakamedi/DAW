@@ -1,12 +1,12 @@
 function inicializar() {
+    cargarDatosUsuarioPerfil();
     var btnGuardar = document.getElementById("btnGuardar");
     btnGuardar.addEventListener('click',guardaDatosLabel, false);
     var btnEditar = document.getElementById("btnEditar");
     btnEditar.addEventListener('click',habilitaBotonesPerfil, false);
     var btnGuardar = document.getElementById("guardar");
     btnGuardar.setAttribute("style", "display: none;");
-    cargarDatosUsuarioPerfil();
-    obtenerUser();
+    //alert("XXXXX");
 }
 
 function habilitaBotonesPerfil(){
@@ -28,7 +28,7 @@ function habilitaBotonesPerfil(){
     inputPlaca.style.display = 'block';
     var inputPlacaPerfil  = document.getElementById("input-placa-Perfil");
     inputPlacaPerfil.style.display = 'none';
-    
+
 }
 
 function guardaDatosLabel(){
@@ -47,10 +47,10 @@ function guardaDatosLabel(){
     msmErrorApellido = document.getElementById("msmErrorApellido");
 
     if(inputNombre.value == "" && inputApellido.value == "" && inputPlaca.value == ""){
-        
+
         msmErrorNombre.innerHTML = "Campos no puede estar vacio";
         msmErrorNombre.style.color = "red";
-        
+
         msmErrorApellido.innerHTML = "Campos no puede estar vacio";
         msmErrorApellido.style.color = "red";
     }
@@ -82,12 +82,14 @@ function guardaDatosLabel(){
         inputPlaca.style.display = 'none';
         nombrePerfil.innerHTML = inputNombre.value;
         apellidoPerfil.innerHTML = inputApellido.value;
-        
+
         inputPlacaPerfil.innerHTML = inputPlaca.value;
         msmErrorApellido.innerHTML = "";
         msmErrorNombre.innerHTML = "";
         var btnGuardar = document.getElementById("guardar");
         btnGuardar.setAttribute("style", "display: none;");
+        var success = document.getElementById("divSuccess");
+        success.style.display = "inline";
     }
 
 
@@ -106,7 +108,7 @@ function validarTengoCarro(){
     divPlaca.setAttribute("style","display: block;");
     var inputPlaca = document.getElementById("carroPerfil");
     inputPlaca.innerHTML = "Carro : Si";
-    
+
 }
 
 function validarPlaca() {
@@ -131,7 +133,7 @@ function validarPlaca() {
         estadoNombre.innerHTML = "";
         //estadoNombre.style.color = "red";
     }
-    else { 
+    else {
         estadoNombre.innerHTML = "Placa incorrecta";
         estadoNombre.style.color = "red";
     }
@@ -184,8 +186,8 @@ function obtenerDatosPerfil(evt){
     var usuarios = response.getElementsByTagName("usuario");
 
     var url = document.URL;
-    var url1 = url.split("=");
-    var array = [url1];
+    var array = url.split("=");
+
     alert(array[1]);
 
     for(var i = 0 ; i < usuarios.length ;i++){
@@ -201,7 +203,7 @@ function obtenerDatosPerfil(evt){
             carroUsu = usuarios[i].getElementsByTagName("carro")[0].firstChild.nodeValue;
             placaUsu = usuarios[i].getElementsByTagName("placa")[0].firstChild.nodeValue;
 
-
+            alert(nombreUsu+" "+apellidoUsu+" "+followersUsu+" "+followingUsu+" "+carroUsu+" "+placaUsu);
 
             nombre = document.getElementById("labelNombre");
             apellido = document.getElementById("apellidoPerfil");
@@ -217,7 +219,7 @@ function obtenerDatosPerfil(evt){
             seguidos.innerHTML = followingUsu;
             imagenSrc.setAttribute("src", avatarSrcUsu);
             if(carroUsu=="si" || carroUsu=="Si"){
-                placa.innerHTML = placa;
+                placa.innerHTML = "Placa: "+placa;
             }else{
                 placa.innerHTML = " ";
             }
@@ -226,13 +228,8 @@ function obtenerDatosPerfil(evt){
         }
     }
 
-    
-    
-    
-}
 
-function obtenerUser(){
-    
+
 
 }
 
@@ -240,7 +237,7 @@ function perfil() {
     location.href = "perfil.html";
 }
 
-function seguidores() { 
+function seguidores() {
     location.href = "main_seguidores.html";
 }
 
