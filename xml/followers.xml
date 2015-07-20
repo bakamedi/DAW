@@ -1,24 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <followers>
     <profile>
-        <id>seguidor1</id>
+        <id>1</id>
         <name>Luis Andrade</name>
-        <followers>9000</followers>
+        <followers>90</followers>
         <following>0</following>
-        <avatar>img/user2.jpg</avatar>
+        <avatar>img/user4.jpg</avatar>
+        <ruta>LIBERTAD - ESPOL</ruta>
     </profile>
      <profile>
-        <id>seguidor2</id>
+        <id>1</id>
         <name>Bakke Medina</name>
-        <followers>3431</followers>
-        <following>151</following>
+        <followers>31</followers>
+        <following>11</following>
         <avatar>img/user3.jpg</avatar>
+         <ruta>GUAYACANES - ESPOL</ruta>
     </profile>
     <profile>
-        <id>seguidor3</id>
+        <id>2</id>
         <name>Hector Júpiter</name>
-        <followers>2457</followers>
-        <following>1531</following>
-        <avatar>img/user4.jpg</avatar>
+        <followers>24</followers>
+        <following>15</following>
+        <avatar>img/user1.jpg</avatar>
+        <ruta>ESPOL - POLLOS EL ENCANTO</ruta>
+    </profile>
+    <profile>
+        <id>2</id>
+        <name>Gabriel Aumala</name>
+        <followers>31</followers>
+        <following>11</following>
+        <avatar>img/user3.jpg</avatar>
+        <ruta>SAN MARINO - ESPOL</ruta>
     </profile>
 </followers>
