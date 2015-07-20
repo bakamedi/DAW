@@ -1,3 +1,5 @@
+//var id = 1;
+
 function inicializar() {
     cargarDatosUsuarioPerfil();
     var btnGuardar = document.getElementById("btnGuardar");
@@ -6,6 +8,7 @@ function inicializar() {
     btnEditar.addEventListener('click',habilitaBotonesPerfil, false);
     var btnGuardar = document.getElementById("guardar");
     btnGuardar.setAttribute("style", "display: none;");
+    //cargarDatosRutasUsuarioPerfil();
     //alert("XXXXX");
 }
 
@@ -188,13 +191,13 @@ function obtenerDatosPerfil(evt){
     var url = document.URL;
     var array = url.split("=");
 
-    alert(array[1]);
+    //alert(array[1]);
 
     for(var i = 0 ; i < usuarios.length ;i++){
         if(usuarios[i].getElementsByTagName("nick")[0].firstChild.nodeValue == array[1]){
-            var id,nombre,apellido,imagenSrc,seguidores,seguidos,tieneCarro,placa;
+            var nombre,apellido,imagenSrc,seguidores,seguidos,tieneCarro,placa;
             var nombreUsu, apellidoUsu, followersUsu, followingUsu, avatarSrcUsu, carroUsu, placaUsu;
-
+            id = usuarios[i].getElementsByTagName("id")[0].firstChild.nodeValue;
             nombreUsu = usuarios[i].getElementsByTagName("nombre")[0].firstChild.nodeValue;
             apellidoUsu = usuarios[i].getElementsByTagName("apellido")[0].firstChild.nodeValue;
             followersUsu = usuarios[i].getElementsByTagName("followers")[0].firstChild.nodeValue;
@@ -203,7 +206,7 @@ function obtenerDatosPerfil(evt){
             carroUsu = usuarios[i].getElementsByTagName("carro")[0].firstChild.nodeValue;
             placaUsu = usuarios[i].getElementsByTagName("placa")[0].firstChild.nodeValue;
 
-            alert(nombreUsu+" "+apellidoUsu+" "+followersUsu+" "+followingUsu+" "+carroUsu+" "+placaUsu);
+            //alert(nombreUsu+" "+apellidoUsu+" "+followersUsu+" "+followingUsu+" "+carroUsu+" "+placaUsu);
 
             nombre = document.getElementById("labelNombre");
             apellido = document.getElementById("apellidoPerfil");
@@ -223,13 +226,70 @@ function obtenerDatosPerfil(evt){
             }else{
                 placa.innerHTML = " ";
             }
-
-
         }
     }
 
+}
 
+function cargarDatosRutasUsuarioPerfil(){
+    var request = new XMLHttpRequest;
+    request.addEventListener('load',creaDivRutasSeguidores,false);
+    request.open('GET',"xml/followers.xml",true);
+    request.send(null);
+}
 
+function creaDivRutasSeguidores(evt){
+    var response = evt.target.responseXML;
+    var profile = response.getElementsByTagName("profile");
+    var nombre, imagenSrc,ruta;
+    var ul, li, a, divRow, divIma , ima, spanName, divNameRuta, spanRuta, spanRuta,img;
+    for(var i = 0 ; i < profile.length ; i++){
+        if(profile[i].getElementsByTagName("id")[0].firstChild.nodeValue == id){
+            nombre = profile[i].getElementsByTagName("id")[0].firstChild.nodeValue;
+            imagenSrc = profile[i].getElementsByTagName("avatar")[0].firstChild.nodeValue;
+            ruta = profile[i].getElementsByTagName("ruta")[0].firstChild.nodeValue;
+
+            var br = document.createElement("br");
+            var hr = document.createAttribute("hr");
+
+            spanName = document.createElement("span");
+            spanName.innerHTML = nombre;
+            spanRuta = document.createElement("span");
+            spanRuta.innerHTML = ruta;
+
+            divNameRuta = document.createElement("div");
+            divNameRuta.setAttribute("class","text-center col-md-9");
+            divNameRuta.appendChild(spanName);
+            divNameRuta.appendChild(br);
+            divNameRuta.appendChild(spanRuta);
+
+            divIma = document.createElement("div");
+            divIma.setAttribute("class", "text-left col-md-3");
+
+            ima = document.createElement("img");
+            ima.setAttribute("alt", "imagen seguidor");
+            ima.setAttribute("class", "img-responsive img-circle");
+            ima.setAttribute("src", imagenSrc);
+
+            divIma.appendChild(ima);
+
+            divRow = document.createElement("div");
+            divRow.setAttribute("class", "row");
+            divRow.appendChild(divIma);
+            divRow.appendChild(divNameRuta);
+
+            a = document.createElement("a");
+            a.setAttribute("href", "#");
+            a.appendChild(divRow);
+
+            li = document.createAttribute("li");
+            li.appendChild(a);
+            ul = document.getElementById("listaSeguidoresRutas");
+            ul.appendChild(li);
+            ul.appendChild(hr);
+        }
+        
+    }
 
 }
 
