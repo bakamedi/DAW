@@ -1,11 +1,13 @@
-var myRoutes = []
+var myRoutes = [];
+var myDest = []
 function handleJSON(url, callback){
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
-		console.log("ready " + xmlhttp.status);
+		//console.log("ready " + xmlhttp.status);
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        //console.log(xmlhttp.responseText);
     	var myArr = JSON.parse(xmlhttp.responseText);
-			console.log("200");
+//			console.log("200");
     	callback(myArr);
   	}
 	}
@@ -31,33 +33,67 @@ function processFollowersNotifications(jArray){
 	document.getElementById('active-follower-list').innerHTML = out;
 }
 
+function processFollowingsNotifications(jArray){
+	var i;
+	var start = '<div class="near-container"><div class="nearby-fllwr"><li><dt>';
+	var mid1 = '</dt><dd>';
+	var end = '</dd></li></div></div>';
+	var end_ready = '</dd></li></div><span class="label label-success ">Listo</span></div>';
+	var out = "";
+	for (i=0; i<jArray.length; i++){
+		if(jArray[i].ready == "1")
+			out += start + jArray[i].name + mid1 + 'A ' + jArray[i].dist + 'm del destino'	+ end_ready + '<hr>';
+		else
+			out += start + jArray[i].name + mid1 + 'A ' + jArray[i].dist + 'm del destino'	+ end + '<hr>';
+	}
+	console.log(out);
+	document.getElementById('active-follower-list').innerHTML = out;
+}
 function getDias(binary){
 	var out = "";
-	if(binary == "0000000")
+	if(binary === "0000000")
 		return "N/A";
-	if(binary == "1111111")
+	if(binary === "1111111")
 		return "Todos";
-	else if(binary == "1111100")
+	else if(binary === "1111100")
 		return "Lunes a Viernes";
 	else{
-		if(binary.charAt(0) == '1')
+		if(binary.charAt(0) === '1')
 			out += "Lunes, ";
-		if(binary.charAt(1) == '1')
+		if(binary.charAt(1) === '1')
 			out += "Martes, ";		
-		if(binary.charAt(2) == '1')
+		if(binary.charAt(2) === '1')
 			out += "Miercoles, ";
-		if(binary.charAt(3) == '1')
+		if(binary.charAt(3) === '1')
 			out += "Jueves, ";
-		if(binary.charAt(4) == '1')
+		if(binary.charAt(4) === '1')
 			out += "Viernes, ";
-		if(binary.charAt(5) == '1')
+		if(binary.charAt(5) === '1')
 			out += "Sabado, ";
-		if(binary.charAt(6) == '1')
+		if(binary.charAt(6) === '1')
 			out += "Domingo, ";
 		return out.substring(0, out.length-2);
 	}
 	return null;
 }
+
+function processMyDestinations(jArray){
+	var i;
+	var start = '<li class="misRutas" data-name="';
+	var preName = '"><a href="#"><span style="font-size:28px">';	
+	var end = '</span></a></li>';
+	var out = "";
+	for (i=0; i<jArray.length; i++){
+		var jObject = jArray[i];
+		myDest[jObject.name] = new google.maps.LatLng(jObject.endX, jObject.endY);
+		out += start + jObject.name + preName + jObject.name + end;
+
+	}
+	//console.log(out);
+	document.getElementById('rutasUL').innerHTML += out;
+}
+
+
 
 function processMyRoutes(jArray){
 	var i;
@@ -113,11 +149,17 @@ function getMyRoutes(){
 	handleJSON('json/myRoutes.json', processMyRoutes);
 }
 
+function getMyDestinations(){
+	handleJSON('json/myDest.json', processMyDestinations);
+}
 
 function getFollowersNotifications(){
 	handleJSON('json/followersNotifications.json', processFollowersNotifications);
 }
 
+function getFollowingsNotifications(){
+	handleJSON('json/followingsNotifications.json', processFollowingsNotifications);
+}
 function getMyFollowers(){
 	handleJSON('json/followers.json', processMyFollowers);
 }

@@ -9,6 +9,7 @@ var directionsService = new google.maps.DirectionsService();
 var agregandoRuta = false;
 var message;
 var blinkHandler = null;
+var currentPosition = null;
 /*
 function addDefaultRoutes(){
 		myRoutes["Home"] = [new google.maps.LatLng(-2.1445351790, -79.96751056), new google.maps.LatLng(-2.140574, -79.864637)];
@@ -17,13 +18,14 @@ function addDefaultRoutes(){
 function initializeMap(){
     directionsDisplay = new google.maps.DirectionsRenderer();
     navigator.geolocation.getCurrentPosition(function (position) {
-			 
-        var espol = new google.maps.LatLng(position.coords.latitude,
+
+	currentPosition = new google.maps.LatLng(position.coords.latitude,
         position.coords.longitude);
+        console.log(currentPosition);
 	 			//Opciones del mapa
 				var mapOptions = {
 	    			zoom: 17,
-	    			center: espol
+	    			center: currentPosition
 				}
 
         //Muestra el mapa
@@ -141,6 +143,7 @@ function clearRuta(){
 function addRouteMarkers(pos1, pos2){
     //Agrega un nuevo marcador en el mapa
 		//
+    console.log(pos1 + "|" + pos2);
     var marker1 = new google.maps.Marker({
     		position: pos1,
 				title: '#',
@@ -153,21 +156,22 @@ function addRouteMarkers(pos1, pos2){
 				draggable:true,
 				map: map
     });
-		start = marker1;
-		end = marker2;
+    start = marker1;
+    end = marker2;
     var request = {
-			origin: pos1,
-			destination: pos2,
-			waypoints: waypts,
-			optimizeWaypoints: true,
-			travelMode: google.maps.TravelMode.DRIVING
+        origin: pos1,
+        destination: pos2,
+        waypoints: waypts,
+        optimizeWaypoints: true,
+        travelMode: google.maps.TravelMode.DRIVING
     };
 
-		directionsService.route(request, function (response, status) {
+    directionsService.route(request, function (response, status) {
         if(status == google.maps.DirectionsStatus.OK){
+            console.log("directions OK");
             directionsDisplay.setDirections(response);
-				}
-		});
+        }
+    });
 
 }
 
@@ -216,6 +220,11 @@ function showRuta(name){
 		console.log(name + " no esta en lista");
 }
 
+function showDestino(name){
+    var pos = myDest[name];
+    if(pos != null)
+        addRouteMarkers(currentPosition, pos);
+}
 function checkDay(day){
 	if($('#check' + day).val())
 		return '1';
@@ -314,7 +323,10 @@ $(document).ready( function(){
                 abortNewRoute();
                 clearRuta();
 		clearFollowersNotification();
-		showRuta(replaceWhitespace($(this).attr('data-name')));
+                if(getPageType() == "car")
+		    showRuta(replaceWhitespace($(this).attr('data-name')));
+                else
+		    showDestino(replaceWhitespace($(this).attr('data-name')));
 		$('li.misRutas').removeClass("active");
 		$(this).toggleClass("active");
 		getFollowersNotifications();
@@ -332,6 +344,5 @@ $(document).ready( function(){
 
 
 google.maps.event.addDomListener(window, 'load', initializeMap);
-getMyRoutes();
-getMyFollowers();
+loadData();
 
