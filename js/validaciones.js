@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 var id;
+=======
+//var id = 1;
+>>>>>>> origin/master
 
 function inicializar() {
     cargarDatosUsuarioPerfil();
@@ -8,7 +12,11 @@ function inicializar() {
     btnEditar.addEventListener('click',habilitaBotonesPerfil, false);
     var btnGuardar = document.getElementById("guardar");
     btnGuardar.setAttribute("style", "display: none;");
+<<<<<<< HEAD
     cargarDatosRutasUsuarioPerfil();
+=======
+    //cargarDatosRutasUsuarioPerfil();
+>>>>>>> origin/master
     //alert("XXXXX");
 }
 
@@ -243,17 +251,27 @@ function creaDivRutasSeguidores(evt){
     var profile = response.getElementsByTagName("profile");
     var nombre, imagenSrc,ruta;
     var ul, li, a, divRow, divIma , ima, spanName, divNameRuta, spanRuta, spanRuta,img;
+<<<<<<< HEAD
     //alert(profile.length);
     for(var i = 0 ; i < profile.length ; i++){
         var idUsuario = profile[i].getElementsByTagName("id")[0].firstChild.nodeValue;
         //alert(idUsuario==id);
         if(idUsuario == id){
             nombre = profile[i].getElementsByTagName("name")[0].firstChild.nodeValue;
+=======
+    for(var i = 0 ; i < profile.length ; i++){
+        if(profile[i].getElementsByTagName("id")[0].firstChild.nodeValue == id){
+            nombre = profile[i].getElementsByTagName("id")[0].firstChild.nodeValue;
+>>>>>>> origin/master
             imagenSrc = profile[i].getElementsByTagName("avatar")[0].firstChild.nodeValue;
             ruta = profile[i].getElementsByTagName("ruta")[0].firstChild.nodeValue;
 
             var br = document.createElement("br");
+<<<<<<< HEAD
             var hr = document.createElement("hr");
+=======
+            var hr = document.createAttribute("hr");
+>>>>>>> origin/master
 
             spanName = document.createElement("span");
             spanName.innerHTML = nombre;
@@ -285,7 +303,11 @@ function creaDivRutasSeguidores(evt){
             a.setAttribute("href", "#");
             a.appendChild(divRow);
 
+<<<<<<< HEAD
             li = document.createElement("a");
+=======
+            li = document.createAttribute("li");
+>>>>>>> origin/master
             li.appendChild(a);
             ul = document.getElementById("listaSeguidoresRutas");
             ul.appendChild(li);
