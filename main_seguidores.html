@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es"> 
+<head>
+		<title>seguidores</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum.scale=1.0">
+  	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.blue-pink.min.css">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+		<script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="css/main_style.css">
+	    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+	    <script src="js/clientAPI.js"></script>
+	    <script src="js/seguidores.js"></script>
+      
+	    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+ 	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+	  <header class="mdl-layout__header">
+		<div class="mdl-layout__header-row">
+		  <!-- Title -->
+		  <span class="mdl-layout-title">Rapid&iacuten Espol</span>
+
+		  <span id="pickRoute" class="subtitulo invisible">Escoge tu ruta:</span>
+		  <!-- Add spacer, to align navigation to the right -->
+		  <div class="mdl-layout-spacer"></div>
+		  <!-- Navigation. We hide it in small screens. -->
+		  <nav class="mdl-navigation mdl-layout--large-screen-only">
+		  <div id="nuevaRuta" class="icon material-icons">add</div>
+			<div class="mdl-tooltip" for="nuevaRuta">Nueva Ruta</div>
+		  <div id="followers-btn" class="icon material-icons">people</div>
+			<div class="mdl-tooltip" for="followers-btn">Siguiendo</div>
+		  <div id="walking" onclick="location.href='walk.html'" class="icon material-icons">directions_run</div>
+			<div class="mdl-tooltip"  for="walking">No tengo carro...</div>
+		  <div id="miPerfil" class="icon material-icons">account_circle</div>
+			<div class="mdl-tooltip" for="miPerfil">Mi Perfil</div>
+
+
+		  </nav>
+		</div>
+	  </header>
+	  <div class="mdl-layout__drawer">
+		<span class="mdl-layout-title">Rapid&iacuten Espol</span>
+		<nav class="mdl-navigation">
+		  <a class="mdl-navigation__link" href="">Perfil</a>
+		  <a class="mdl-navigation__link" href="walk.html">No tengo carro</a>
+		  <a class="mdl-navigation__link" href="">Seguidores</a>
+		  <a class="mdl-navigation__link" href="">Siguiendo</a>
+		  <a class="mdl-navigation__link" href="login.html">Cerrar Sesi&oacuten</a>
+		</nav>
+	  </div>
+	  <main class="mdl-layout__content">
+		<div class="page-content">
+				<!-- Aqui empieza el contenido de la pagina -->
+			<div class="container-fluid">
+                        <div class="row">
+						<div id="bus_seguidores" class="col-md-9">
+							<!-- Expandable Textfield -->
+							<form action="#">
+							  <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable textfield-demo">
+							    <label class="mdl-button mdl-js-button mdl-button--icon" for="sample6">
+							      <i class="material-icons">search</i>
+							    </label>
+							    <div class="mdl-textfield__expandable-holder">
+							      <input class="mdl-textfield__input" type="text" id="sample6" />
+							      <label class="mdl-textfield__label" for="sample-expandable">Expandable Input</label>
+							    </div>
+							  </div>
+							</form>
+							<!-- fin del text field -->
+						</div>
+					</div>
+					<div id="followersRow" class="row">
+					</div>
+			</div>
+	   
+			
+			 
+			 <div class="container-fluid">
+				<div class="row">
+					<div class="col-md-4">
+						
+							
+                            <select id="seguidores_select" multiple="multiple" size=30 style="max-height: 100%;width: 70%;">
+                                <option>Luis Andrade</option>
+                                <option>Carolina Alcivar</option>
+                                <option>Bakke Medina</option><option>Samuel Murillo</option>
+                                <option>Hector Jupiter</option>
+                                <option>Gabriel Aumala</option>
+                                <option>Luis Del Pezo</option><option>Nancy Loaiza</option>
+                                <option>Mario Del Pezo</option>
+                                <option>Mayra Galan</option>            
+                            </select>
+                        
+					</div>
+					<div class="col-md-8" id="user_perfil">
+					
+					</div>
+							
+					</div>
+				</div>
+			
+			</div>
+	   </main>
+	</div>  
+
+    </body>
+</html>

@@ -1,0 +1,28 @@
+[
+	{"name":"Luis Andrade",
+		"followers":"9000",
+		"following":"0",
+		"avatar":"img/user.jpg"
+	},
+	{"name":"Bakke Medina",
+		"followers":"3431",
+		"following":"151",
+		"avatar":"img/user.jpg"
+	},
+	{"name":"Hector Júpiter",
+		"followers":"2457",
+		"following":"1531",
+		"avatar":"img/user.jpg"
+	},
+	{"name":"Nicole Caicedo",
+		"followers":"2457",
+		"following":"1531",
+		"avatar":"img/user.jpg"
+	},
+	{"name":"Javier Carrera",
+		"followers":"2457",
+		"following":"1531",
+		"avatar":"img/user.jpg"
+	}
+]
+
