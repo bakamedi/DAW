@@ -12,6 +12,24 @@
     font-family: "tu fuente";
     src: url("../font/02.TTF") format("truetype");
 }
+
+#rutaPerfil p{
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+#rutaSeguidores p{
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+#rutaSeguidores{
+    background-color: rgb(33,150,243);
+    color: #fff;
+}
+
 #imagenPerfil button{
     font-family: "tu fuente", sans-serif !important;
     font-size: 20px;
@@ -56,4 +74,8 @@ border: 11px solid #bec4c4;
 #rutas-nav{
     padding: 20px;
     width: 30%;
+}
+
+#myModal{
+    padding-top: 10px;
 }

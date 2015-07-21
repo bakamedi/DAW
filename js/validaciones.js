@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 var id;
-=======
-//var id = 1;
->>>>>>> origin/master
 
 function inicializar() {
     cargarDatosUsuarioPerfil();
@@ -12,11 +8,7 @@ function inicializar() {
     btnEditar.addEventListener('click',habilitaBotonesPerfil, false);
     var btnGuardar = document.getElementById("guardar");
     btnGuardar.setAttribute("style", "display: none;");
-<<<<<<< HEAD
     cargarDatosRutasUsuarioPerfil();
-=======
-    //cargarDatosRutasUsuarioPerfil();
->>>>>>> origin/master
     //alert("XXXXX");
 }
 
@@ -27,8 +19,6 @@ function habilitaBotonesPerfil(){
     apellidoPerfil.style.display = 'none';
     var carroPerfil = document.getElementById("carroPerfil");
     carroPerfil.display = 'none';
-    var placaPerfil = document.getElementById("placaPerfil");
-    placaPerfil.style.display = 'none';
     var inputNombre = document.getElementById("inputNombre");
     inputNombre.style.display = 'block';
     var inputApellido = document.getElementById("inputApellido");
@@ -45,7 +35,6 @@ function habilitaBotonesPerfil(){
 function guardaDatosLabel(){
     var nombrePerfil = document.getElementById("nombrePerfil");
     var apellidoPerfil = document.getElementById("apellidoPerfil");
-    var placaPerfil = document.getElementById("placaPerfil");
     var inputNombre = document.getElementById("inputNombre");
     var inputApellido = document.getElementById("inputApellido");
     var inputCarro = document.getElementById("input-Carro");
@@ -86,7 +75,6 @@ function guardaDatosLabel(){
         nombrePerfil.style.display = 'inline';
         apellidoPerfil.style.display = 'inline';
         inputPlacaPerfil.style.display = 'inline';
-        placaPerfil.style.display = 'inline';
         inputNombre.style.display = 'none';
         inputApellido.style.display = 'none';
         inputCarro.style.display = 'none';
@@ -158,7 +146,6 @@ function ocultaBoton(){
 function ocultaCancelar(){
     var nombrePerfil = document.getElementById("nombrePerfil");
     var apellidoPerfil = document.getElementById("apellidoPerfil");
-    var placaPerfil = document.getElementById("placaPerfil");
     var inputNombre = document.getElementById("inputNombre");
     var inputApellido = document.getElementById("inputApellido");
     var inputCarro = document.getElementById("input-Carro");
@@ -168,7 +155,6 @@ function ocultaCancelar(){
     nombrePerfil.style.display = 'inline';
     apellidoPerfil.style.display = 'inline';
     inputPlacaPerfil.style.display = 'inline';
-    placaPerfil.style.display = 'inline';
     inputNombre.style.display = 'none';
     inputApellido.style.display = 'none';
     inputCarro.style.display = 'none';
@@ -230,7 +216,7 @@ function obtenerDatosPerfil(evt){
             seguidos.innerHTML = followingUsu;
             imagenSrc.setAttribute("src", avatarSrcUsu);
             if(carroUsu=="si" || carroUsu=="Si"){
-                placa.innerHTML = "Placa: "+placa;
+                placa.innerHTML = "Placa: "+placaUsu;
             }else{
                 placa.innerHTML = " ";
             }
@@ -250,28 +236,18 @@ function creaDivRutasSeguidores(evt){
     var response = evt.target.responseXML;
     var profile = response.getElementsByTagName("profile");
     var nombre, imagenSrc,ruta;
-    var ul, li, a, divRow, divIma , ima, spanName, divNameRuta, spanRuta, spanRuta,img;
-<<<<<<< HEAD
+    var ul, li, a, divRow, divIma , ima, spanName, divNameRuta, spanRuta, spanRuta, img, buttonTxtMsg;
     //alert(profile.length);
     for(var i = 0 ; i < profile.length ; i++){
         var idUsuario = profile[i].getElementsByTagName("id")[0].firstChild.nodeValue;
         //alert(idUsuario==id);
         if(idUsuario == id){
             nombre = profile[i].getElementsByTagName("name")[0].firstChild.nodeValue;
-=======
-    for(var i = 0 ; i < profile.length ; i++){
-        if(profile[i].getElementsByTagName("id")[0].firstChild.nodeValue == id){
-            nombre = profile[i].getElementsByTagName("id")[0].firstChild.nodeValue;
->>>>>>> origin/master
             imagenSrc = profile[i].getElementsByTagName("avatar")[0].firstChild.nodeValue;
             ruta = profile[i].getElementsByTagName("ruta")[0].firstChild.nodeValue;
 
             var br = document.createElement("br");
-<<<<<<< HEAD
             var hr = document.createElement("hr");
-=======
-            var hr = document.createAttribute("hr");
->>>>>>> origin/master
 
             spanName = document.createElement("span");
             spanName.innerHTML = nombre;
@@ -294,20 +270,33 @@ function creaDivRutasSeguidores(evt){
 
             divIma.appendChild(ima);
 
+            buttonTxtMsg = document.createElement("button");
+            buttonTxtMsg.setAttribute("class","mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored");
+            buttonTxtMsg.setAttribute("style","background-color: #0094ff;");
+            //buttonTxtMsg.setAttribute("class","btn btn-info btn-lg");
+            //buttonTxtMsg.setAttribute("data-toggle","modal");
+            //buttonTxtMsg.setAttribute("data-target","#myModal");
+
+            var spanTxtMsg = document.createElement("span");
+            spanTxtMsg.setAttribute("class", "glyphicon glyphicon-envelope");
+
+            buttonTxtMsg.appendChild(spanTxtMsg);
+
             divRow = document.createElement("div");
             divRow.setAttribute("class", "row");
             divRow.appendChild(divIma);
             divRow.appendChild(divNameRuta);
+            divRow.appendChild(buttonTxtMsg);
+
+
 
             a = document.createElement("a");
             a.setAttribute("href", "#");
             a.appendChild(divRow);
 
-<<<<<<< HEAD
-            li = document.createElement("a");
-=======
-            li = document.createAttribute("li");
->>>>>>> origin/master
+            li = document.createElement("li");
+            li.setAttribute("class", "misRutas");
+            li.setAttribute("data-name", "Casa");
             li.appendChild(a);
             ul = document.getElementById("listaSeguidoresRutas");
             ul.appendChild(li);
