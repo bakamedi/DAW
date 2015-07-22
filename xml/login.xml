@@ -9,8 +9,8 @@
         <followers>0</followers>
         <following>0</following>
         <avatar>img/user1.jpg</avatar>
-        <carro></carro>
-        <placa></placa>
+        <carro>no</carro>
+        <placa>0</placa>
     </usuario>
     <usuario>
 	    <id>2</id>	
@@ -18,8 +18,8 @@
         <contraseña>12345678</contraseña>
         <nombre>andres</nombre>
         <apellido>medina</apellido>
-	    <followers>0</followers>
-        <following>0</following>
+	    <followers>2</followers>
+        <following>1</following>
         <avatar>img/user2.jpg</avatar>
         <carro>si</carro>
         <placa>GEU-000</placa>
@@ -33,8 +33,8 @@
 	    <followers>0</followers>
         <following>0</following>
         <avatar>img/user3.jpg</avatar>
-        <carro></carro>
-        <placa></placa>
+        <carro>no</carro>
+        <placa>0</placa>
     </usuario>
     <usuario>
 	    <id>4</id>
@@ -45,7 +45,7 @@
 	    <followers>0</followers>
         <following>0</following>
         <avatar>img/user4.jpg</avatar>
-        <carro></carro>
-        <placa></placa>
+        <carro>no</carro>
+        <placa>0</placa>
     </usuario>
 </usuarios>
