@@ -43,7 +43,7 @@ html, body{
     display:none;}
 
 }
-@media screen and (min-width: 380px){
+@media screen and (min-width: 380px) and (max-width: 768px){
 #map-canvas{
     height:100%;
     width:50%;
@@ -58,7 +58,7 @@ html, body{
     }
 }
 
-@media screen and (min-width: 768px){
+@media screen and (max-width: 1280px) and (min-width: 768px){
 #map-canvas{
     height:100%;
     width:60%;
