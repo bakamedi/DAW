@@ -258,12 +258,14 @@ $(document).ready( function(){
 	});
 
         //Mostrar el popup de followers cuando das click en el boton
+        /**
 	$('#followers-btn').click(function(){
 		console.log("click");
 		$('#myModal_siguiendo').modal('show');
 	});
 
 	$('#myModal_siguiendo').modal({ show: false});
+        */
 
 });
 

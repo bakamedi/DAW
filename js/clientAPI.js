@@ -18,16 +18,12 @@ function handleJSON(url, callback){
 
 function processFollowersNotifications(jArray){
 	var i;
-	var start = '<div class="near-container"><div class="nearby-fllwr"><li><dt>';
-	var mid1 = '</dt><dd>';
-	var end = '</dd></li></div></div>';
-	var end_ready = '</dd></li></div><span class="label label-success ">Listo</span></div>';
+	var start = '<div class="near-container"><dt>';
+        var preDist = '</dt><dd>';
+	var end = '</dd><div><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent notif-button ">Llevar</button></div><hr></div>';
 	var out = "";
 	for (i=0; i<jArray.length; i++){
-		if(jArray[i].ready == "1")
-			out += start + jArray[i].name + mid1 + 'A ' + jArray[i].dist + 'm de la ruta'	+ end_ready + '<hr>';
-		else
-			out += start + jArray[i].name + mid1 + 'A ' + jArray[i].dist + 'm de la ruta'	+ end + '<hr>';
+	    out += start + jArray[i].name + preDist  + 'A ' + jArray[i].dist + 'm del punto de partida' + end;
 	}
 	console.log(out);
 	document.getElementById('active-follower-list').innerHTML = out;
