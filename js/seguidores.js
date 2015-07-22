@@ -6,7 +6,7 @@ $("select[id=seguidores_select]").change(function(){
 	var preName = '" width="300" height="300" border="0"alt="" style="padding:10px;" class="img-responsive center-block img-circle text-center"></div><div class="mdl-card__supporting-text"><a href="#" class="card-title">';
 	var preFollowers = '</a></div><p class="card" style="margin-left:16px">Seguidores: ';
 	var preFollowing = '<br>Siguiendo: ';
-	var end = '</p><div><button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored">'
+	var end = '</p><div><button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored" data-toggle="modal" data-target="#cdf" style="float:none">'
   								+'<i class="material-icons">textsms</i></button></div></div>';
 	var out = "";
 	
@@ -20,5 +20,8 @@ $("select[id=seguidores_select]").change(function(){
 	console.log(out);
 	document.getElementById('user_perfil').innerHTML = out;
 	});
+	$('#cdf').modal({ show: false});
+
 });
+
 
