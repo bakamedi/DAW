@@ -2,6 +2,7 @@ var id;
 
 function inicializar() {
     cargarDatosUsuarioPerfil();
+
     var btnGuardar = document.getElementById("btnGuardar");
     btnGuardar.addEventListener('click',guardaDatosLabel, false);
     var btnEditar = document.getElementById("btnEditar");
@@ -18,7 +19,7 @@ function habilitaBotonesPerfil(){
     var apellidoPerfil = document.getElementById("apellidoPerfil");
     apellidoPerfil.style.display = 'none';
     var carroPerfil = document.getElementById("carroPerfil");
-    carroPerfil.display = 'none';
+    carroPerfil.style.display = 'none';
     var inputNombre = document.getElementById("inputNombre");
     inputNombre.style.display = 'block';
     var inputApellido = document.getElementById("inputApellido");
@@ -29,6 +30,8 @@ function habilitaBotonesPerfil(){
     inputPlaca.style.display = 'block';
     var inputPlacaPerfil  = document.getElementById("input-placa-Perfil");
     inputPlacaPerfil.style.display = 'none';
+    var divCarroPerfil = document.getElementById("divCarroPerfil");
+    divCarroPerfil.style.display = 'none';
 
 }
 
@@ -75,6 +78,7 @@ function guardaDatosLabel(){
         nombrePerfil.style.display = 'inline';
         apellidoPerfil.style.display = 'inline';
         inputPlacaPerfil.style.display = 'inline';
+        divCarroPerfil.style.display = 'inline'
         inputNombre.style.display = 'none';
         inputApellido.style.display = 'none';
         inputCarro.style.display = 'none';
@@ -212,8 +216,8 @@ function obtenerDatosPerfil(evt){
 
             nombre.innerHTML = nombreUsu;
             apellido.innerHTML = apellidoUsu;
-            seguidores.innerHTML = followersUsu;
-            seguidos.innerHTML = followingUsu;
+            seguidores.innerHTML = "Seguidores :  "+ followersUsu;
+            seguidos.innerHTML = "Siguiendo :  "+ followingUsu;
             imagenSrc.setAttribute("src", avatarSrcUsu);
             if(carroUsu=="si" || carroUsu=="Si"){
                 placa.innerHTML = "Placa: "+placaUsu;
@@ -273,9 +277,11 @@ function creaDivRutasSeguidores(evt){
             buttonTxtMsg = document.createElement("button");
             buttonTxtMsg.setAttribute("class","mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored");
             buttonTxtMsg.setAttribute("style","background-color: #0094ff;");
-            //buttonTxtMsg.setAttribute("class","btn btn-info btn-lg");
-            //buttonTxtMsg.setAttribute("data-toggle","modal");
-            //buttonTxtMsg.setAttribute("data-target","#myModal");
+            //buttonTxtMsg.setAttribute("id",nombre);
+            //---------------------------------
+            buttonTxtMsg.setAttribute("data-toggle","modal");
+            buttonTxtMsg.setAttribute("data-target","#cdf");
+            buttonTxtMsg.setAttribute("onclick", "atraparValores()");
 
             var spanTxtMsg = document.createElement("span");
             spanTxtMsg.setAttribute("class", "glyphicon glyphicon-envelope");
@@ -307,6 +313,9 @@ function creaDivRutasSeguidores(evt){
 
 }
 
+function atraparValores(){
+}
+
 function perfil() {
     location.href = "perfil.html";
 }
@@ -314,6 +323,8 @@ function perfil() {
 function seguidores() {
     location.href = "main_seguidores.html";
 }
+
+
 
 
 window.addEventListener('load', inicializar, false);
