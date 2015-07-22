@@ -176,9 +176,17 @@ function ingresar(evt) {
         //alert(usuario==usu);
         //alert(contraseña == cont);
         if(usuario == usu && contraseña == cont){
-            location.href = "perfil.html?"+"nombre="+usu;
-            break;
+            bandera = 1;
+            var tempNombre = usu;
         }
+    }
+
+    if(bandera==1){
+        location.href = "perfil.html?"+"nombre="+tempNombre;
+        
+    }
+    else{
+        location.href = "login.html";
     }
 
 }
