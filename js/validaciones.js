@@ -239,8 +239,8 @@ function cargarDatosRutasUsuarioPerfil(){
 function creaDivRutasSeguidores(evt){
     var response = evt.target.responseXML;
     var profile = response.getElementsByTagName("profile");
-    var nombre, imagenSrc,ruta;
-    var ul, li, a, divRow, divIma , ima, spanName, divNameRuta, spanRuta, spanRuta, img, buttonTxtMsg;
+    var nombre, imagenSrc, ruta;
+    var ul, li, a, divRow, divIma , ima, spanName, divNameRuta, spanRuta, spanRuta, img, buttonTxtMsg, buttonEliminarSeguidor;
     //alert(profile.length);
     for(var i = 0 ; i < profile.length ; i++){
         var idUsuario = profile[i].getElementsByTagName("id")[0].firstChild.nodeValue;
@@ -277,6 +277,7 @@ function creaDivRutasSeguidores(evt){
             buttonTxtMsg = document.createElement("button");
             buttonTxtMsg.setAttribute("class","mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored");
             buttonTxtMsg.setAttribute("style","background-color: #0094ff;");
+
             //buttonTxtMsg.setAttribute("id",nombre);
             //---------------------------------
             buttonTxtMsg.setAttribute("data-toggle","modal");
@@ -284,15 +285,26 @@ function creaDivRutasSeguidores(evt){
             buttonTxtMsg.setAttribute("onclick", "atraparValores()");
 
             var spanTxtMsg = document.createElement("span");
-            spanTxtMsg.setAttribute("class", "glyphicon glyphicon-envelope");
+            spanTxtMsg.setAttribute("class", "glyphicon glyphicon-comment");
 
             buttonTxtMsg.appendChild(spanTxtMsg);
 
+            buttonEliminarSeguidor = document.createElement("button");
+            buttonEliminarSeguidor.setAttribute("class","mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored");
+            buttonEliminarSeguidor.setAttribute("style","background-color: #0094ff;");
+            buttonEliminarSeguidor.setAttribute("alt", "dejar de seguir");
+            //var spanDejarDeSeguir = document.createElement("span");
+            //spanDejarDeSeguir.setAttribute("class","glyphicon glyphicon-remove-circle")
+
+            //buttonEliminarSeguidor.appendChild(spanDejarDeSeguir);
+
             divRow = document.createElement("div");
             divRow.setAttribute("class", "row");
+            divRow.setAttribute("id", nombre);
             divRow.appendChild(divIma);
             divRow.appendChild(divNameRuta);
             divRow.appendChild(buttonTxtMsg);
+            //divRow.appendChild(buttonEliminarSeguidor);
 
 
 
