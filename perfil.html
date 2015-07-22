@@ -52,7 +52,8 @@
       <a class="mdl-navigation__link" href="login.html">Cerrar Sesi&oacuten</a>
     </nav>
   </div>
-  <main class="mdl-layout__content">
+  <
+    <main class="mdl-layout__content">
     <div class="page-content">
 		<!--Google Map -->
 		<!-- perfil usuario/seguidor-->
@@ -60,7 +61,7 @@
             <div class="row">
                 <div id="imagenPerfil" class=" col-xs-12 text-center">
                     <div>
-                        <img alt="Imagen Perfil" id="imaUser"  class="img-responsive center-block img-circle text-center">
+                        <img alt="Imagen Perfil" id="imaUser" src="#"  class="img-responsive center-block img-circle text-center">
                     </div>
 
                     <div id="labelSeguidores-Siguiendo" style="padding:10px;">
@@ -147,10 +148,9 @@
 			</div>
 		</div>
         <nav id="rutas-nav" class="columna">
-            <div id="rutaPerfil">
-                <span class="glyphicon glyphicon-map-marker">
-                    MIS RUTAS RECIENTES
-                </span>
+            <div id="rutaPerfil" class="text-center">
+                <p><span class="glyphicon glyphicon-map-marker">
+                </span>Mis Rutas</p>
             </div>
             <ul class="nav nav-pills nav-stacked">
                 <li class="misRutas" data-name="Casa">
@@ -160,8 +160,7 @@
                                 <img alt="Imagen GoogleMaps" id=""  class="img-responsive img-circle" src="img/icon.png" > 
                             </div>
                             <div class="text-center col-md-9">
-                                <span>ESPOL - PUERTO MORO</dt>
-                                </span>
+                                <span>ESPOL - PUERTO MORO</span>
                             </div>
                         </div>
                     </a>
@@ -184,16 +183,35 @@
         </nav>
 
         <nav id="rutas-nav" class="columna">
-            <div id="rutaPerfil">
-                <span class="glyphicon glyphicon-map-marker">
-                    RUTAS DE MIS SEGUIDORES
-                </span>
+            <div id="rutaSeguidores" class="text-center">
+                <p><span class="glyphicon glyphicon-map-marker">
+                </span>Rutas de mis Seguidores</p>
             </div>
             <ul id="listaSeguidoresRutas" class="nav nav-pills nav-stacked">
                 
             </ul>
         </nav>
 	</div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
    </main>
 </div>
 </body>
