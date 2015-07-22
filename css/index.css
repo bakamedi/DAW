@@ -85,3 +85,20 @@ h1,h4 {
     font-size: 16px;
     font-weight: bold;
 }
+
+.slide{
+    width: 100%;
+    height: 300px;
+    margin: 2% auto;
+    position: relative;
+}
+ 
+.slide img{
+    width: 100%;
+    height: 300px;
+    position: absolute;
+}
+ 
+.slide .img2, .slide .img3 {
+    display: none;
+}
