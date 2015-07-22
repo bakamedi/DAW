@@ -272,4 +272,8 @@ $(document).ready( function(){
 
 google.maps.event.addDomListener(window, 'load', initializeMap);
 loadData();
-
+if(getPageType() == "car"){
+    getFollowersNotifications();
+}else{
+    getFollowingsNotifications();
+		}
