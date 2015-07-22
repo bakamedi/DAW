@@ -100,79 +100,6 @@ html, body{
     to   { opacity: 1; }
 }
 
-#imagen{
-    padding: 10px 15px 15px 5px;
-    border-radius: 25px;
-    width: 200px;
-    height: 200px;
-}
-
-#imagen_seguidores{
-	padding: 10px 15px 15px 5px;
-    border-radius: 25px;
-	margin-top: -7%;
-    width: 200px;
-    height: 200px;
-}
-
-#imagen_seguidos{
-    padding: 10px 15px 15px 5px;
-    border-radius: 25px;
-    width: 48px;
-    height: 48px;
-}
-
-#Usu_Seguir{
-	margin-bottom:auto;
-}
-
-#Usu_Seguir p{
-	font-family: "tu fuente", sans-serif !important;
-    font-size: 40px;
-    font-weight: bold;
-}
-
-#Usu_Seguir h5{
-	font-family: fantasy !important;
-	font-size: 20px;
-}
-
-#Usu_Seguir_sub{
-	top: -180px;
-	font-family: fantasy !important;
-}
-
-#Usu_Seguir_sub h5 {
-	font-family: fantasy !important;
-	font-size: 20px;
-}
-
-#Usu_Seguidos {
-	float:left;
-	height:80px;
-}
-
-#Usu_Seguidos p{
-	font: oblique bold 120% cursive !important;
-	font-style: italic;
-    font-size: 25px;
-}
-
-#Usu_seguidos_sub {
-	padding: 3px;
-}
-
-#Usu_seguidos_sub h5 {
-	font-family: "tu fuente", sans-serif !important;
-	font-size: 20px;
-}
-
-#Usu_seguidos_sub p {
-	font-family: "tu fuente", sans-serif !important;
-    font-size: 25px;
-    font-weight: bold;
-}
-
 .input_txt{
 	border-radius: 15px;
 }
@@ -355,16 +282,26 @@ div.material-icons{
     margin:5px;
 }
 .mdl-card  {
-    width: 170px;
-    min-height: 150px;
+    width: 600px;
+    min-height: 400px;
     float:left;
     margin:7px;
+	border-radius: 102px 102px 102px 102px;
+	-moz-border-radius: 102px 102px 102px 102px;
+	-webkit-border-radius: 102px 102px 102px 102px;
+	border: 5px solid  #2CC0C5;
 }
 
 a.card-title {
-    font-weight: 500;
-    font-family: "Roboto","Helvetica","Arial",sans-serif !important;
-    font-size: 16px;
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+p.card {
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 28px;
+    font-weight: bold;
 }
 
 button.savebtn{
