@@ -35,16 +35,13 @@ function processFollowersNotifications(jArray){
 
 function processFollowingsNotifications(jArray){
 	var i;
-	var start = '<div class="near-container"><div class="nearby-fllwr"><li><dt>';
-	var mid1 = '</dt><dd>';
-	var end = '</dd></li></div></div>';
-	var end_ready = '</dd></li></div><span class="label label-success ">Listo</span></div>';
+	var start = '<div class="near-container"><span class="time-text">en ';
+	var mid1 = '</span><dt>';
+        var preDist = '</dt><dd>';
+	var end = '</dd><div><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent notif-button ">Llevame</button><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent notif-button">Ver Ruta</button></div><hr></div>';
 	var out = "";
 	for (i=0; i<jArray.length; i++){
-		if(jArray[i].ready == "1")
-			out += start + jArray[i].name + mid1 + 'A ' + jArray[i].dist + 'm del destino'	+ end_ready + '<hr>';
-		else
-			out += start + jArray[i].name + mid1 + 'A ' + jArray[i].dist + 'm del destino'	+ end + '<hr>';
+	    out += start + jArray[i].time + mid1 + jArray[i].name + preDist  + 'A ' + jArray[i].dist + 'm del destino' + end;
 	}
 	console.log(out);
 	document.getElementById('active-follower-list').innerHTML = out;
@@ -93,7 +90,18 @@ function processMyDestinations(jArray){
 	document.getElementById('rutasUL').innerHTML += out;
 }
 
+function addDest(jObject){
+	var i;
+	var start = '<li class="misRutas" data-name="';
+	var preName = '"><a href="#"><span style="font-size:28px">';	
+	var end = '</span></a></li>';
+	var out = "";
+        out += start + jObject.name + preName + jObject.name + end;
 
+
+	//console.log(out);
+	document.getElementById('rutasUL').innerHTML += out;
+}
 
 function processMyRoutes(jArray){
 	var i;

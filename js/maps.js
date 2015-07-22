@@ -37,6 +37,11 @@ function initializeMap(){
 	});	   
 }
 
+function replaceWhitespace(name){
+    return name.replace(' ', whitespace);
+}
+
+
 function isValidAlphaNumericName(str) {
   var code, i, len;
 
@@ -49,20 +54,6 @@ function isValidAlphaNumericName(str) {
     }
   }
   return true;
-}
-
-function removeForm(){
-    $("#newRouteForm").toggleClass("invisible");
-    $("#rutasUL").toggleClass("invisible");
-}	
-function placeForm(){
-    $("#rutasUL").toggleClass("invisible");
-    $("#newRouteForm").toggleClass("invisible");
-    }
-function blinker() {
-    $('.blink_me').fadeOut(800);
-    $('.blink_me').fadeIn(800);
-    console.log("blink");
 }
 
 function finishNewRoute(){
@@ -79,9 +70,27 @@ function finishNewRoute(){
 
 }
 
-function replaceWhitespace(name){
-		return name.replace(' ', whitespace);
+function escogerInicio(){
+	agregandoRuta = true;
+        $("#pickRoute").attr("style", "");
+	$("#pickRoute").toggleClass("invisible");
+        blinkHandler = setInterval(blinker, 1600);
 }
+function removeForm(){
+    $("#newRouteForm").toggleClass("invisible");
+    $("#rutasUL").toggleClass("invisible");
+}	
+function placeForm(){
+    $("#rutasUL").toggleClass("invisible");
+    $("#newRouteForm").toggleClass("invisible");
+    }
+function blinker() {
+    $('.blink_me').fadeOut(800);
+    $('.blink_me').fadeIn(800);
+    console.log("blink");
+}
+
+
 
 function returnWhitespace(name){
 		return name.replace(whitespace, " ");
@@ -176,12 +185,7 @@ function addRouteMarkers(pos1, pos2){
 }
 
 
-function escogerInicio(){
-	agregandoRuta = true;
-        $("#pickRoute").attr("style", "");
-	$("#pickRoute").toggleClass("invisible");
-        blinkHandler = setInterval(blinker, 1600);
-}
+
 
 function nombrarRuta(){
 	console.log("nombrarRuta");
@@ -225,66 +229,6 @@ function showDestino(name){
     if(pos != null)
         addRouteMarkers(currentPosition, pos);
 }
-function checkDay(day){
-	if($('#check' + day).val())
-		return '1';
-	else 
-		return '0';
-}
-function constructDays(){
-	var out = "";
-	out += checkDay('Lunes');
-	out += checkDay('Martes');
-	out += checkDay('Miercoles');
-	out += checkDay('Jueves');
-	out += checkDay('Viernes');
-	out += checkDay('Sabado');
-	out += checkDay('Domingo');
-	return out;
-}
-
-function isValidHour(time){
-	var i;
-	for(i = 0; i < time.length; i++){
-		var c = time.charAt(i);
-		var code = time.charCodeAt(i);
-		if (!(code > 47 && code < 58 ) && !(c == ':'))
-			return false;
-	}
-	if(time.indexOf(':') == -1)
-		return false;
-	var arr = time.split(':');
-	if(arr.length > 2)
-		return false;
-	/*
-	if((parseInt(arr[0]) < 0) || (parseInt(arr[0]) > 23))
-		return false;
-	if((parseInt(arr[1]) < 0) || (parseInt(arr[1]) > 59))
-		return false;*/
-return true;
-}
-
-function nuevaRuta(){
-    console.log("nuevaRuta");
-    if(!agregandoRuta){
-
-        clearRuta();
-        escogerInicio();
-        google.maps.event.addListener(map, 'click', addLatLng);
-    }
-}
-
-function cleanNewRouteForm(){
-    $('#routetime').val("");
-    $('#routename').val("");
-    $('#checkLunes').prop('checked', false);
-    $('#checkMartes').prop('checked', false);
-    $('#checkMiercoles').prop('checked', false);
-    $('#checkJueves').prop('checked', false);
-    $('#checkViernes').prop('checked', false);
-    $('#checkSabado').prop('checked', false);
-    $('#checkDomingo').prop('checked', false);
-}
 
 function abortNewRoute(){
     $('#pickRoute').addClass('invisible');
@@ -295,41 +239,22 @@ function abortNewRoute(){
 $(document).ready( function(){
         //Guardar la nueva ruta
         $("body").on('click', '#submitRoute', function(){
-                //Validar contenidos de la ruta;
-                var newRoute = [];
-                newRoute.name = $('#routename').val();
-                if(!isValidAlphaNumericName(replaceWhitespace(name))){
-                        console.log("wrong name");
-                        return;
-                }
-                newRoute.hora = $('#routetime').val();
-                if(!isValidHour(newRoute.hora)){
-                        console.log("wrong time");
-                        return;
-                }
-
-                newRoute.dias = constructDays();
-                myRoutes[replaceWhitespace(newRoute.name)] = [start.position, end.position];
-                clearRutasColumn();
-                addRoute(newRoute);
-                //getMyRoutes();
-                agregandoRuta = false;
-                console.log("chao " + agregandoRuta);
-                cleanNewRouteForm();
-                });
+                submitContent();
+        });
 
         //Mostrar gente cerca cuando das click a una ruta
 	$("body").on('click', 'li.misRutas', function(){                
                 abortNewRoute();
                 clearRuta();
 		clearFollowersNotification();
-                if(getPageType() == "car")
+                if(getPageType() == "car"){
 		    showRuta(replaceWhitespace($(this).attr('data-name')));
-                else
+                    getFollowersNotifications();
+                }else{
 		    showDestino(replaceWhitespace($(this).attr('data-name')));
-		$('li.misRutas').removeClass("active");
+                    getFollowingsNotifications();
+		}$('li.misRutas').removeClass("active");
 		$(this).toggleClass("active");
-		getFollowersNotifications();
 	});
 
         //Mostrar el popup de followers cuando das click en el boton

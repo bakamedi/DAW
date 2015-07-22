@@ -274,13 +274,21 @@ html, body{
 
 .near-container{
 	width:100%;
-	overflow: hidden;
-	margin : 5px;
+        padding : 5px;
+}
+
+.time-text{
+    width:100%;
+    color:gray;
+    display:block;
+    text-align:right;
+    padding-right:10px;
+    font-size:small;
 }
 
 hr{
-	margin-top : 5px;
-	margin-bottom : 5px;
+	margin-top : 20px;
+        margin-bottom : 0px;
 }
 
 .column-text{
@@ -342,6 +350,10 @@ div.material-icons{
     width:100%;
 }
 
+.notif-button{
+    display:inline;
+    margin:5px;
+}
 .mdl-card  {
     width: 170px;
     min-height: 150px;
