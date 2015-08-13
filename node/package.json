@@ -1,0 +1,11 @@
+{
+  "name": "MySite",
+  "version": "0.0.1",
+  "private": "true",
+  "dependencies": {
+    "jade": "*",
+    "mariasql":"*",
+    "express": "3.4.8",
+    "socket.io": "1.3.6"
+  }
+}
