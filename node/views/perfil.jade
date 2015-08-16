@@ -1,0 +1,105 @@
+extends layout
+
+block content
+	div(id="perfil" class="columna" style="height: 50%;width: 40%;")
+		div(class="row")
+			div(id="imagenPerfil" class=" col-xs-12 text-center")
+				div
+					img(alt="Imagen Perfil" id="imaUser" src="/images/user1.jpg"  class="img-responsive center-block img-circle text-center")
+				div(id="labelSeguidores-Siguiendo" style="padding:10px;")
+					div(class="row")
+						div(class="col-sm-8 text-center")
+							button(id="btnEditar" type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab")
+								span(class="glyphicon glyphicon-pencil" aria-hidden="true")
+							button(id="editarFoto" type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab")
+								span(class="glyphicon glyphicon-open" aria-hidden="true")
+							button(id="editarFoto" type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab")
+								span(class="glyphicon glyphicon-envelope" aria-hidden="true")
+					div(class="text-center")
+						//label(id="labelSeguidores") Seguidores:
+					div(class="text-center")
+						//label(id="labelSiguiendo") Siguiendo:
+					hr
+		div(class="row col-xs-12 text-center center-block")
+			form(id="formularioPerfil" class="form-horizontal" name="formularioContacto")
+				div(class="form-group")
+					div(id="nombrePerfil" class="col-xs-12 text-center")
+						label(id="labelNombre" class="block-center control-label")
+					div(class="col-xs-offset-4 col-md-4")
+						input(id="inputNombre" type="text" class="form-control " name="nombre" placeholder="Nombre" style='display:none;')
+						p
+							span(id="msmErrorNombre" style="color:blue")
+				div(class="form-group")
+					div(class="col-xs-12 text-center")
+						label(id="apellidoPerfil" class="block-center control-label")
+					div(class="col-xs-offset-4 col-md-4")
+						input(id="inputApellido" type="text" class="form-control" name="apellidoPerfil"  placeholder="Apellido" style='display:none;')
+						p
+							span(id="msmErrorApellido" style="color:blue")
+				div(class="form-group")
+					div(id="divCarroPerfil" class="col-xs-12 text-center block-center")
+						label(id="carroPerfil" class="block-center  control-label")
+					div(id="input-Carro" class="radio col-xs-offset-4 col-md-4" style='display:none;')
+						label Tengo Carro
+							input(id="rbTengo" type="radio" name="optionsRadios" value="Si" checked)
+						label No tengo Carro
+							input(id="rbNoTengo" type="radio" name="optionsRadios" value="No" checked)
+				div(id="input-Placa" class="form-group")
+					div(class="col-xs-12 text-center")
+						label(id="input-placa-Perfil" class="block-center control-label")
+					div(class="col-xs-offset-4 col-md-4")
+						input(id="inputPlaca" type="text" class="form-control" placeholder=" ejemplo : GEU-0000" style='display:none;')
+						p
+							span(id="msmError" style="color:blue")
+				hr
+				div(id="guardar" class="form-group")
+					div(class="col-offset-5 col-md-8 col-lg-12 center-block")
+						button(id="btnGuardar" class="mdl-button mdl-js-button mdl-button--primary" value="Guardar" style='display:none')
+							span(class="glyphicon glyphicon-ok")
+						button(id="btnCancelar" type="reset" class="mdl-button mdl-js-button mdl-button--accent" value="Cancelar" style='display:none')
+							span(class="glyphicon glyphicon-remove")
+				div(id="divSuccess" class="alert alert-success alert-dismissable" style="display: none;")
+					button(type="button" class="close" data-dismiss="alert" aria-hidden="true") Se ha Guardado sus datos Exitosamente
+	nav(id="rutas-nav" class="columna")
+		div(id="div-rutas-nav")
+			div(id="rutaPerfil" class="text-center")
+				p Mis Rutas
+					span(class="glyphicon glyphicon-map-marker")
+			ul(class="nav nav-pills nav-stacked")
+				li(class="misRutas" data-name="Casa")
+					a(href="#")
+						div(class="row")
+							div(class="text-left col-md-3")
+								img(alt="Imagen GoogleMaps" id=""  class="img-responsive img-circle" src="/images/icon.png")
+							div(class="text-center col-md-9")
+								span ESPOL - PUERTO MORO
+				hr
+				li(class="" data-name="")
+					a(href="#")
+						div(class="row")
+							div(class="text-left col-md-3")
+								img(alt="Imagen GoogleMaps" id=""  class="img-responsive img-circle" src="/images/icon.png")
+							div(class="text-center col-md-9")
+								span ESPOL - FIEC
+	nav(id="rutas-nav" class="columna")
+		div(id="rutaSeguidores" class="text-center")
+			p Rutas de mis Seguidores
+				span(class="glyphicon glyphicon-map-marker")
+		ul(id="listaSeguidoresRutas" class="nav nav-pills nav-stacked")
+			li(class="misRutas" data-name="Casa")
+				a(href="#")
+					div(class="row")
+						div(class="text-left col-md-3")
+							img(alt="Imagen GoogleMaps" id=""  class="img-responsive img-circle" src="/images/user2.jpg")
+						div(class="text-center col-md-9")
+							span FIEC - MALL DEL SOL
+			hr
+			li(class="misRutas" data-name="Casa")
+				a(href="#")
+					div(class="row")
+						div(class="text-left col-md-3")
+							img(alt="Imagen GoogleMaps" id=""  class="img-responsive img-circle" src="/images/user3.jpg")
+						div(class="text-center col-md-9")
+							span RIO CENTRO NORTE - ESPOL
+			hr
+	script(src='/javascripts/perfil_val.js')
