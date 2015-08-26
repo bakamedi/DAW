@@ -1,0 +1,82 @@
+extends layout_inicio
+
+block content
+    div(class="container-fluid" style="padding-top: 10%;")
+        div(class="row")
+            div(id="descripcion" class="col-lg-4 col-md-offset-2" style="background-color: #fff; border-radius: 15px")
+                h1(class="text-primary") 
+                    strong Bienvenido a Rapidin ESPOL
+                div(style="color: black" class="text-justify")
+                    div(class="slide")
+                        figure
+                            img(class="img1" alt="alt img1" src="images/login1.jpg")
+                            img(class="img2" alt="alt img2" src="images/login2.jpg")
+                            img(class="img2" alt="alt img3" src="images/login2.jpg")
+                            img(class="img2" alt="alt img4" src="images/login2.jpg")
+
+            div(id="inicio" class="col-lg-3 col-md-offset-1" style="background-color: #fff; border-radius: 15px;")
+                h1(class="text-primary text-center") 
+                    strong Inicio de Sesi&oacuten
+                form(action="/inicio", method='post')
+                    div(id="formUsuario" "form-group text-left")
+                        label(for="InputUsuario") Usuario
+                        input(id="Email" name="Email" type="text" class="form-control" placeholder="Usuario" autofocus="true" required)
+                    div(id="formPassword" class="form-group text-left")
+                        label(for="exampleInputPassword1") Contraseña
+                        input(id="Password" name="Password" type="password" class="form-control" placeholder="Password" required)
+                    div(id="formCheck" class="form-group text-left")
+                        div(class="checkbox")
+                            label
+                                strong
+                                    input(type="checkbox")
+                                    |   Remember me
+                    div(class="form-group")
+                        button(id="btnIngresar" type="submit" class="btn btn-primary text-left" onclick="cargarUsuarios();") Ingresar
+                        button(type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal" onclick="limpiarCampos();") Registrate es Gratis!!
+
+    //Begin Modal                         
+    div(class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel")
+        div(class="modal-dialog" role="document")
+            div(class="modal-content")
+                div(class="modal-header")
+                    h4(class="modal-title text-primary" id="myModalLabel") Registrate
+                div(class="modal-body")
+                    div(id="formRegistro" class="container-fluid")
+                        form(class="form-horizontal" onsubmit="return validarPlacaDetener()")
+                            div(class="form-group")
+                                label(for="inputEmail3" class="col-sm-4 control-label") Usuario
+                                div(class="col-sm-8")
+                                    input(id="inUsuario" type="text" class="form-control" placeholder="Usuario ESPOL" required onkeyup="cargarDatosUsuario()")
+                            div(class="form-group")
+                                label(for="inputEmail3" class="col-sm-4 control-label") Contraseña
+                                div(class="col-sm-8")
+                                    input(id="inContraseña" type="password" class="form-control" placeholder="Contraseña ESPOL" required onkeyup="cargarDatosUsuario()")
+                            div(class="form-group")
+                                label(for="inputEmail3" class="col-sm-4 control-label") Apellido
+                                div(class="col-sm-8")
+                                    input(id="inApellido" type="text" class="form-control" placeholder="Apellido" readonly="")
+                            div(class="form-group")
+                                label(for="inputEmail3" class="col-sm-4 control-label") Contraseña
+                                div(class="col-sm-8")
+                                    input(id="inNewContraseña" type="password" class="form-control" placeholder="Contraseña" required)
+                            div(class="form-group")
+                                label(for="inputEmail3" class="col-sm-4 control-label") Confirmar Contraseña
+                                div(class="col-sm-8")
+                                    input(id="inConNewContraseña" type="password" class="form-control" placeholder="Confirmar Contraseña" required)
+                            div(class="radio")
+                                label(class="col-sx-12 col-sm-offset-5")
+                                    input(id="rbTengo" type="radio" name="optionsRadios" value="option1" checked onclick="validarTengoCarro();")
+                                    |   Tengo Carro
+                            div(class="radio")
+                                label(class="col-sx-12 col-sm-offset-5")
+                                    input(id="rbNoTengo" type="radio" name="optionsRadios" value="option1" onclick="validarNoTengoCarro();")
+                                    |   No Tengo Carro
+                            div(id="formPlaca" class="form-group" style="padding-top: 5px;")
+                                label(for="inputEmail3" class="col-sm-4 control-label") Placa
+                                div(class="col-sm-8")
+                                    input(id="inPlaca" type="text" class="form-control" placeholder="Placa (Ej:ABC0123)" required onkeyup="validarPlaca();")
+                                    p
+                                        span(id="msmError" style="color:blue")
+                            div(class="form-group" style="text-align:right")
+                                button(type="button" class="btn btn-danger" data-dismiss="modal" onclick="limpiarCampos();") Cancelar
+                                button(type="submit" class="btn btn-primary" onclick="validarPlaca();") Unirse
