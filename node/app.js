@@ -2,7 +2,7 @@ var express 		= require('express');
 var bodyParser     	= require('body-parser');
 var morgan         	= require('morgan');
 var methodOverride 	= require('method-override');
-var sessions = require("client-sessions");
+var sessions 		= require("client-sessions");
 var soap 			= require('soap');
 
 var app 			= express();
@@ -51,20 +51,22 @@ app.get('/inicio', function (req, res) {
 app.get('/logout', function (req, res) {
   if(req.carPoolSession.username != null)
         req.carPoolSession.reset();  
-  res.redirect('/')
+  		res.redirect('/')
 })
 
 var url = 'http://ws.espol.edu.ec/saac/wsandroid.asmx?WSDL';
-app.post('/inicio', function (req, res){
+app.post('/autenticacion', function (req, res){
 	var args = {authUser: req.body.Email, authContrasenia: req.body.Password};	
 	soap.createClient(url, function(err, client) {
 	  	client.autenticacion(args, function(err, result) { 
 	  		re = result.autenticacionResult;
 	  		if(re){
-                                req.carPoolSession.username = req.body.Email; //Coloco el username en el session
-	  			res.render('perfil.jade',req.body.Email);
+	  			req.carPoolSession.username = req.body.Email; //Coloco el username en el session
+	  			res.redirect('/inicio/?a='+1);
 	  		}
 	  		else{
+	  			//var f = misc.x();
+	  			//console.log(f);
 	  			res.redirect('/?error=' + 1);
 	  		}
 	  			
@@ -72,4 +74,14 @@ app.post('/inicio', function (req, res){
 	});
 })
 
+
+/*
+app.get('/', function (req, res) {
+  res.render('login.jade')
+})
+
+app.get('/index', function (req, res) {
+  res.render('perfil.jade')
+})
+*/
 app.listen(8080);
