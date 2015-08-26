@@ -33,9 +33,9 @@ app.post('/inicio', function (req, res){
 	  			res.render('perfil.jade',req.body.Email);
 	  		}
 	  		else{
-	  			var f = misc.x();
-	  			console.log(f);
-	  			res.redirect('/');
+	  			//var f = misc.x();
+	  			//console.log(f);
+	  			res.redirect('/?error=' + 1);
 	  		}
 	  			
 	  	});
