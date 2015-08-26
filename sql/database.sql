@@ -8,6 +8,7 @@ apellido varchar(45),
 usuario varchar(45) ,
 placa varchar(45),
 imagen varchar(45) null,
+contrasena varchar(40) not null,
 capacidadCarro int null,
 PRIMARY KEY (idUsuario)
 );
