@@ -9,6 +9,7 @@
     "socket.io": "1.3.6",
     "soap":"*",
     "method-override":"*",
-    "morgan":"*"
+    "morgan":"*",
+    "body-parser":"*"
   }
 }
