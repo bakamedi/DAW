@@ -4,6 +4,7 @@ var morgan         	= require('morgan');
 var methodOverride 	= require('method-override');
 var sessions = require("client-sessions");
 var soap 			= require('soap');
+var db_handler = require ('./db_handler');
 
 var app 			= express();
 
@@ -23,6 +24,28 @@ app.use(sessions({
   duration: 30 * 60 * 1000, // how long the session will stay valid in ms
   activeDuration: 1000 * 60 * 15 // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
 }));
+
+//BEGIN MARIA
+var Client = require('mariasql');
+var mariaClient = new Client();
+mariaClient.connect({
+      host: '127.0.0.1',
+        user: 'root',
+          password: 'tevasaquedarendaw'
+});
+
+mariaClient.on('connect', function() {
+       console.log('Client connected');
+        })
+ .on('error', function(err) {
+        console.log('Client error: ' + err);
+         })
+ .on('close', function(hadError) {
+        console.log('Client closed');
+         });
+
+
+//FIN MARIA
 
 /**
 * Pagina de login
@@ -62,7 +85,10 @@ app.post('/inicio', function (req, res){
 	  		re = result.autenticacionResult;
 	  		if(re){
                                 req.carPoolSession.username = req.body.Email; //Coloco el username en el session
-	  			res.render('perfil.jade',req.body.Email);
+                               // var user = new db_handler.user("Gabriel", "Aumala", req.carPoolSession.username, "GKT-723", 5, "HOLA MUNDOO!");
+                                //db_handler.crear_usuario(mariaClient, user, function(queryRes){
+	  			    res.render('perfil.jade',req.body.Email);
+                               // });                         
 	  		}
 	  		else{
 	  			res.redirect('/?error=' + 1);
@@ -73,3 +99,4 @@ app.post('/inicio', function (req, res){
 })
 
 app.listen(8080);
+

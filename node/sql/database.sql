@@ -5,10 +5,10 @@ create table usuario(
 idUsuario INT NOT NULL AUTO_INCREMENT ,
 nombre varchar(45) ,
 apellido varchar(45),
-usuario varchar(45) ,
-placa varchar(45),
-imagen varchar(45) null,
-capacidadCarro int null,
+usuario varchar(20) ,
+placa varchar(8),
+capacidadCarro int,
+bio varchar(140),
 PRIMARY KEY (idUsuario)
 );
 
