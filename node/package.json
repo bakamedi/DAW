@@ -10,6 +10,7 @@
     "soap":"*",
     "method-override":"*",
     "morgan":"*",
-    "body-parser":"*"
+    "body-parser":"*",
+    "client-sessions":"0.7.0"
   }
 }
