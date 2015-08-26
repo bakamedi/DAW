@@ -44,6 +44,16 @@ app.get('/inicio', function (req, res) {
         res.render('perfil.jade')
 })
 
+/**
+* logout
+* Esto deberia de ser un post, pero por ahora por conveniencia es un get.
+**/
+app.get('/logout', function (req, res) {
+  if(req.carPoolSession.username != null)
+        req.carPoolSession.reset();  
+  res.redirect('/')
+})
+
 var url = 'http://ws.espol.edu.ec/saac/wsandroid.asmx?WSDL';
 app.post('/inicio', function (req, res){
 	var args = {authUser: req.body.Email, authContrasenia: req.body.Password};	
@@ -55,7 +65,7 @@ app.post('/inicio', function (req, res){
 	  			res.render('perfil.jade',req.body.Email);
 	  		}
 	  		else{
-	  			res.redirect('/');
+	  			res.redirect('/?error=' + 1);
 	  		}
 	  			
 	  	});
