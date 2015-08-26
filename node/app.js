@@ -1,36 +1,45 @@
-var express = require('express');
+var express 		= require('express');
+var bodyParser     	= require('body-parser');
+var morgan         	= require('morgan');
+var methodOverride 	= require('method-override');
 
- app = express();
+var soap 			= require('soap');
 
-//BEGIN MARIA
-var inspect = require('util').inspect;
-var Client = require('mariasql');
-var dbName;
-var c = new Client();
-c.connect({
-      host: '127.0.0.1',
-        user: 'root',
-          password: 'tevasaquedarendaw'
-});
+var app 			= express();
 
-c.on('connect', function() {
-       console.log('Client connected');
-        })
- .on('error', function(err) {
-        console.log('Client error: ' + err);
-         })
- .on('close', function(hadError) {
-        console.log('Client closed');
-         });
 
-//c.end();
+//var misc = require('./public/javascripts/val_login');
 
-//FIN MARIA
-app.set('views', __dirname + '/views')
-app.set('view engine', 'jade')
 
-app.use(express.logger('dev'))
+app.use(express.static(__dirname + '/public'));     	// set the static files location /public/img will be /img for users
+app.use(morgan('dev'));	                  				// log every request to the console
+app.use(bodyParser.urlencoded({ extended: false }));    // parse application/x-www-form-urlencoded
+app.use(bodyParser.json());    							// parse application/json
+app.use(methodOverride());
 
-app.use(express.static(__dirname + '/public'))
+app.get('/', function (req, res) {
+  res.render('login.jade')
+})
+
+
+
+var url = 'http://ws.espol.edu.ec/saac/wsandroid.asmx?WSDL';
+app.post('/inicio', function (req, res){
+	var args = {authUser: req.body.Email, authContrasenia: req.body.Password};	
+	soap.createClient(url, function(err, client) {
+	  	client.autenticacion(args, function(err, result) { 
+	  		re = result.autenticacionResult;
+	  		if(re){
+	  			res.render('perfil.jade',req.body.Email);
+	  		}
+	  		else{
+	  			var f = misc.x();
+	  			console.log(f);
+	  			res.redirect('/');
+	  		}
+	  			
+	  	});
+	});
+})
 
 app.listen(8080);
