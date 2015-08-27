@@ -1,11 +1,7 @@
-/*var a = "lhjhljk";
-function h () {
-    return a;
-}
 
-module.exports.x = h;
-*/
 function inicializar() {
+    //var btnIngresar = document.getElementById("btnIngresar");
+    //btnIngresar.addEventListener('click',validar, false);
     //var btnIngresar = document.getElementById("btnIngresar");
     //btnIngresar.addEventListener('click',validar, false);
     var url = document.URL;
@@ -46,8 +42,25 @@ function inicializar() {
         divInicio.appendChild(div);
     }
 }
+/*
+$("form").submit(function(e) {
+    e.preventDefault(); // Prevents the page from refreshing
+    var $this = $(this); // `this` refers to the current form element
+    $.post(
+        $this.attr("action"), // Gets the URL to sent the post to
+        $this.serialize(), // Serializes form data in standard format
+        function(data) { /** code to handle response  },
+        "json" // The format the response should be in
+    );
+});
+*/
+function closewindow() {    
+    /*
+    confirm('Usuario Registrado');
+    $('#myModal').modal('toggle');
+    */
 
-
+}
 
 function validar() {
 
@@ -72,7 +85,7 @@ function validar() {
     btn.setAttribute("aria-label","Close");
     
     label.setAttribute("style","font-size: 10px;");
-    label.innerHTML = "Usuario y/o contraseña incorrecta";
+    label.innerHTML = "Email y/o contraseña incorrecta";
 
     btn.appendChild(spa);
 
@@ -111,13 +124,20 @@ function validar() {
 
 function validarTengoCarro(){
     var divPlaca = document.getElementById("formPlaca");
+    var divCapacidad = document.getElementById("formCapacidad");
     divPlaca.setAttribute("style","display:normal;");
-
+    divCapacidad.setAttribute("style","display:normal;");
+    var inPlaca = document.getElementById("inPlaca").value="";
+    var inCapacidad = document.getElementById("inCapacidad").value="";
 }
 
 function validarNoTengoCarro(){
     var divPlaca = document.getElementById("formPlaca");
+    var inPlaca = document.getElementById("inPlaca").value=" ";
+    var inCapacidad = document.getElementById("inCapacidad").value="0";
+    var divCapacidad = document.getElementById("formCapacidad");
     divPlaca.setAttribute("style","display: none;");
+    divCapacidad.setAttribute("style","display: none;");
 }
 
 function validarPlaca() {
@@ -179,15 +199,16 @@ function limpiarCampos() {
     var inUsuario = document.getElementById("inUsuario").value = "";
     var inContraseña = document.getElementById("inContraseña").value = "";
     //var inNombre = document.getElementById("inNombre");
-    var inApellido = document.getElementById("inApellido");
+    //var inApellido = document.getElementById("inApellido");
 
     //inNombre.setAttribute("placeholder","Nombre");
-    inApellido.setAttribute("placeholder","Apellido");
+    //inApellido.setAttribute("placeholder","Apellido");
 
-    var inNewContraseña = document.getElementById("inNewContraseña").value = "";
-    var inConNewContraseña = document.getElementById("inConNewContraseña").value = "";
+    //var inNewContraseña = document.getElementById("inNewContraseña").value = "";
+    //var inConNewContraseña = document.getElementById("inConNewContraseña").value = "";
     var rb1 = document.getElementById("rbTengo").checked = true;
     var inPlaca = document.getElementById("inPlaca").value = "";
+    var inCapacidad = document.getElementById("inCapacidad").value="";
 
     var divPlaca = document.getElementById("formPlaca");
     var estadoNombre = document.getElementById("msmError");
@@ -200,7 +221,7 @@ function limpiarCampos() {
 }
 
 function cargarUsuarios(){
-    //location.href = "perfil.html?"+"nombre="+tempNombre;
+    server.h();
     /*
     var request = new XMLHttpRequest;
     request.addEventListener('load',ingresar,false);
@@ -340,6 +361,13 @@ function verticalBounce() {
     delay: 650,
     complete: horizontalBounce
   })
+}
+
+function justNumbers(e){
+    var keynum = window.event ? window.event.keyCode : e.which;
+    if((keynum == 8) || (keynum==46))
+        return true;
+    return /\d/.test(String.fromCharCode(keynum));
 }
 
 window.addEventListener('load', inicializar, false);

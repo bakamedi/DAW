@@ -2,9 +2,9 @@ var express 		= require('express');
 var bodyParser     	= require('body-parser');
 var morgan         	= require('morgan');
 var methodOverride 	= require('method-override');
-var sessions 		= require("client-sessions");
+var sessions        = require("client-sessions");
 var soap 			= require('soap');
-var db_handler = require ('./db_handler');
+var db_handler      = require ('./db_handler');
 
 var app 			= express();
 
@@ -29,9 +29,9 @@ app.use(sessions({
 var Client = require('mariasql');
 var mariaClient = new Client();
 mariaClient.connect({
-      host: '127.0.0.1',
-        user: 'root',
-          password: 'tevasaquedarendaw'
+     host: '127.0.0.1',
+     user: 'root',
+     password: 'root'
 });
 
 mariaClient.on('connect', function() {
@@ -43,6 +43,8 @@ mariaClient.on('connect', function() {
  .on('close', function(hadError) {
         console.log('Client closed');
          });
+
+
 
 
 //FIN MARIA
@@ -74,37 +76,94 @@ app.get('/inicio', function (req, res) {
 app.get('/logout', function (req, res) {
   if(req.carPoolSession.username != null)
         req.carPoolSession.reset();  
-  		res.redirect('/')
+  res.redirect('/')
 })
 
 var url = 'http://ws.espol.edu.ec/saac/wsandroid.asmx?WSDL';
-app.post('/autenticacion', function (req, res){
+//var myParams = req.body.inNombre, req.body.inApellido, req.body.inUsuario ,req.body.inPlaca, req.body.Contraseña;
+app.post('/crear', function (req, res){
+     //console.log("sdfsadfsdfsdaf");
+     var args = {authUser: req.body.inUsuario, authContrasenia: req.body.inContraseña}; 
+     var argsCrear = {usuario: req.body.inUsuario};
+     soap.createClient(url, function(err, client) {
+          client.autenticacion(args, function(err, result) { 
+               re = result.autenticacionResult;
+               if(re){
+                    soap.createClient(url, function(err , client){
+                         client.wsInfoUsuario(argsCrear, function(err, result){
+                              var Nombres = result.wsInfoUsuarioResult.diffgram.NewDataSet.INFORMACIONUSUARIO.NOMBRES;
+                              var Apellidos = result.wsInfoUsuarioResult.diffgram.NewDataSet.INFORMACIONUSUARIO.APELLIDOS;
+
+                              var user = new db_handler.user(Nombres, Apellidos, req.body.inUsuario, req.body.inPlaca, req.body.inCapacidad);
+                              db_handler.crear_usuario(mariaClient,user,function(queryRes){
+                                   res.redirect('/');
+                              })
+                         })
+                    })
+               }
+               else{
+                    res.redirect('/?error=' + 1);
+               }
+                    
+          });
+     });
+})
+/*
+app.post('/inicio', function (req, res){
 	var args = {authUser: req.body.Email, authContrasenia: req.body.Password};	
 	soap.createClient(url, function(err, client) {
 	  	client.autenticacion(args, function(err, result) { 
 	  		re = result.autenticacionResult;
 	  		if(re){
-                                req.carPoolSession.username = req.body.Email; //Coloco el username en el session
-                               // var user = new db_handler.user("Gabriel", "Aumala", req.carPoolSession.username, "GKT-723", 5, "HOLA MUNDOO!");
-                                //db_handler.crear_usuario(mariaClient, user, function(queryRes){
-	  			res.redirect('/inicio/?a='+1);
+                    //req.carPoolSession.username = req.body.Email; //Coloco el username en el session
+                         var user = new db_handler.user("Hector", "Jupiter", "hjupiter", "GKT-723", "123");
+                         db_handler.crear_usuario(mariaClient, user, function(queryRes){
+                              console.log("asdsadsa");
+                         })
+	  			//res.render('perfil.jade',req.body.Email);
                                // });                         
-                        }else{
-	  			//var f = misc.x();
-	  			//console.log(f);
+	  		}
+	  		else{
 	  			res.redirect('/?error=' + 1);
 	  		}
 	  			
 	  	});
 	});
 })
-/*
-app.get('/', function (req, res) {
-  res.render('login.jade')
+*/
+
+app.post('/inicio', function (req, res){
+     var userSolo = new db_handler.userSolo(req.body.Email);
+     var t = [];
+     db_handler.verificar_usuario(mariaClient,userSolo,function(queryRes){
+          if(queryRes.length == 0){
+               res.redirect('/inicio');
+               //el usuario no esta registrado
+          }
+          else{
+               //usuario registrado
+               var args = {authUser: req.body.Email, authContrasenia: req.body.Password}; 
+               soap.createClient(url, function(err, client) {
+                    client.autenticacion(args, function(err, result) { 
+                         re = result.autenticacionResult;
+                         if(re){
+                              req.carPoolSession.username = req.body.Email; //Coloco el username en el session
+                              //var user = new db_handler.user("Hector", "Jupiter", "hjupiter", "GKT-723", "123");
+                              //db_handler.crear_usuario(mariaClient, user, function(queryRes){
+                              //     console.log("asdsadsa");
+                              //    })
+                              //res.render('perfil.jade',req.body.Email);
+                                         // });                         
+                              res.redirect('/inicio/?');
+                         }
+                         else{
+                              res.redirect('/?error=' + 1);
+                         }
+                    });
+               });
+          }
+
+     });
 })
 
-app.get('/index', function (req, res) {
-  res.render('perfil.jade')
-})
-*/
 app.listen(8080);

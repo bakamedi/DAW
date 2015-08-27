@@ -17,7 +17,7 @@ block content
             div(id="inicio" class="col-lg-3 col-md-offset-1" style="background-color: #fff; border-radius: 15px;")
                 h1(class="text-primary text-center") 
                     strong Inicio de Sesi&oacuten
-                form(action="/autenticacion", method='post')
+                form(action="/inicio", method='post')
                     div(id="formUsuario" "form-group text-left")
                         label(for="InputUsuario") Usuario
                         input(id="Email" name="Email" type="text" class="form-control" placeholder="Usuario" autofocus="true" required)
@@ -42,41 +42,33 @@ block content
                     h4(class="modal-title text-primary" id="myModalLabel") Registrate
                 div(class="modal-body")
                     div(id="formRegistro" class="container-fluid")
-                        form(class="form-horizontal" onsubmit="return validarPlacaDetener()")
+                        form(action="/crear" class="form-horizontal" method="POST")
                             div(class="form-group")
                                 label(for="inputEmail3" class="col-sm-4 control-label") Usuario
                                 div(class="col-sm-8")
-                                    input(id="inUsuario" type="text" class="form-control" placeholder="Usuario ESPOL" required onkeyup="cargarDatosUsuario()")
+                                    input(id="inUsuario" type="text" class="form-control" placeholder="Usuario ESPOL" required name="inUsuario")
                             div(class="form-group")
                                 label(for="inputEmail3" class="col-sm-4 control-label") Contraseña
                                 div(class="col-sm-8")
-                                    input(id="inContraseña" type="password" class="form-control" placeholder="Contraseña ESPOL" required onkeyup="cargarDatosUsuario()")
-                            div(class="form-group")
-                                label(for="inputEmail3" class="col-sm-4 control-label") Apellido
-                                div(class="col-sm-8")
-                                    input(id="inApellido" type="text" class="form-control" placeholder="Apellido" readonly="")
-                            div(class="form-group")
-                                label(for="inputEmail3" class="col-sm-4 control-label") Contraseña
-                                div(class="col-sm-8")
-                                    input(id="inNewContraseña" type="password" class="form-control" placeholder="Contraseña" required)
-                            div(class="form-group")
-                                label(for="inputEmail3" class="col-sm-4 control-label") Confirmar Contraseña
-                                div(class="col-sm-8")
-                                    input(id="inConNewContraseña" type="password" class="form-control" placeholder="Confirmar Contraseña" required)
+                                    input(id="inContraseña" type="password" class="form-control" placeholder="Contraseña ESPOL" required name="inContraseña")
                             div(class="radio")
                                 label(class="col-sx-12 col-sm-offset-5")
-                                    input(id="rbTengo" type="radio" name="optionsRadios" value="option1" checked onclick="validarTengoCarro();")
+                                    input(id="rbTengo" type="radio" checked onclick="validarTengoCarro();" name="optionsRadios")
                                     |   Tengo Carro
                             div(class="radio")
                                 label(class="col-sx-12 col-sm-offset-5")
-                                    input(id="rbNoTengo" type="radio" name="optionsRadios" value="option1" onclick="validarNoTengoCarro();")
+                                    input(id="rbNoTengo" type="radio" onclick="validarNoTengoCarro();" name="optionsRadios")
                                     |   No Tengo Carro
                             div(id="formPlaca" class="form-group" style="padding-top: 5px;")
                                 label(for="inputEmail3" class="col-sm-4 control-label") Placa
                                 div(class="col-sm-8")
-                                    input(id="inPlaca" type="text" class="form-control" placeholder="Placa (Ej:ABC0123)" required onkeyup="validarPlaca();")
+                                    input(id="inPlaca" type="text" class="form-control" placeholder="Placa (Ej:ABC0123)" required name="inPlaca")
                                     p
                                         span(id="msmError" style="color:blue")
+                            div(class="form-group" id="formCapacidad" style="padding-top: 5px;")
+                                label(for="inputEmail3" class="col-sm-4 control-label") Capacidad
+                                div(class="col-sm-8")
+                                    input(id="inCapacidad" type="text" onkeypress="return justNumbers(event)" class="form-control" placeholder="Capacidad" required name="inCapacidad") 
                             div(class="form-group" style="text-align:right")
-                                button(type="button" class="btn btn-danger" data-dismiss="modal" onclick="limpiarCampos();") Cancelar
-                                button(type="submit" class="btn btn-primary" onclick="validarPlaca();") Unirse
+                                button(type="button" class="btn btn-danger" data-dismiss="modal") Cancelar
+                                button(type="submit" class="btn btn-primary") Unirse
