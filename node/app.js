@@ -2,7 +2,7 @@ var express 		= require('express');
 var bodyParser     	= require('body-parser');
 var morgan         	= require('morgan');
 var methodOverride 	= require('method-override');
-var sessions = require("client-sessions");
+var sessions 		= require("client-sessions");
 var soap 			= require('soap');
 var db_handler = require ('./db_handler');
 
@@ -74,11 +74,11 @@ app.get('/inicio', function (req, res) {
 app.get('/logout', function (req, res) {
   if(req.carPoolSession.username != null)
         req.carPoolSession.reset();  
-  res.redirect('/')
+  		res.redirect('/')
 })
 
 var url = 'http://ws.espol.edu.ec/saac/wsandroid.asmx?WSDL';
-app.post('/inicio', function (req, res){
+app.post('/autenticacion', function (req, res){
 	var args = {authUser: req.body.Email, authContrasenia: req.body.Password};	
 	soap.createClient(url, function(err, client) {
 	  	client.autenticacion(args, function(err, result) { 
@@ -87,16 +87,24 @@ app.post('/inicio', function (req, res){
                                 req.carPoolSession.username = req.body.Email; //Coloco el username en el session
                                // var user = new db_handler.user("Gabriel", "Aumala", req.carPoolSession.username, "GKT-723", 5, "HOLA MUNDOO!");
                                 //db_handler.crear_usuario(mariaClient, user, function(queryRes){
-	  			    res.render('perfil.jade',req.body.Email);
+	  			res.redirect('/inicio/?a='+1);
                                // });                         
-	  		}
-	  		else{
+                        }else{
+	  			//var f = misc.x();
+	  			//console.log(f);
 	  			res.redirect('/?error=' + 1);
 	  		}
 	  			
 	  	});
 	});
 })
+/*
+app.get('/', function (req, res) {
+  res.render('login.jade')
+})
 
+app.get('/index', function (req, res) {
+  res.render('perfil.jade')
+})
+*/
 app.listen(8080);
-

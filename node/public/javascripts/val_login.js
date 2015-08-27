@@ -1,15 +1,53 @@
-var a = "lhjhljk";
+/*var a = "lhjhljk";
 function h () {
     return a;
 }
 
 module.exports.x = h;
-
+*/
 function inicializar() {
     //var btnIngresar = document.getElementById("btnIngresar");
     //btnIngresar.addEventListener('click',validar, false);
-    
+    var url = document.URL;
+    var array = url.split("=");
+    var formUsuario = document.getElementById("formUsuario");
+    var formPassword = document.getElementById("formPassword");
+    var div = document.createElement("div");
+    var label = document.createElement("label");
+    var btn = document.createElement("button");
+    var spa = document.createElement("span");
+    var divInicio = document.getElementById("inicio");
+
+    if(array[1]==1){
+        spa.setAttribute("aria-hidden","true");
+        spa.innerHTML = "x";
+        spa.setAttribute("style","font-size: 15px;");
+
+        btn.setAttribute("class","close");
+        btn.setAttribute("data-dismiss","alert");
+        btn.setAttribute("aria-label","Close");
+        
+        label.setAttribute("style","font-size: 10px;");
+        label.innerHTML = "Usuario y/o contraseña incorrecta";
+
+        btn.appendChild(spa);
+
+        div.setAttribute("role", "alert");
+        div.setAttribute("id", "alertaIngreso");
+        div.setAttribute("style", "padding-top: 7px;");
+        div.setAttribute("style", "padding-bottom: 2px;");
+        div.setAttribute("class", "alert alert-warning alert-dismissible");
+
+        formPassword.setAttribute("class","has-error");
+        formUsuario.setAttribute("class","has-error");
+
+        div.appendChild(btn);
+        div.appendChild(label);
+        divInicio.appendChild(div);
+    }
 }
+
+
 
 function validar() {
 
@@ -34,7 +72,7 @@ function validar() {
     btn.setAttribute("aria-label","Close");
     
     label.setAttribute("style","font-size: 10px;");
-    label.innerHTML = "Email y/o contraseña incorrecta";
+    label.innerHTML = "Usuario y/o contraseña incorrecta";
 
     btn.appendChild(spa);
 
@@ -162,7 +200,7 @@ function limpiarCampos() {
 }
 
 function cargarUsuarios(){
-    server.h();
+    //location.href = "perfil.html?"+"nombre="+tempNombre;
     /*
     var request = new XMLHttpRequest;
     request.addEventListener('load',ingresar,false);
@@ -304,4 +342,4 @@ function verticalBounce() {
   })
 }
 
-//window.addEventListener('load', inicializar, false);
+window.addEventListener('load', inicializar, false);
