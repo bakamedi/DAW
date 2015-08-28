@@ -4,8 +4,7 @@ var morgan         	= require('morgan');
 var methodOverride 	= require('method-override');
 var sessions        = require("client-sessions");
 var soap 			= require('soap');
-var db_handler = require ('./db_handler');
-var credentials  = require ('./credentials');
+var db_handler      = require ('./db_handler');
 
 var app 			= express();
 
@@ -30,9 +29,9 @@ app.use(sessions({
 var Client = require('mariasql');
 var mariaClient = new Client();
 mariaClient.connect({
-      host: '127.0.0.1',
-      user: credentials.getUser(),
-      password: credentials.getPassword()
+     host: '127.0.0.1',
+     user: 'root',
+     password: 'root'
 });
 
 mariaClient.on('connect', function() {
@@ -126,7 +125,6 @@ app.post('/inicio', function (req, res){
 	  	client.autenticacion(args, function(err, result) { 
 	  		re = result.autenticacionResult;
 	  		if(re){
-<<<<<<< HEAD
                     //req.carPoolSession.username = req.body.Email; //Coloco el username en el session
                          var user = new db_handler.user("Hector", "Jupiter", "hjupiter", "GKT-723", "123");
                          db_handler.crear_usuario(mariaClient, user, function(queryRes){
@@ -136,16 +134,6 @@ app.post('/inicio', function (req, res){
                                // });                         
 	  		}
 	  		else{
-=======
-                                req.carPoolSession.username = req.body.Email; //Coloco el username en el session
-                               //var user = new db_handler.user("Gabriel", "Aumala", req.carPoolSession.username, "GKT-723", 5, "HOLA MUNDOO!");
-                                //db_handler.crear_usuario(mariaClient, user, function(queryRes){
-	  			res.redirect('/inicio/?a='+1);
-                               //});                         
-                        }else{
-	  			//var f = misc.x();
-	  			//console.log(f);
->>>>>>> b3d20f67afaaa582d3ec1b974ffddbf7d5845be0
 	  			res.redirect('/?error=' + 1);
 	  		}
 	  			
@@ -155,9 +143,9 @@ app.post('/inicio', function (req, res){
 */
 
 app.post('/inicio', function (req, res){
-     var userSolo = new db_handler.userSolo(req.body.Email);
-     db_handler.verificar_usuario(mariaClient,userSolo,function(queryRes){
-          if(queryRes.length == 0){
+     var user = new db_handler.userSolo(req.body.Email);
+     db_handler.verificar_usuario(mariaClient,user,function(queryRes){
+          if(queryRes[0].FALSE){
                res.redirect('/inicio');
                //el usuario no esta registrado
           }
@@ -177,7 +165,7 @@ app.post('/inicio', function (req, res){
                     });
                });
           }
-
+          
      });
 })
 

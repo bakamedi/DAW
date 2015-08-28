@@ -20,6 +20,26 @@ function executeQuery(connection, queryString, callback){
              });
     }
 
+  function executeQueryObtenerDatos(connection, queryString, callback){
+    var queryResult = [];
+        connection.query(queryString)
+                .on('result', function(res) {
+                    res.on('row', function(row) {
+                             console.log('Result row: ' + inspect(row));
+                             queryResult.push(row)
+                           })
+                       .on('error', function(err) {
+                                console.log('Result error: ' + inspect(err));
+                           })
+                          .on('end', function(info) {
+                                   console.log('Result finished successfully');
+                            })
+                })
+             .on('end', function endDBExecutionCallback() {
+                 callback(queryResult);
+             });
+    }
+
 module.exports = {
  
   user: function(nombre, apellido, username, placa, capacidad, bio) {
@@ -36,11 +56,8 @@ module.exports = {
         return str;
     };
       
-  }, 
-  crear_usuario: function (connection, usuario, callback) {
-    var queryStr = 'call rapidin.crear_usuario(' + usuario.toDBString() + ')';
-    executeQuery(connection, queryStr, callback);
   },
+
   userSolo: function(username) {
     this.username = username;
     this.toDBString = function(){
@@ -51,6 +68,17 @@ module.exports = {
     };
       
   }, 
-verificar_usuario: function (connection, usuario, callback) {
+
+  crear_usuario: function (connection, usuario, callback) {
+    var queryStr = 'call rapidin.crear_usuario(' + usuario.toDBString() + ')';
+    executeQuery(connection, queryStr, callback);
+  },
+
+  verificar_usuario: function (connection, usuario, callback) {
+      var queryStr = 'call rapidin.verificar_usuario('+ usuario.toDBString()+')';
+      executeQueryObtenerDatos(connection,queryStr,callback);
    }
 };
+
+
+

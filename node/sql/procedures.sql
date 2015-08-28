@@ -26,3 +26,17 @@ END;
 $$
 
 DELIMITER ;
+
+
+drop procedure if exists verificar_usuario;
+DELIMITER $$ 
+CREATE PROCEDURE verificar_usuario(username VARCHAR(20))
+begin
+	if ((select count(*) from usuario where usuario = username)>0) then
+		select true;
+	else
+		select false;
+	end if;
+end;
+$$
+DELIMITER ;
