@@ -1,0 +1,117 @@
+body {
+    background-image: url("../images/01.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color:#464646;
+    opacity: 0.9;
+}
+
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 2px;
+}
+
+@media screen and (max-width: 1200px) {
+    #descripcion {
+        visibility: hidden;
+        display: none;
+    }
+}
+
+@font-face {
+    font-family: "tu fuente";
+    src: url("../font/02.TTF") format("truetype");
+}
+
+h1,h4 { 
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+#formInUSuario label {
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#formInContraseña label {
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#formInCapacidad label {
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#formInPlaca label {
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#formUsuario input {
+    font-family: "Times New Roman", sans-serif !important;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#formInContraseña input {
+    font-family: "Times New Roman", sans-serif !important;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#formInCapacidad input {
+    font-family: "Times New Roman", sans-serif !important;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#formInPlaca input {
+    font-family: "Times New Roman", sans-serif !important;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+.radio {
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 20px;
+    font-weight: bold;
+    
+}
+
+
+#msmError {
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.slide{
+    width: 100%;
+    height: 300px;
+    margin: 2% auto;
+    position: relative;
+}
+ 
+.slide img{
+    width: 100%;
+    height: 300px;
+    position: absolute;
+}
+ 
+.slide .img2, .slide .img3 {
+    display: none;
+}

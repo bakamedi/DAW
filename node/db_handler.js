@@ -2,14 +2,15 @@ var inspect = require('util').inspect;
 
 module.exports = {
  
-  user: function(nombre, apellido, username, placa, capacidad) {
+  user: function(nombre, apellido, username, placa, capacidad, bio) {
     this.nombre = nombre;
     this.apellido = apellido;
     this.username = username;
     this.placa = placa;
     this.capacidad = capacidad;
+    this.bio = bio;
     this.toDBString = function(){
-        var str = "\"" + this.nombre + '\", \"' + this.apellido + '\", \"' + this.username + '\", \"' + this.placa + '\", \"' + this.capacidad + '\"';
+        var str = "\"" + this.nombre + '\", \"' + this.apellido + '\", \"' + username + '\", \"' + placa + '\", ' + capacidad + ', \"' + bio + '\"';
         str.replace('--', '');
         str.replace(';', '');
         return str;

@@ -121,7 +121,7 @@ function validar() {
     }
 }
 
-
+/*
 function validarTengoCarro(){
     var divPlaca = document.getElementById("formPlaca");
     var divCapacidad = document.getElementById("formCapacidad");
@@ -194,7 +194,7 @@ function validarPlacaDetener() {
     }
 }
 
-
+*/
 function limpiarCampos() { 
     var inUsuario = document.getElementById("inUsuario").value = "";
     var inContraseña = document.getElementById("inContraseña").value = "";
