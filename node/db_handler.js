@@ -38,27 +38,8 @@ module.exports = {
       
   }, 
   crear_usuario: function (connection, usuario, callback) {
-<<<<<<< HEAD
-    // whatever
-    queryResult = [];
-    console.log(usuario.toDBString());
-    console.log("sdfsdfsa");
-    connection.query('call rapidin.crear_usuario(' + usuario.toDBString() + ')')
-            .on('result', function(res) {
-                res.on('row', function(row) {
-                         console.log('Result row: ' + inspect(row));
-                         queryResult.push(row.Database)
-                       })
-                   .on('error', function(err) {
-                            console.log('Result error: ' + inspect(err));
-                       })
-                      .on('end', function(info) {
-                               console.log('Result finished successfully');
-                        })
-            })
-         .on('end', function () {
-             callback(queryResult);
-         });
+    var queryStr = 'call rapidin.crear_usuario(' + usuario.toDBString() + ')';
+    executeQuery(connection, queryStr, callback);
   },
   userSolo: function(username) {
     this.username = username;
@@ -71,31 +52,5 @@ module.exports = {
       
   }, 
 verificar_usuario: function (connection, usuario, callback) {
-    // whatever
-    queryResult = [];
-    console.log(usuario.toDBString());
-    console.log("sdfsdfsa");
-    connection.query('call rapidin.obtener_usuario(' + usuario.toDBString() + ')')
-            .on('result', function(res) {
-                res.on('row', function(row) {
-                         console.log('Result row: ' + inspect(row));
-                         queryResult.push(row)
-                       })
-                   .on('error', function(err) {
-                            console.log('Result error: ' + inspect(err));
-                       })
-                      .on('end', function(info) {
-                               console.log('Result finished successfully');
-                        })
-            })
-         .on('end', function () {
-          console.log(queryResult);
-             callback(queryResult);
-         });
-
-=======
-    var queryStr = 'call rapidin.crear_usuario(' + usuario.toDBString() + ')';
-    executeQuery(connection, queryStr, callback);
->>>>>>> b3d20f67afaaa582d3ec1b974ffddbf7d5845be0
-  }
+   }
 };

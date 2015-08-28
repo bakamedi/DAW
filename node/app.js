@@ -4,12 +4,8 @@ var morgan         	= require('morgan');
 var methodOverride 	= require('method-override');
 var sessions        = require("client-sessions");
 var soap 			= require('soap');
-<<<<<<< HEAD
-var db_handler      = require ('./db_handler');
-=======
 var db_handler = require ('./db_handler');
 var credentials  = require ('./credentials');
->>>>>>> b3d20f67afaaa582d3ec1b974ffddbf7d5845be0
 
 var app 			= express();
 
@@ -34,15 +30,9 @@ app.use(sessions({
 var Client = require('mariasql');
 var mariaClient = new Client();
 mariaClient.connect({
-<<<<<<< HEAD
-     host: '127.0.0.1',
-     user: 'root',
-     password: 'root'
-=======
       host: '127.0.0.1',
-        user: credentials.getUser(),
-          password: credentials.getPassword()
->>>>>>> b3d20f67afaaa582d3ec1b974ffddbf7d5845be0
+      user: credentials.getUser(),
+      password: credentials.getPassword()
 });
 
 mariaClient.on('connect', function() {
