@@ -86,10 +86,10 @@ app.post('/autenticacion', function (req, res){
 	  		re = result.autenticacionResult;
 	  		if(re){
                                 req.carPoolSession.username = req.body.Email; //Coloco el username en el session
-                               // var user = new db_handler.user("Gabriel", "Aumala", req.carPoolSession.username, "GKT-723", 5, "HOLA MUNDOO!");
+                               //var user = new db_handler.user("Gabriel", "Aumala", req.carPoolSession.username, "GKT-723", 5, "HOLA MUNDOO!");
                                 //db_handler.crear_usuario(mariaClient, user, function(queryRes){
 	  			res.redirect('/inicio/?a='+1);
-                               // });                         
+                               //});                         
                         }else{
 	  			//var f = misc.x();
 	  			//console.log(f);
