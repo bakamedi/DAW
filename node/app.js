@@ -30,8 +30,8 @@ var Client = require('mariasql');
 var mariaClient = new Client();
 mariaClient.connect({
      host: '127.0.0.1',
-     user: 'root',
-     password: 'root'
+     user: credentials.getUser(),
+     password: credentials.getPassword()
 });
 
 mariaClient.on('connect', function() {
@@ -93,7 +93,7 @@ app.post('/crear', function (req, res){
                if(re){
                     var userSolo = new db_handler.userSolo(req.body.inUsuario);
                     db_handler.verificar_usuario(mariaClient,userSolo,function(queryRes){
-                      if(queryRes.length == 0){
+                      if(queryRes[0].FALSE){
                         soap.createClient(url, function(err , client){
                           client.wsInfoUsuario(argsCrear, function(err, result){
                               var Nombres = result.wsInfoUsuarioResult.diffgram.NewDataSet.INFORMACIONUSUARIO.NOMBRES;

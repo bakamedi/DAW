@@ -6,26 +6,6 @@ function executeQuery(connection, queryString, callback){
                 .on('result', function(res) {
                     res.on('row', function(row) {
                              console.log('Result row: ' + inspect(row));
-                             queryResult.push(row.Database)
-                           })
-                       .on('error', function(err) {
-                                console.log('Result error: ' + inspect(err));
-                           })
-                          .on('end', function(info) {
-                                   console.log('Result finished successfully');
-                            })
-                })
-             .on('end', function endDBExecutionCallback() {
-                 callback(queryResult);
-             });
-    }
-
-  function executeQueryObtenerDatos(connection, queryString, callback){
-    var queryResult = [];
-        connection.query(queryString)
-                .on('result', function(res) {
-                    res.on('row', function(row) {
-                             console.log('Result row: ' + inspect(row));
                              queryResult.push(row)
                            })
                        .on('error', function(err) {
@@ -36,6 +16,7 @@ function executeQuery(connection, queryString, callback){
                             })
                 })
              .on('end', function endDBExecutionCallback() {
+              console.log(queryResult);
                  callback(queryResult);
              });
     }
@@ -76,7 +57,7 @@ module.exports = {
 
   verificar_usuario: function (connection, usuario, callback) {
       var queryStr = 'call rapidin.verificar_usuario('+ usuario.toDBString()+')';
-      executeQueryObtenerDatos(connection,queryStr,callback);
+      executeQuery(connection,queryStr,callback);
    }
 };
 
