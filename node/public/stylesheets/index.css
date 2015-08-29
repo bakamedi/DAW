@@ -60,6 +60,12 @@ h1,h4 {
     font-weight: bold;
 }
 
+#marque {
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 30px;
+    font-weight: bold;
+}
+
 #formRegistro input {
     font-family: "Times New Roman", sans-serif !important;
     font-size: 15px;
