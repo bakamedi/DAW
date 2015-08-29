@@ -40,3 +40,30 @@ begin
 end;
 $$
 DELIMITER ;
+
+drop procedure if exists obtener_usuario;
+
+DELIMITER $$
+
+CREATE PROCEDURE obtener_usuario(usuername VARCHAR(20))
+begin
+    begin
+    update usuario set nombre=nombre ,apellido=apellido ,placa=placa ,capacidadCarro=capacidad where usuario=usuario;
+end;
+
+$$
+
+DELIMITER;
+
+drop procedure if exists update_usuario;
+
+DELIMITER $$
+
+CREATE PROCEDURE update_usuario(nombre VARCHAR(45),apellido VARCHAR(45),usuername VARCHAR(20),placa VARCHAR(7),capacidad INT)
+begin
+    update usuario set nombre=nombre ,apellido=apellido ,placa=placa ,capacidadCarro=capacidad where usuario=usuario;
+END
+
+$$
+
+DELIMITER;

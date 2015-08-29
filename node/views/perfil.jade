@@ -9,8 +9,9 @@ block content
 				div(id="labelSeguidores-Siguiendo" style="padding:5px;")
 					div(class="row")
 						div(class="col-sm-8 text-center")
-							button(id="btnEditar" type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab")
-								span(class="glyphicon glyphicon-pencil" aria-hidden="true")
+							form(action="/editar" method="GET")
+								button(id="btnEditar" type="submit" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab")
+									span(class="glyphicon glyphicon-pencil" aria-hidden="true")
 							button(id="btnEditarFoto" type="button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab")
 								span(class="glyphicon glyphicon-open" aria-hidden="true")
 						form(action="/logout" method="GET")
@@ -21,7 +22,6 @@ block content
 						//label(id="labelSiguiendo") Siguiendo:
 					hr
 		div(class="row col-xs-12 text-center center-block")
-			form(action="/editar", method='post')
 				each perfil in listaPerfil
 					div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
 						label(id="labelNombrePerfil")=perfil.nombre
@@ -33,15 +33,7 @@ block content
 							label=perfil.capacidadCarro
 					div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
 						label(id="labelPlaca")=perfil.placa
-				hr
-				div(id="guardar" class="form-group")
-					div(class="col-offset-5 col-md-8 col-lg-12 center-block")
-						button(type="submit" id="btnGuardar" class="mdl-button mdl-js-button mdl-button--primary" value="Guardar" style='display:none')
-							span(class="glyphicon glyphicon-ok")
-						button(id="btnCancelar" type="reset" class="mdl-button mdl-js-button mdl-button--accent" value="Cancelar" style='display:none')
-							span(class="glyphicon glyphicon-remove")
-				div(id="divSuccess" class="alert alert-success alert-dismissable" style="display: none;")
-					button(type="button" class="close" data-dismiss="alert" aria-hidden="true") Se ha Guardado sus datos Exitosamente
+
 	nav(id="rutas-nav" class="columna")
 		div(id="div-rutas-nav")
 			div(id="rutaPerfil" class="text-center")
