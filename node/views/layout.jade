@@ -2,39 +2,42 @@ doctype html
 html
   head
     meta(name="viewport", content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum.scale=1.0")
+    block highPriorityScripts
     link(rel="stylesheet", href="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.blue-pink.min.css")
     link(rel="stylesheet", href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css")
     link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
     link(rel="stylesheet", href="/stylesheets/main_style.css")
-    link(rel="stylesheet", href="/stylesheets/perfil_style.css")
   body
-    div(class="mdl-layout mdl-js-layout mdl-layout--fixed-header")
-      header(class="mdl-layout__header")
-        div(class="mdl-layout__header-row")
-          span(class="mdl-layout-title") Rapid&iacuten Espol
-          span(id="pickRoute" class="blink-me subtitulo invisible") Escoge el inicio de la ruta en el mapa
-          div(class="mdl-layout-spacer")
-          nav(class="mdl-navigation mdl-layout--large-screen-only")
-            div(id="nuevaRuta" class="icon material-icons") add
-            div(class="mdl-tooltip" for="nuevaRuta") Nueva Ruta
-            div(id="followers-btn" class="icon material-icons") people
-            div(class="mdl-tooltip" for="followers-btn") Siguiendo
-            div(id="walking" class="icon material-icons") directions_run
-            div(class="mdl-tooltip" for="walking") No tengo carro...
-            div(id="miPerfil" class="icon material-icons") account_circle
-            div(class="mdl-tooltip" for="miPerfil") Mi Perfil
-      div(class="mdl-layout__drawer")
-        span(class="mdl-layout-title") Rapid&iacuten Espol
-        nav(class="mdl-navigation")
-          a(class="mdl-navigation__link") Perfil
-          a(class="mdl-navigation__link") No tengo carro
-          a(class="mdl-navigation__link") Seguidores
-          a(class="mdl-navigation__link") Siguiendo
-          a(class="mdl-navigation__link") Cerrar Sesi&oacuten
-      main(class="mdl-layout__content")
-        div(class="page-content")
-          block content
+    .container
+        block popups
+        div(class="mdl-layout mdl-js-layout mdl-layout--fixed-header")
+          header(class="mdl-layout__header")
+            div(class="mdl-layout__header-row")
+              span(class="mdl-layout-title") Rapid&iacuten Espol
+              span(id="pickRoute" class="blink-me subtitulo invisible") Escoge el inicio de la ruta en el mapa
+              div(class="mdl-layout-spacer")
+              nav(class="mdl-navigation mdl-layout--large-screen-only")
+                div(id="nuevaRuta" class="icon material-icons") add
+                div(class="mdl-tooltip" for="nuevaRuta") Nueva Ruta
+                div(id="followers-btn" class="icon material-icons") people
+                div(class="mdl-tooltip" for="followers-btn") Siguiendo
+                div(id="walking" class="icon material-icons") directions_run
+                div(class="mdl-tooltip" for="walking") No tengo carro...
+                div(id="miPerfil" class="icon material-icons") account_circle
+                div(class="mdl-tooltip" for="miPerfil") Mi Perfil
+          div(class="mdl-layout__drawer")
+            span(class="mdl-layout-title") Rapid&iacuten Espol
+            nav(class="mdl-navigation")
+              a(class="mdl-navigation__link") Perfil
+              a(class="mdl-navigation__link") No tengo carro
+              a(class="mdl-navigation__link") Seguidores
+              a(class="mdl-navigation__link") Siguiendo
+              a(class="mdl-navigation__link") Cerrar Sesi&oacuten
+          main(class="mdl-layout__content")
+            div(class="page-content")
+              block content
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     script(src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js")
     script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true")
     script(src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
+    block lowPriorityScripts
