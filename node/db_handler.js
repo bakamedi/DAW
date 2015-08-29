@@ -1,8 +1,8 @@
 var inspect = require('util').inspect;
 
-function executeQuery(connection, queryString, callback){
+function executeQuery(connection, queryString, object, callback){
     var queryResult = [];
-        connection.query(queryString)
+        connection.query(queryString, object)
                 .on('result', function(res) {
                     res.on('row', function(row) {
                              console.log('Result row: ' + inspect(row));
@@ -30,34 +30,25 @@ module.exports = {
     this.placa = placa;
     this.capacidad = capacidad;
     this.bio = bio;
-    this.toDBString = function(){
-        var str = "\"" + this.nombre + '\", \"' + this.apellido + '\", \"' + username + '\", \"' + placa + '\", ' + capacidad + ', \"' + bio + '\"';
-        str.replace('--', '');
-        str.replace(';', '');
-        return str;
-    };
-      
+          
   },
-
-  userSolo: function(username) {
-    this.username = username;
-    this.toDBString = function(){
-        var str = "\"" + username + '\"';
-        str.replace('--', '');
-        str.replace(';', '');
-        return str;
-    };
-      
-  }, 
-
+     
   crear_usuario: function (connection, usuario, callback) {
-    var queryStr = 'call rapidin.crear_usuario(' + usuario.toDBString() + ')';
-    executeQuery(connection, queryStr, callback);
+    var queryStr = 'call rapidin.crear_usuario(:nombre, :apellido, :username, :placa, :capacidad, :bio)';
+    var object = { nombre : usuario.nombre,
+                apellido : usuario.apellido,
+                username : usuario.username,
+                placa : usuario.placa,
+                capacidad : usuario.capacidad,
+                bio : usuario.bio
+    };
+    executeQuery(connection, queryStr, object, callback);
   },
 
-  verificar_usuario: function (connection, usuario, callback) {
-      var queryStr = 'call rapidin.verificar_usuario('+ usuario.toDBString()+')';
-      executeQuery(connection,queryStr,callback);
+  verificar_usuario: function (connection, username, callback) {
+      var queryStr = 'call rapidin.verificar_usuario(:username)';
+      var object = {username : username};
+      executeQuery(connection,queryStr, object, callback);
    }
 };
 

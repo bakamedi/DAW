@@ -5,7 +5,7 @@ var methodOverride 	= require('method-override');
 var sessions        = require("client-sessions");
 var soap 			= require('soap');
 var db_handler      = require ('./db_handler');
-
+var credentials      = require ('./credentials');
 var app 			= express();
 
 
@@ -91,8 +91,7 @@ app.post('/crear', function (req, res){
           client.autenticacion(args, function(err, result) { 
                re = result.autenticacionResult;
                if(re){
-                    var userSolo = new db_handler.userSolo(req.body.inUsuario);
-                    db_handler.verificar_usuario(mariaClient,userSolo,function(queryRes){
+                    db_handler.verificar_usuario(mariaClient,req.body.inUsuario,function(queryRes){
                       if(queryRes[0].FALSE){
                         soap.createClient(url, function(err , client){
                           client.wsInfoUsuario(argsCrear, function(err, result){
@@ -143,8 +142,7 @@ app.post('/inicio', function (req, res){
 */
 
 app.post('/inicio', function (req, res){
-     var user = new db_handler.userSolo(req.body.Email);
-     db_handler.verificar_usuario(mariaClient,user,function(queryRes){
+     db_handler.verificar_usuario(mariaClient,req.body.Email,function(queryRes){
           if(queryRes[0].FALSE){
                res.redirect('/inicio');
                //el usuario no esta registrado
