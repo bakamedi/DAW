@@ -30,8 +30,8 @@ var Client = require('mariasql');
 var mariaClient = new Client();
 mariaClient.connect({
      host: '127.0.0.1',
-     user: 'root',
-     password: 'root'
+     user: credentials.getUser(),
+     password: credentials.getPassword()
 });
 
 mariaClient.on('connect', function() {
