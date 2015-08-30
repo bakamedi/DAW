@@ -18,14 +18,14 @@ block content
                 h1(class="text-primary text-center") 
                     strong Registrese
                 form(action="/crear" class="form-horizontal" method="POST" onsubmit="return validarPlacaDetener()")
-                    div(class="form-group" id="formInUSuario")
+                    div(class="form-group" id="formInUSuario" style="display:none;")
                         label(for="inputEmail3" class="col-sm-4 control-label") Usuario
                         div(class="col-sm-8")
-                            input(type="text" class="form-control" placeholder="Usuario de la ESPOL" required name="inUsuario")
-                    div(class="form-group" id="formInContraseña")
+                            input(type="text" class="form-control" placeholder="Usuario de la ESPOL" required name="inUsuario" value=usu readonly)
+                    div(class="form-group" id="formInContraseña" style="display:none;")
                         label(for="inputEmail3" class="col-sm-4 control-label") Contraseña
                         div(class="col-sm-8")
-                            input(type="password" class="form-control" placeholder="Contraseña de la ESPOL" required name="inContraseña")
+                            input(type="password" class="form-control" placeholder="Contraseña de la ESPOL" required name="inContraseña" value=con readonly)
                     div(class="form-group radio")
                         label(class="col-sx-12 col-sm-offset-5")
                             input(name="optionsRadios" type="radio" checked onclick="validarTengoCarro()")
@@ -44,5 +44,9 @@ block content
                         label(for="inputEmail3" class="col-sm-4 control-label") Capacidad
                         div(class="col-sm-8")
                             input(id="inCapacidad" name="inCapacidad" type="text" class="form-control" required placeholder="3" onkeypress="return justNumbers(event)")
+                    div(class="form-group" id="formBiografia")
+                        label(for="inputEmail3" class="col-sm-4 control-label") Biografia
+                        div(class="col-sm-8")
+                            textarea(id="inBiografia" name="inBiografia" rows="3" class="form-control" placeholder="Escriba algo sobre usted")
                     div(class="form-group" style="text-align:center")
                         button(type="submit" class="btn btn-primary") Registrate

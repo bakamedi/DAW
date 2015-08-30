@@ -1,6 +1,9 @@
 extends layout_inicio
 
 block content
+    div(class="container-fluid")
+        h3(class="text-danger text-center bg-info") 
+            marquee(id="marque" behavior="slide") Red exclusiva para estudiantes/personal de ESPOL. usa tu usuario de ESPOL para obtener acceso
     div(class="container-fluid" style="padding-top: 10%;")
         div(class="row")
             div(id="descripcion" class="col-lg-4 col-md-offset-2" style="background-color: #fff; border-radius: 15px")
@@ -32,5 +35,3 @@ block content
                                     |   Remember me
                     div(class="form-group")
                         button(id="btnIngresar" type="submit" class="btn btn-primary text-left" onclick="cargarUsuarios();") Ingresar
-                form(action="/registro")
-                    button(type="submit" class="btn btn-warning") Registrate es Gratis!!
