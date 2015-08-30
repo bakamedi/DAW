@@ -30,15 +30,21 @@ block content
 								div(class="col-md-4")
 									div(class="radio")
 										if perfil.placa == "XXX0000"
-											label(class="radio-inline" for="radios-0") Si
-												input(type="radio" name="tieneCarro" id="carroSi" value="1" onclick="validarTengoCarro();")
-											label(for="radios-1" class="radio-inline") No
-												input(type="radio" name="tieneCarro" id="carroNo" value="2" onclick="validarNoTengoCarro();" checked)
+											label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1")
+												input(name="tieneCarro" type="radio" id="option-1" class="mdl-radio__button" value="1" onclick="validarTengoCarro();")
+												span(class="mdl-radio__label") Si
+											&nbsp;&nbsp;
+											label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2")
+												input(name="tieneCarro" type="radio" id="option-2" class="mdl-radio__button" value="2" onclick="validarNoTengoCarro();" checked)
+												span(class="mdl-radio__label")	No												
 										else 
-											label(class="radio-inline" for="radios-0") Si
-												input(type="radio" name="tieneCarro" id="carroSi" value="1" onclick="validarTengoCarro();" checked)
-											label(for="radios-1" class="radio-inline") No
-												input(type="radio" name="tieneCarro" id="carroNo" value="2" onclick="validarNoTengoCarro();")
+											label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1")
+												input(name="tieneCarro" type="radio" id="option-1" class="mdl-radio__button" value="1" onclick="validarTengoCarro();" checked)
+												span(class="mdl-radio__label") Si
+											&nbsp;&nbsp;
+											label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2")
+												input(name="tieneCarro" type="radio" id="option-2" class="mdl-radio__button" value="2" onclick="validarNoTengoCarro();")
+												span(class="mdl-radio__label") No
 
 							if perfil.placa == "XXX0000"
 								div(id="formInPlaca" class="form-group" style="display:none")
