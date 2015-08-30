@@ -1,12 +1,12 @@
-var express     = require('express');
+var express         = require('express');
 var bodyParser      = require('body-parser');
 var morgan          = require('morgan');
 var methodOverride  = require('method-override');
 var sessions        = require("client-sessions");
-var soap      = require('soap');
+var soap            = require('soap');
 var db_handler      = require ('./db_handler');
-var credentials      = require ('./credentials');
-var app       = express();
+var credentials     = require ('./credentials');
+var app             = express();
 
 
 //var misc = require('./public/javascripts/val_login');
@@ -91,7 +91,8 @@ app.post('/actualiza',function (req,res){
                                       req.body.apellido,
                                       req.carPoolSession.username,
                                       req.body.placa,
-                                      req.body.capacidadCarro);
+                                      req.body.capacidadCarro,
+                                      req.body.bio);
       db_handler.update_usuario(mariaClient,user,function(queryRes){
           var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
           db_handler.obtener_usuario(mariaClient,user,function(queryRes){
