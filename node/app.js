@@ -191,4 +191,9 @@ app.post('/inicio', function (req, res){
      });
 })
 
+
+app.get('/pass', function (req, res){
+    res.render('pasajero.jade');
+})
+
 app.listen(8080);

@@ -1,0 +1,18 @@
+[
+  { "name":"Cesar Madrid",
+       "time":"5m",
+       "dist":"8"
+  },
+  { "name":"Charlie Medina",
+       "time":"2h",
+       "dist":"74"
+  },
+  { "name":"Jeff Rivera",
+       "time":"35m",
+       "dist":"1325"
+  },
+  { "name":"Fausto Yerovi",
+        "time":"1h",
+        "dist":"2556"
+  }
+]
