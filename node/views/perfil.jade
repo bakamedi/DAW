@@ -57,40 +57,33 @@ block content
 									label=perfil.capacidadCarro
 					div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
 						label(id="labelBio")=perfil.bio
-
-
-				div(id="labelSeguidores-Siguiendo" style="padding:5px;")
-					div(class="row")
-						div(class="form-group col-xs-4")
-						div(class="form-group col-xs-1 col-md-1 col-lg-1")
-							form(action="/editar" method="GET")
-								div(class="fileUpload btn btn-default")
-									span(class="glyphicon glyphicon-pencil")
-									input(type="submit" class="upload")
-						//mensajeria
-						div(class="form-group col-xs-1 col-md-1 col-lg-1")
-							form(action="#" method="")
-								div(class="fileUpload btn btn-default")
-									span(class="glyphicon glyphicon-envelope")
-									input(type="submit" class="upload" data-toggle="modal" data-target="#myModal")
-						//imagen1
-						//div(class="form-group col-xs-1")
-						//	form(method="POST", enctype="multipart/form-data", action="/subir")
-						//		fieldset
-						//			label Seleccciona una imagen1
-						//			input(type="file" name="image")
-						//			br
-						//			button(type="submit" class="btn btn-danger") Subir
-						//imagen2
-						div(class="form-group col-xs-1 col-md-1 col-lg-1")
-							form(method="POST", enctype="multipart/form-data", action="/subir")
-								div(class="fileUpload btn btn-default")
-									span(class="glyphicon glyphicon-picture")
-									input(id="uploadBtn" type="file" class="upload" name="miarchivo")
-					div(class="text-center")
-						//label(id="labelSeguidores") Seguidores:
-					div(class="text-center")
-						//label(id="labelSiguiendo") Siguiendo:
+		div(class="row")
+			div(class="form-group col-xs-4")
+			div(class="form-group col-xs-1 col-md-1 col-lg-1")
+				form(action="/editar" method="GET")
+					div(class="fileUpload btn btn-default")
+						span(class="glyphicon glyphicon-pencil")
+						input(type="submit" class="upload")
+			//mensajeria
+			div(class="form-group col-xs-1 col-md-1 col-lg-1")
+				form(action="#" method="")
+					div(class="fileUpload btn btn-default")
+						span(class="glyphicon glyphicon-envelope")
+						input(type="submit" class="upload" data-toggle="modal" data-target="#myModal")
+			//imagen1
+			//div(class="form-group col-xs-1")
+			//	form(method="POST", enctype="multipart/form-data", action="/subir")
+			//		fieldset
+			//			label Seleccciona una imagen1
+			//			input(type="file" name="image")
+			//			br
+			//			button(type="submit" class="btn btn-danger") Subir
+			//imagen2
+			div(class="form-group col-xs-1 col-md-1 col-lg-1")
+				form(method="POST", enctype="multipart/form-data", action="/subir")
+					div(class="fileUpload btn btn-default")
+						span(class="glyphicon glyphicon-picture")
+						input(id="uploadBtn" type="file" class="upload" name="miarchivo")
 
 		
 

@@ -5,8 +5,8 @@ function inicializar() {
 
 function validarTengoCarro(){
     var divPlaca = document.getElementById("formInPlaca");
-    divPlaca.setAttribute("style","display:normal;");
     var inPlaca = document.getElementById("inPlaca").value="";
+    divPlaca.setAttribute("style","display:normal;");
 }
 
 function validarNoTengoCarro(){
@@ -54,7 +54,7 @@ function validarPlaca() {
         }
     }
 
-    if ((conLetras + conNum == 7) && conLetras == 3 && conNum == 4 && verificarUltimosNumeros==4 && verificarPrimerasSonLetras==3 && placa[3]=="-") {
+    if ((conLetras + conNum == 7) && conLetras == 3 && conNum == 4 && verificarUltimosNumeros==4 && verificarPrimerasSonLetras==3) {
         estadoNombre.innerHTML = "";
         //estadoNombre.style.color = "red";
     }
