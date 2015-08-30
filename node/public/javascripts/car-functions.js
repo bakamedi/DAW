@@ -35,7 +35,7 @@ function isValidHour(time){
 		return false;*/
 return true;
 }
-function cleanNewRouteForm(){
+function clearNewDataForm(){
     $('#routetime').val("");
     $('#routename').val("");
     $('#checkLunes').prop('checked', false);
@@ -58,9 +58,9 @@ function constructDays(){
 	return out;
 }
 
-function nuevaRuta(){
-    console.log("nuevaRuta");
-    if(!agregandoRuta){
+function nuevaMapData(){
+    console.log("nuevaMapData");
+    if(!agregandoData){
 
         clearRuta();
         escogerInicio();
@@ -71,25 +71,25 @@ function nuevaRuta(){
 
 
 function submitContent(){
-    var newRoute = [];
-    newRoute.name = $('#routename').val();
+    var myNewData = [];
+    myNewData.name = $('#routename').val();
     if(!isValidAlphaNumericName(replaceWhitespace(name))){
         console.log("wrong name");
         return;
     }
-    newRoute.hora = $('#routetime').val();
-    if(!isValidHour(newRoute.hora)){
+    myNewData.hora = $('#routetime').val();
+    if(!isValidHour(myNewData.hora)){
         console.log("wrong time");
         return;
     }
 
-    newRoute.dias = constructDays();
-    myRoutes[replaceWhitespace(newRoute.name)] = [start.position, end.position];
+    myNewData.dias = constructDays();
+    myRoutes[replaceWhitespace(myNewData.name)] = [start.position, end.position];
     clearRutasColumn();
-    addRoute(newRoute);
+    addRoute(myNewData);
     //getMyRoutes();
-    agregandoRuta = false;
-    console.log("chao " + agregandoRuta);
-    cleanNewRouteForm();
+    agregandoData = false;
+    console.log("chao " + agregandoData);
+    clearNewDataForm();
 }
     

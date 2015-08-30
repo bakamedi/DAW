@@ -10,13 +10,13 @@ function replaceWhitespace(name){
     return name.replace(' ', whitespace);
 }
 
-function cleanNewRouteForm(){
+function clearNewRouteForm(){
     $('#routename').val("");
 }
 
-function nuevaRuta(){
-    console.log("nuevaRuta");
-    if(!agregandoRuta){
+function nuevaMapData(){
+    console.log("nuevaMapData");
+    if(!agregandoData){
 
         clearRuta();
         escogerInicio();
@@ -43,8 +43,8 @@ function submitContent(){
     clearRutasColumn();
     addDest(newDest);
     //getMyRoutes();
-    agregandoRuta = false;
-    console.log("chao " + agregandoRuta);
-    cleanNewRouteForm();
+    agregandoData = false;
+    console.log("chao " + agregandoData);
+    clearNewDataForm();
 }
  

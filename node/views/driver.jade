@@ -6,8 +6,9 @@ block lowPriorityScripts
     script(src="/javascripts/maps.js")
 
 block menuIcons
-    div(id="nuevaRuta" class="icon material-icons") add
-    div(class="mdl-tooltip" for="nuevaRuta") Nueva Ruta
+    div(id="nuevaData" class="icon material-icons"
+    onclick="nuevaMapData();") add
+    div(class="mdl-tooltip" for="nuevaData") Nueva Ruta
     div(id="followers-btn" class="icon material-icons") people
     div(class="mdl-tooltip" for="followers-btn") Siguiendo
     div(id="walking" class="icon material-icons") directions_run
@@ -51,25 +52,25 @@ block content
                 input(class="mdl-textfield__input" type="text" id="routetime")
                 label(class="mdl-textfield__label" for="sample1") Hora de la ruta...
             label(class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkLunes")
-                input(type="checkbox" id="checkMartes" class="mdl-checkbox__input")
+                input(type="checkbox" id="checkLunes" class="mdl-checkbox__input")
                 span Lunes
             label(class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkMartes")
                 input(type="checkbox" id="checkMartes" class="mdl-checkbox__input")
                 span Martes
             label(class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkMiercoles")
-                input(type="checkbox" id="checkMartes" class="mdl-checkbox__input")
+                input(type="checkbox" id="checkMiercoles" class="mdl-checkbox__input")
                 span Mi&eacutercoles
             label(class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkJueves")
-                input(type="checkbox" id="checkMartes" class="mdl-checkbox__input")
+                input(type="checkbox" id="checkJueves" class="mdl-checkbox__input")
                 span Jueves
             label(class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkViernes")
-                input(type="checkbox" id="checkMartes" class="mdl-checkbox__input")
+                input(type="checkbox" id="checkViernes" class="mdl-checkbox__input")
                 span Viernes
             label(class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkSabado")
-                input(type="checkbox" id="checkMartes" class="mdl-checkbox__input")
+                input(type="checkbox" id="checkSabado" class="mdl-checkbox__input")
                 span S&aacutebado
             label(class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkDomingo")
-                input(type="checkbox" id="checkMartes" class="mdl-checkbox__input")
+                input(type="checkbox" id="checkDomingo" class="mdl-checkbox__input")
                 span Domingo
 
             button(id="submitRoute" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect savebtn mdl-button--accent") GUARDAR

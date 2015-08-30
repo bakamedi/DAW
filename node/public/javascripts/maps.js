@@ -6,7 +6,7 @@ var start;
 var end;
 var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
-var agregandoRuta = false;
+var agregandoData = false;
 var message;
 var blinkHandler = null;
 var currentPosition = null;
@@ -71,7 +71,7 @@ function finishNewRoute(){
 }
 
 function escogerInicio(){
-	agregandoRuta = true;
+	agregandoData = true;
         $("#pickRoute").attr("style", "");
 	$("#pickRoute").toggleClass("invisible");
         blinkHandler = setInterval(blinker, 1600);
@@ -98,8 +98,9 @@ function returnWhitespace(name){
 function addLatLng(event){
     //Agrega un nuevo marcador en el mapa
 		//
+    console.log("clicked :" + event.latLng.A + " " +  event.latLng.F);
     var marker = new google.maps.Marker({
-    		position: new google.maps.LatLng(event.latLng.A, event.latLng.F),
+    		position: event.latLng,
 				title: '#',
 				draggable:true,
 				map: map
@@ -110,14 +111,14 @@ function addLatLng(event){
 				pickRoute.innerHTML = "Selecciona el destino de la nueva ruta";
 				return;
     }
-    else if (end == null){
+    /*else if (end == null){
 			end = marker;
 			finishNewRoute();
 		}
-    else {
+    */else {
 				waypts.push(marker);
 				locations.push(marker.position);
-				end = marker;
+			//	end = marker;
 		}
 
     var request = {
@@ -232,7 +233,7 @@ function showDestino(name){
 
 function abortNewRoute(){
     $('#pickRoute').addClass('invisible');
-    agregandoRuta = false;
+    agregandoData = false;
 }
 
 //JQuery Events
@@ -240,6 +241,10 @@ $(document).ready( function(){
         //Guardar la nueva ruta
         $("body").on('click', '#submitRoute', function(){
                 submitContent();
+        });
+        $("body").on('click', '#nuevaDataPopup', function(){
+            console.log('nuevadata');
+            nuevaMapData();
         });
 
         //Mostrar gente cerca cuando das click a una ruta
