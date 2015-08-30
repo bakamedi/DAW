@@ -66,12 +66,48 @@ app.get('/inicio', function (req, res) {
   if(req.carPoolSession.username == null)
         res.redirect('/');
   else
-        res.render('perfil.jade')
+      /**
+      * obtiene los en la base con el usuario
+      **/
+      var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
+      db_handler.obtener_usuario(mariaClient,user,function(queryRes){
+           res.render('perfil.jade',{listaPerfil : queryRes});
+      });
 })
 
+/**
+* Pagina de editar perfil
+**/
+app.get('/editar',function (req,res){
+  var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
+      db_handler.obtener_usuario(mariaClient,user,function(queryRes){
+           res.render('editar_perfil.jade',{listaPerfil : queryRes});
+      });
+});
+
 app.get('/registro', function (req, res) {
-  res.render('registro.jade')
-})
+  res.render('registro.jade');
+});
+
+/**
+* actualiza perfil
+**/
+app.post('/actualiza',function (req,res){
+  if(req.carPoolSession.username == null)
+        res.redirect('/');
+  else
+      var user = new db_handler.user( req.body.nombre,
+                                      req.body.apellido,
+                                      req.carPoolSession.username,
+                                      req.body.placa,
+                                      req.body.capacidadCarro);
+      db_handler.update_usuario(mariaClient,user,function(queryRes){
+          var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
+          db_handler.obtener_usuario(mariaClient,user,function(queryRes){
+              res.redirect('/inicio');
+          });
+      });
+});
 
 /**
 * logout
