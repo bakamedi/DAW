@@ -51,35 +51,29 @@ block content
 									div(class="form-group")
 										label(class="col-md-4 control-label") Placa
 										div(class="col-md-4")
-											input(id="inPlaca" name="placa" type="text" placeholder="Ejemplo:GYE1234" class="form-control" value="#{perfil.placa}" required onkeyup="validarPlaca();")
+											input(id="inPlaca" name="placa" type="text" placeholder="Ejemplo:GYE1234" class="form-control" value="#{perfil.placa}" required)
 											p
 												span(id="msmError" style="color:blue")
 									div(class="form-group")
 										label(class="col-md-4 control-label") Capacidad Del Carro
 										div(class="col-md-4")
 											input(id="inCapacidad" name="capacidadCarro" type="number" placeholder="Capacidad" class="form-control" value="#{perfil.capacidadCarro}" min=1)
-									div(class="form-group center-block")
-										div(class="col-md-offset-5 col-md-8 col-lg-12 center-block ")
-											button(type="submit" id="btnGuardar" class="mdl-button mdl-js-button mdl-button--primary" value="Guardar")
-												span(class="glyphicon glyphicon-ok")
-											button(id="btnCancelar" type="reset" class="mdl-button mdl-js-button mdl-button--accent" value="Cancelar")
-												span(class="glyphicon glyphicon-remove")
 							else
 								div(id="formInPlaca" class="form-group" style="display:inline")
 									div(class="form-group")
 										label(class="col-md-4 control-label") Placa
 										div(class="col-md-4")
-											input(id="inPlaca" name="placa" type="text" placeholder="Ejemplo:GYE1234" class="form-control" value="#{perfil.placa}" required onkeyup="validarPlaca();")
+											input(id="inPlaca" name="placa" type="text" placeholder="Ejemplo:GYE1234" class="form-control" value="#{perfil.placa}" required)
 											p
 												span(id="msmError" style="color:blue")
 									div(class="form-group")
 										label(class="col-md-4 control-label") Capacidad Del Carro
 										div(class="col-md-4")
 											input(id="inCapacidad" name="capacidadCarro" type="number" placeholder="Capacidad" class="form-control" value="#{perfil.capacidadCarro}" min=1)
-									div(class="form-group center-block")
-										div(class="col-md-offset-5 col-md-8 col-lg-12 center-block ")
-											button(type="submit" id="btnGuardar" class="mdl-button mdl-js-button mdl-button--primary" value="Guardar")
-												span(class="glyphicon glyphicon-ok")
-											button(id="btnCancelar" type="reset" class="mdl-button mdl-js-button mdl-button--accent" value="Cancelar")
-												span(class="glyphicon glyphicon-remove")
+							div(class="form-group center-block")
+								div(class="col-md-offset-5 col-md-8 col-lg-12 center-block ")
+									button(type="submit" id="btnGuardar" class="mdl-button mdl-js-button mdl-button--primary" value="Guardar")
+										span(class="glyphicon glyphicon-ok")
+									button(id="btnCancelar" type="reset" class="mdl-button mdl-js-button mdl-button--accent" value="Cancelar")
+										span(class="glyphicon glyphicon-remove")
 	script(src='/javascripts/editar_perfil_val.js')
