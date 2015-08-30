@@ -21,12 +21,7 @@ html
           span(id="pickRoute" class="blink-me subtitulo invisible") Escoge el inicio de la ruta en el mapa
           div(class="mdl-layout-spacer")
           nav(class="mdl-navigation mdl-layout--large-screen-only")
-            div(id="nuevaRuta" class="icon material-icons") add
-            div(class="mdl-tooltip" for="nuevaRuta") Nueva Ruta
-            div(id="followers-btn" class="icon material-icons") people
-            div(class="mdl-tooltip" for="followers-btn") Siguiendo
-            div(id="walking" class="icon material-icons") directions_run
-            div(class="mdl-tooltip" for="walking") No tengo carro...
+            block menuIcons
             div(id="miPerfil" class="icon material-icons") account_circle
             div(class="mdl-tooltip" for="miPerfil") Mi Perfil
       div(class="mdl-layout__drawer")
