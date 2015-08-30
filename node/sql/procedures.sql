@@ -1,32 +1,22 @@
 use rapidin ;
 
 drop procedure if exists crear_usuario;
-
 DELIMITER $$ 
-
-
 create procedure crear_usuario(nombre VARCHAR(45), apellido VARCHAR(45), usuario VARCHAR(20), placa VARCHAR(7), capacidad INT, bio VARCHAR(140))
 begin
     insert into usuario (nombre,apellido,usuario,placa,capacidadCarro,bio) values(nombre, apellido, usuario, placa, capacidad,bio);
 END;
 $$
-
 DELIMITER ;
 
-
-
 drop procedure if exists obtener_usuario;
-
 DELIMITER $$ 
-
 create procedure obtener_usuario(usuarioInput VARCHAR(20))
 begin
     select nombre,apellido,placa,capacidadCarro from usuario where usuario=usuarioInput;
 END;
 $$
-
 DELIMITER ;
-
 
 drop procedure if exists verificar_usuario;
 DELIMITER $$ 
@@ -39,8 +29,6 @@ begin
 	end if;
 end;
 $$
-
-
 DELIMITER ;
 
 drop procedure if exists obtener_usuario;
@@ -50,18 +38,13 @@ begin
     select nombre,apellido,placa,capacidadCarro,bio from usuario where usuario=usuario;
 end;
 $$
-
 DELIMITER ;
+
 drop procedure if exists update_usuario;
-
 DELIMITER $$
-
-CREATE PROCEDURE update_usuario(nombre VARCHAR(45),apellido VARCHAR(45),usuername VARCHAR(20),placa VARCHAR(10),capacidad INT,bio VARCHAR(140))
+create procedure update_usuario(nombre VARCHAR(45),apellido VARCHAR(45),username VARCHAR(20),placa VARCHAR(10),capacidad INT,bio VARCHAR(140))
 begin
-    update usuario set nombre=nombre ,apellido=apellido ,placa=placa ,capacidadCarro=capacidad ,bio=bio where usuario=usuario;
-end;
-
+	update usuario set nombre=nombre ,apellido=apellido ,placa=placa ,capacidadCarro=capacidad ,bio=bio where usuario=username;
+END;
 $$
-
-DELIMITER;
-
+DELIMITER ;
