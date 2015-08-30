@@ -1,7 +1,6 @@
 extends layout
 
 block content
-	div(id="perfil" class="" style="height: 50%;width: 100%;")
 		div(class="row")
 			div(id="imagenPerfil" class=" col-xs-12 text-center")
 				div
@@ -9,9 +8,6 @@ block content
 				div(id="labelSeguidores-Siguiendo" style="padding:5px;")
 					div(class="row")
 						div(class="col-xs-7 text-center")
-
-						form(action="/logout" method="GET")
-							input(id="btnMensajes" type="submit" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" href="/logout")
 					div(class="text-center")
 						label(id="labelSeguidores") Seguidores:
 					div(class="text-center")

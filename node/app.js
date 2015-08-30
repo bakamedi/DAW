@@ -30,8 +30,8 @@ var Client = require('mariasql');
 var mariaClient = new Client();
 mariaClient.connect({
      host: '127.0.0.1',
-     user: credentials.getUser(),
-     password: credentials.getPassword()
+     user: 'root',
+     password: 'root'
 });
 
 mariaClient.on('connect', function() {
@@ -66,18 +66,12 @@ app.get('/inicio', function (req, res) {
   if(req.carPoolSession.username == null)
         res.redirect('/');
   else
-      /**
-      * obtiene los en la base con el usuario
-      **/
       var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
       db_handler.obtener_usuario(mariaClient,user,function(queryRes){
            res.render('perfil.jade',{listaPerfil : queryRes});
       });
 })
 
-/**
-* Pagina de editar perfil
-**/
 app.get('/editar',function (req,res){
   var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
       db_handler.obtener_usuario(mariaClient,user,function(queryRes){
@@ -89,9 +83,6 @@ app.get('/registro', function (req, res) {
   res.render('registro.jade');
 });
 
-/**
-* actualiza perfil
-**/
 app.post('/actualiza',function (req,res){
   if(req.carPoolSession.username == null)
         res.redirect('/');
@@ -121,26 +112,25 @@ app.get('/logout', function (req, res) {
 
 var url = 'http://ws.espol.edu.ec/saac/wsandroid.asmx?WSDL';
 app.post('/crear', function (req, res){
-     /*var args = {authUser: req.body.inUsuario, authContrasenia: req.body.inContraseña}; 
+     var args = {authUser: req.body.inUsuario, authContrasenia: req.body.inContraseña}; 
      var argsCrear = {usuario: req.body.inUsuario};
      soap.createClient(url, function(err, client) {
           client.autenticacion(args, function(err, result) { 
                re = result.autenticacionResult;
                if(re){
                     db_handler.verificar_usuario(mariaClient,req.body.inUsuario,function(queryRes){
-                      if(queryRes[0].FALSE){*/
-                        var argsCrear = {usuario: req.body.inUsuario};
+                      if(queryRes[0].FALSE){
                         soap.createClient(url, function(err , client){
                           client.wsInfoUsuario(argsCrear, function(err, result){
                               var Nombres = result.wsInfoUsuarioResult.diffgram.NewDataSet.INFORMACIONUSUARIO.NOMBRES;
                               var Apellidos = result.wsInfoUsuarioResult.diffgram.NewDataSet.INFORMACIONUSUARIO.APELLIDOS;
-                              //var bio = "--";
-                              var user = new db_handler.user(Nombres, Apellidos, req.body.inUsuario, req.body.inPlaca, req.body.inCapacidad,req.body.inBiografia);
+                              var bio = "--";
+                              var user = new db_handler.user(Nombres, Apellidos, req.body.inUsuario, req.body.inPlaca, req.body.inCapacidad,bio);
                               db_handler.crear_usuario(mariaClient,user,function(queryRes){
                                    res.redirect('/');
                               })
                           })
-                        })/*
+                        })
                       }
                       else{
                         res.redirect('/registro?error=' + 2);
@@ -152,7 +142,7 @@ app.post('/crear', function (req, res){
                }
                     
           });
-     });*/
+     });
 })
 /*
 app.post('/inicio', function (req, res){
@@ -179,10 +169,9 @@ app.post('/inicio', function (req, res){
 */
 
 app.post('/inicio', function (req, res){
-  /*
      db_handler.verificar_usuario(mariaClient,req.body.Email,function(queryRes){
           if(queryRes[0].FALSE){
-               res.redirect('/registro?error=' + 1);
+               res.redirect('/inicio');
                //el usuario no esta registrado
           }
           else{
@@ -202,28 +191,6 @@ app.post('/inicio', function (req, res){
                });
           }
           
-     });
-      */
-     var args = {authUser: req.body.Email, authContrasenia: req.body.Password}; 
-     soap.createClient(url, function(err, client) {
-            client.autenticacion(args, function(err, result) {
-                re = result.autenticacionResult;
-                if(re){
-                      db_handler.verificar_usuario(mariaClient,req.body.Email,function(queryRes){
-                          if(queryRes[0].FALSE){
-                              res.render('registro.jade',{usu: req.body.Email,con:req.body.Password})
-                          }
-                          else{
-                              req.carPoolSession.username = req.body.Email; 
-                              res.redirect('/inicio/?');  
-                          }
-                      });
-                }
-                else{
-                    res.redirect('/inicio?error=' + 1);
-                }
-
-            });
      });
 })
 
