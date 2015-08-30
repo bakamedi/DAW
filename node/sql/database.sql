@@ -16,8 +16,8 @@ create table ruta(
 idRuta INT not null AUTO_INCREMENT ,
 idUsuario INT not null ,
 nombreRuta varchar(45),
-diaSemana varchar(45),
-hora varchar(45),
+diaSemana varchar(14),
+hora SMALLINT,
 PRIMARY KEY(idRuta),
 foreign key (idUsuario) references usuario(idUsuario)
 );
@@ -25,9 +25,9 @@ foreign key (idUsuario) references usuario(idUsuario)
 create table puntoRuta(
 idPunto INT not null AUTO_INCREMENT ,
 idRuta INT not null,
-puntoX varchar(15),
-puntoY varchar(15),
-tipo varchar(10),
+puntoX DOUBLE(16,10),
+puntoY DOUBLE(16,10),
+tipo ENUM('START', 'MID', 'END'),
 PRIMARY KEY(idPunto),
 foreign key (idRuta) references ruta(idRuta)
 );
@@ -36,8 +36,8 @@ create table destino(
 idDestino INT not null AUTO_INCREMENT,
 idUsuario INT not null,
 nombreDestino varchar(45),
-destinoPosX varchar(15),
-destinoPosY varchar(15),
+destinoPosX DOUBLE(16,10),
+destinoPosY DOUBLE(16,10),
 PRIMARY KEY(idDestino),
 foreign key (idUsuario) references usuario(idUsuario)
 );
