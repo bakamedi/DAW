@@ -196,4 +196,9 @@ app.get('/pass', function (req, res){
     res.render('pasajero.jade');
 })
 
+app.get('/driver', function (req, res){
+    res.render('driver.jade');
+})
+
+
 app.listen(8080);
