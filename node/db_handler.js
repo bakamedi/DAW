@@ -50,20 +50,20 @@ module.exports = {
       executeQuery(connection,queryStr, object, callback);
    },
 
-   obtener_usuario: function (connection, usuario,callback){
+  obtener_usuario: function (connection, usuario,callback){
       var queryStr = 'call rapidin.obtener_usuario(:username)';
       var object = {username : usuario.username};
       executeQuery(connection,queryStr,object,callback);
    },
 
-   update_usuario: function(connection, usuario, callback){
+  update_usuario: function(connection, usuario, callback){
     var queryStr = 'call rapidin.update_usuario(:nombre, :apellido, :username, :placa, :capacidadCarro,:bio)';
     var object = { 
         nombre          : usuario.nombre,
         apellido        : usuario.apellido,
         username        : usuario.username,
         placa           : usuario.placa,
-        capacidadCarro  : usuario.capacidadCarro,
+        capacidadCarro  : usuario.capacidad,
         bio             : usuario.bio
     };
     executeQuery(connection, queryStr, object, callback);

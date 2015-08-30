@@ -47,7 +47,7 @@ drop procedure if exists obtener_usuario;
 DELIMITER $$
 CREATE PROCEDURE obtener_usuario(usuername VARCHAR(20))
 begin
-    select nombre,apellido,placa,capacidadCarro from usuario where usuario=usuario;
+    select nombre,apellido,placa,capacidadCarro,bio from usuario where usuario=usuario;
 end;
 $$
 

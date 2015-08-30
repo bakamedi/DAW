@@ -4,8 +4,11 @@ var morgan          = require('morgan');
 var methodOverride  = require('method-override');
 var sessions        = require("client-sessions");
 var soap            = require('soap');
-var db_handler      = require ('./db_handler');
-var credentials     = require ('./credentials');
+var db_handler      = require('./db_handler');
+var credentials     = require('./credentials');
+//uploading files wiht formidable
+//var formidable      = require('formidable');
+//var uploads         = require('./uploads')
 var app             = express();
 
 
@@ -13,10 +16,12 @@ var app             = express();
 
 
 app.use(express.static(__dirname + '/public'));       // set the static files location /public/img will be /img for users
+app.use(express.static(__dirname + '/public/images'));
 app.use(morgan('dev'));                           // log every request to the console
 app.use(bodyParser.urlencoded({ extended: false }));    // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());                 // parse application/json
 app.use(methodOverride());
+//app.use(bodyParser.({uploadDIr:'./uploads'}));
 
 app.use(sessions({
   cookieName: 'carPoolSession', // cookie name dictates the key name added to the request object
@@ -35,14 +40,14 @@ mariaClient.connect({
 });
 
 mariaClient.on('connect', function() {
-       console.log('Client connected');
-        })
- .on('error', function(err) {
-        console.log('Client error: ' + err);
-         })
- .on('close', function(hadError) {
-        console.log('Client closed');
-         });
+  console.log('Client connected');
+  })
+  .on('error', function(err) {
+  console.log('Client error: ' + err);
+   })
+  .on('close', function(hadError) {
+  console.log('Client closed');
+ });
 
 
 
@@ -78,6 +83,18 @@ app.get('/editar',function (req,res){
            res.render('editar_perfil.jade',{listaPerfil : queryRes});
       });
 });
+
+/*
+app.post('/subir', function upload(req, res){
+ var form = new formidable.IncomingForm();
+ form.parse(req, function (err, fields, files) {
+  res.writeHead(200, {'content-type': 'text/plain'});
+  res.end('File uploaded!');
+  console.log("Upload completed");
+  console.log(util.inspect(files));
+ });
+});
+*/
 
 app.get('/registro', function (req, res) {
   res.render('registro.jade');
