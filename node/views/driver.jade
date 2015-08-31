@@ -48,9 +48,22 @@ block content
                 id="routename")
                 label(class="mdl-textfield__label" for="sample1") Nombre...
                 span.mdl-textfield__error S&oacutelo se permiten letras y n&uacutemeros
-            div(class="mdl-textfield mdl-js-textfield textfield-demo newroute-form")
-                input(class="mdl-textfield__input" type="text" id="routetime")
-                label(class="mdl-textfield__label" for="sample1") Hora de la ruta...
+            label Hora de partida
+            div(class="newroute-form")
+                select#routehour
+                    - for(var hour = 0; hour < 24; hour++)
+                      if(hour < 10)
+                        option 0#{hour}
+                      else
+                        option #{hour}
+                label :
+                select#routemin
+                    - for(var min = 0; min < 60; min++)
+                      if(min < 10)
+                        option 0#{min}
+                      else
+                        option #{min}
+            br
             label(class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkLunes")
                 input(type="checkbox" id="checkLunes" class="mdl-checkbox__input")
                 span Lunes

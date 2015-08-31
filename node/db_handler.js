@@ -45,6 +45,7 @@ var inspect = require('util').inspect;
 /** End MariaSQL */
 function executeQuery(queryString, object, callback){
     var queryResult = [];
+    console.log(object);
         mariaClient.query(queryString, object)
                 .on('result', function(res) {
                     res.on('row', function(row) {
@@ -121,7 +122,7 @@ module.exports = {
   insertar_ruta: function(route, puntos, callback){
     var queryStr = 'call rapidin.insertar_ruta(:username, :nombre, :dias, :hora)';
     var object = { 
-        username        : route.idUser,
+        username        : route.iduser,
         nombre          : route.nombre,
         dias            : route.dias,
         hora            : route.hora
@@ -129,12 +130,14 @@ module.exports = {
     executeQuery(queryStr, object, callback);
     var newRoute = new Route({
         userId : route.idUser,
-        nombre : route.nombre,
+        name : route.nombre,
         points : puntos
    });
    newRoute.save(function (err, newRoute){
-       if(err)
+       if(err){
+           console.log("Error  al guardar con mongoose");
            return console.error(err);
+       }
    });
   }
 

@@ -15,29 +15,14 @@ function getPageType(){
 }
 
 
-function isValidHour(time){
-	var i;
-	for(i = 0; i < time.length; i++){
-		var c = time.charAt(i);
-		var code = time.charCodeAt(i);
-		if (!(code > 47 && code < 58 ) && !(c == ':'))
-			return false;
+function getTimeInteger(time){
+        var hour = $("#routehour").index();
+        var min = $("#routemin").index();
+        return hour * 60 + min;
 	}
-	if(time.indexOf(':') == -1)
-		return false;
-	var arr = time.split(':');
-	if(arr.length > 2)
-		return false;
-	/*
-	if((parseInt(arr[0]) < 0) || (parseInt(arr[0]) > 23))
-		return false;
-	if((parseInt(arr[1]) < 0) || (parseInt(arr[1]) > 59))
-		return false;*/
-return true;
-}
 function clearNewDataForm(){
-    $('#routetime').val("");
-    $('#routename').val("");
+    $('#routetime').index(0);
+    $('#routemin').index(0);
     $('#checkLunes').prop('checked', false);
     $('#checkMartes').prop('checked', false);
     $('#checkMiercoles').prop('checked', false);
@@ -48,14 +33,23 @@ function clearNewDataForm(){
 }
 function constructDays(){
 	var out = "";
-	out += checkDay('Lunes');
-	out += checkDay('Martes');
-	out += checkDay('Miercoles');
-	out += checkDay('Jueves');
-	out += checkDay('Viernes');
-	out += checkDay('Sabado');
-	out += checkDay('Domingo');
-	return out;
+	if(checkDay('Lunes'))
+            out += ",l"; 
+        if(checkDay('Martes'))
+            out += ",m"; 
+        if(checkDay('Miercoles'))
+            out += ",x"; 
+        if(checkDay('Jueves'))
+            out += ",j"; 
+        if(checkDay('Viernes'))
+            out += ",v"; 
+        if(checkDay('Sabado'))
+            out += ",s"; 
+        if(checkDay('Domingo'))
+            out += ",d"; 
+        if(out.length > 0)
+            return out.substring(1);
+        else return "";
 }
 
 function nuevaMapData(){
@@ -77,19 +71,43 @@ function submitContent(){
         console.log("wrong name");
         return;
     }
-    myNewData.hora = $('#routetime').val();
-    if(!isValidHour(myNewData.hora)){
-        console.log("wrong time");
+    
+    myNewData.dias = constructDays();
+    if(myNewData.dias.length == 0)
+    {
+        console.log("wrong days");
         return;
     }
 
-    myNewData.dias = constructDays();
-    myRoutes[replaceWhitespace(myNewData.name)] = [start.position, end.position];
-    clearRutasColumn();
-    addRoute(myNewData);
-    //getMyRoutes();
-    agregandoData = false;
-    console.log("chao " + agregandoData);
-    clearNewDataForm();
-}
+    myNewData.hora = getTimeInteger();
+
+    var positions = [];
+    var obj = [];
+    obj.x = start.position.G;
+    obj.y = start.position.K;
+    positions.push(obj);
+
+    obj = [];
+    obj.x = end.position.G;
+    obj.y = end.position.K;
+    positions.push(obj);
+
+    console.log("waypts listos" + positions + " " + myNewData.hora + " " + myNewData.name + " " + myNewData.dias);
+    $.post( "/nuevaRuta",
+            { 
+                nombre : myNewData.name,
+                dias   : myNewData.dias,
+                puntos : positions,
+                hora   : myNewData.hora 
+            },
+            function( data ) {
+                myRoutes[replaceWhitespace(myNewData.name)] = [start.position, end.position];
+                clearRutasColumn();
+                addRoute(myNewData);
+                //getMyRoutes();
+                agregandoData = false;
+                console.log("chao " + agregandoData);
+                clearNewDataForm();
+            });
+    }
     

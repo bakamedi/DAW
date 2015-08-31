@@ -198,5 +198,12 @@ app.get('/driver', function (req, res){
     res.render('driver.jade');
 })
 
-
+app.post('/nuevaRuta', function (req, res){
+    /*if(req.carPoolSession.username == null)
+        res.redirect('/');
+    else{*/
+        var nuevaRuta = new db_handler.ruta('gaumala', req.body.nombre, req.body.dias, req.body.hora);
+        db_handler.insertar_ruta(nuevaRuta, req.body.puntos,function(queryRes){
+        });
+})
 app.listen(8080);
