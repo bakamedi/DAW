@@ -2,24 +2,23 @@ create database rapidin;
 use rapidin;
 
 create table usuario(
-idUsuario INT NOT NULL AUTO_INCREMENT ,
+usuario varchar(20) NOT NULL,
 nombre varchar(45) ,
 apellido varchar(45),
-usuario varchar(20) ,
 placa varchar(8),
 capacidadCarro int,
 bio varchar(140),
-PRIMARY KEY (idUsuario)
+PRIMARY KEY (usuario)
 );
 
 create table ruta(
 idRuta INT not null AUTO_INCREMENT ,
-idUsuario INT not null ,
+usuario varchar(20) not null ,
 nombreRuta varchar(45),
 diaSemana varchar(45),
 hora varchar(45),
 PRIMARY KEY(idRuta),
-foreign key (idUsuario) references usuario(idUsuario)
+foreign key (usuario) references usuario(usuario)
 );
 
 create table puntoRuta(
@@ -34,27 +33,27 @@ foreign key (idRuta) references ruta(idRuta)
 
 create table destino(
 idDestino INT not null AUTO_INCREMENT,
-idUsuario INT not null,
+usuario varchar(20) not null,
 nombreDestino varchar(45),
 destinoPosX varchar(15),
 destinoPosY varchar(15),
 PRIMARY KEY(idDestino),
-foreign key (idUsuario) references usuario(idUsuario)
+foreign key (usuario) references usuario(usuario)
 );
 
 create table seguidores_siguiendo(
 idSeguidorSiguiente INT not null AUTO_INCREMENT,
-idUsuario1Siguiendo INT not null,
-idUsuario2Seguidor INT not null,
+idUsuario1Siguiendo varchar(20) not null,
+idUsuario2Seguidor varchar(20) not null,
 PRIMARY KEY(idSeguidorSiguiente),
-foreign key(idUsuario1Siguiendo) references usuario(idUsuario),
-foreign key(idUsuario2Seguidor ) references usuario(idUsuario)
+foreign key(idUsuario1Siguiendo) references usuario(usuario),
+foreign key(idUsuario2Seguidor ) references usuario(usuario)
 );
 
 create table mensaje(
 idMensaje INT not null AUTO_INCREMENT,
-idUsuarioRemitente INT not null,
-idUsuarioRemisor INT not null,
+idUsuarioRemitente varchar(20) not null,
+idUsuarioRemisor varchar(20) not null,
 contenido varchar(280),
 fecha varchar(10),
 ubicacionActual varchar(45),
@@ -63,19 +62,19 @@ PRIMARY KEY(idMensaje)
 
 create table viaje(
 idViaje INT not null AUTO_INCREMENT,
-idUsuario INT not null,
+usuario varchar(20) not null,
 idRuta INT not null,
 fecha varchar(10),
 PRIMARY KEY(idViaje), 
-foreign key(idUsuario) references usuario(idUsuario),
+foreign key(usuario) references usuario(usuario),
 foreign key(idRuta) references ruta(idRuta)
 );
 
 create table pasajero(
 idPasajero INT not null AUTO_INCREMENT,
-idUsuario INT not null ,
+usuario INT not null ,
 idViaje INT not null ,
 PRIMARY KEY(idPasajero),
 foreign key(idViaje) references viaje(idViaje),
-foreign key(idUsuario) references usuario(idUsuario)
+foreign key(usuario) references usuario(usuario)
 );

@@ -1,0 +1,10 @@
+extends layout
+
+block content
+	div(class="row")
+		div(class="col-xs-offset-5")
+		div(class="col-xs-5")
+			form(action="upload" enctype="multipart/form-data" method="post")
+				input(type="text" name="title")
+				input(type="file" name="upload")
+				input(type="submit" value="Upload")

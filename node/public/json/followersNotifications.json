@@ -1,0 +1,18 @@
+[
+	{ "name":"Bakke Medina",
+		"ready":"1",
+		"dist":"2"
+	},
+  { "name":"Carlos Gualan",
+		"ready":"1",
+		"dist":"100"
+	},
+  { "name":"Luis Andrade",
+		"ready":"1",
+		"dist":"1200"
+	},
+	{ "name":"Hector Júpiter",
+		"ready":"0",
+		"dist":"2500"
+	}
+]

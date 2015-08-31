@@ -1,0 +1,60 @@
+extends layout
+
+block lowPriorityScripts
+    script(src="/javascripts/clientAPI.js")
+    script(src="/javascripts/walk-functions.js")
+    script(src="/javascripts/maps.js")
+
+block menuIcons
+    div(id="nuevaData" class="icon material-icons") add
+    div(class="mdl-tooltip" for="nuevaData") Nuevo Destino
+    div(id="followers-btn" class="icon material-icons") people
+    div(class="mdl-tooltip" for="followers-btn") Siguiendo
+    div(id="walking" class="icon material-icons") directions_car
+    div(class="mdl-tooltip" for="walking") Ando en carro...
+
+
+block popups
+    div(class="modal fade" id="myModal_siguiendo" role="dialog")
+                div.modal-dialog
+                    div.modal-content
+                        div.modal-header
+                            button(type="button" class="close" data-dismiss="modal") &times;
+                            h4.modal-title Seguidores
+                        div.modal-body
+                            div.container-fluid
+                                div.row
+                                    div(id="bus_seguidores" class="col-md-9")
+                                        //Expandable  Textfield
+                                        form(action="#")
+                                            div(class="mdl-textfield mdl-js-textfield mdl-textfield--expandable textfield-demo")
+                                                label(class="mdl-button mdl-js-button mdl-button--icon" for="sample6")
+                                                    i(class="material-icons") search
+                                                div.mdl-textfield__expandable-holder
+                                                    input(class="mdl-textfield__input" type="text" id="sample6")
+                                                    label(class="mdl-textfield__label" for="sample-expandable") Expandable Input
+                                div(id="followersRow" class="row")
+                        div.modal-footer
+                            button(type="button" class="btn btn-default" data-dismiss="modal") Close
+
+block content
+    nav(id="rutas-nav" class="columna")
+        ul(id="rutasUL" class="nav nav-pills nav-stacked")
+        form(id="newRouteForm" class="invisible" style="margin:6px" onsubmit="return false")
+            h3.form-text Nuevo Destino
+            br
+            div(class="mdl-textfield mdl-js-textfield textfield-demo newroute-form")
+                input(class="mdl-textfield__input" patttern="[A-Z,a-z, ]*" type="text"
+                id="routename")
+                label(class="mdl-textfield__label" for="sample1") Nombre...
+                span.mdl-textfield__error S&oacutelo se permiten letras y n&uacutemeros
+                button(id="submitRoute" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect savebtn mdl-button--accent") GUARDAR
+    //Google Map
+    #map-canvas
+    nav(id="follower-nav" class="columna")
+        #active-follower-list
+            p#emptyNotif No hay datos.<br>Selecciona un destino.
+        div(class="mdl-textfield mdl-js-textfield textfield-demo search-box")
+            input(class="mdl-textfield__input" type="text" id="sample1")
+            label(class="mdl-textfield__label" for="sample1") Search...
+    
