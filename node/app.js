@@ -33,31 +33,34 @@ app.use(sessions({
 * Pagina de login
 **/
 app.get('/', function (req, res) {
-  if(req.carPoolSession.username != null)
-        res.redirect('/inicio');
-  else
-        res.render('login.jade')
+  if(req.carPoolSession.username != null){
+    res.redirect('/inicio');
+  }
+  else{
+    res.render('login.jade');
+  }
 })
 
 /**
 * Pagina de perfil
 **/
 app.get('/inicio', function (req, res) {
-  if(req.carPoolSession.username == null)
-        res.redirect('/');
+  if(req.carPoolSession.username == null){
+    res.redirect('/');
+  }
   else{
-      console.log(req.carPoolSession.username);
-      var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
-      db_handler.obtener_usuario(user,function(queryRes){
-           res.render('perfil.jade',{listaPerfil : queryRes});
-      });
+    console.log(req.carPoolSession.username);
+    var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
+    db_handler.obtener_usuario(user,function(queryRes){
+         res.render('perfil.jade',{listaPerfil : queryRes,usuario : req.carPoolSession.username});
+    });
   }
 })
 
 app.get('/editar',function (req,res){
   var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
       db_handler.obtener_usuario(user,function(queryRes){
-           res.render('editar_perfil.jade',{listaPerfil : queryRes});
+           res.render('editar_perfil.jade',{listaPerfil : queryRes,usuario : req.carPoolSession.username});
       });
 });
 
@@ -78,9 +81,9 @@ app.get('/registro', function (req, res) {
 });
 
 app.post('/actualiza',function (req,res){
-  if(req.carPoolSession.username == null)
+  if(req.carPoolSession.username == null){
         res.redirect('/');
-  else{
+  }else{
       var user = new db_handler.user( req.body.nombre,
                                       req.body.apellido,
                                       req.carPoolSession.username,
@@ -101,8 +104,9 @@ app.post('/actualiza',function (req,res){
 * Esto deberia de ser un post, pero por ahora por conveniencia es un get.
 **/
 app.get('/logout', function (req, res) {
-  if(req.carPoolSession.username != null)
-        req.carPoolSession.reset();  
+  if(req.carPoolSession.username != null){
+        req.carPoolSession.reset();
+  }
   res.redirect('/')
 })
 

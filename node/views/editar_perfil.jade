@@ -15,70 +15,71 @@ block content
 						label(id="labelSiguiendo") Siguiendo:
 			div(class="row text-center center-block")
 				div(class="form-group .col-md-3 .col-md-offset-5")
-					form(class="form-horizontal" action="/actualiza" method="POST")
+					form(id="formularioUsuarioEditar" class="form-horizontal" action="/actualiza" method="POST")
 						each perfil in listaPerfil
-							div(class="form-group")
-								label(class="col-md-4 control-label") Nombres
-								div(class="col-md-4")
-									input(name="nombre" type="text" placeholder="Nombres" class="form-control" value="#{perfil.nombre}")
-							div(class="form-group")
-								label(class="col-md-4 control-label") Apellidos
-								div(class="col-md-4")
-									input(name="apellido" type="text" placeholder="Apellidos" class="form-control" value="#{perfil.apellido}")
-							div(class="form-group")
-								label(class="col-md-4 control-label" for="radios") Tiene Carro
-								div(class="col-md-4")
-									div(class="radio")
-										if perfil.placa == "XXX0000"
-											label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1")
-												input(name="tieneCarro" type="radio" id="option-1" class="mdl-radio__button" value="1" onclick="validarTengoCarro();")
-												span(class="mdl-radio__label") Si
-											&nbsp;&nbsp;
-											label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2")
-												input(name="tieneCarro" type="radio" id="option-2" class="mdl-radio__button" value="2" onclick="validarNoTengoCarro();" checked)
-												span(class="mdl-radio__label")	No												
-										else 
-											label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1")
-												input(name="tieneCarro" type="radio" id="option-1" class="mdl-radio__button" value="1" onclick="validarTengoCarro();" checked)
-												span(class="mdl-radio__label") Si
-											&nbsp;&nbsp;
-											label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2")
-												input(name="tieneCarro" type="radio" id="option-2" class="mdl-radio__button" value="2" onclick="validarNoTengoCarro();")
-												span(class="mdl-radio__label") No
+							if perfil.usuario == usuario
+								div(class="form-group")
+									label(class="col-md-4 control-label") Nombres
+									div(class="col-md-4")
+										input(name="nombre" type="text" placeholder="Nombres" class="form-control" value="#{perfil.nombre}")
+								div(class="form-group")
+									label(class="col-md-4 control-label") Apellidos
+									div(class="col-md-4")
+										input(name="apellido" type="text" placeholder="Apellidos" class="form-control" value="#{perfil.apellido}")
+								div(class="form-group")
+									label(class="col-md-4 control-label" for="radios") Tiene Carro
+									div(class="col-md-4")
+										div(class="radio")
+											if perfil.placa == "XXX0000"
+												label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1")
+													input(name="tieneCarro" type="radio" id="option-1" class="mdl-radio__button" value="1" onclick="validarTengoCarro();")
+													span(class="mdl-radio__label") Si
+												&nbsp;&nbsp;
+												label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2")
+													input(name="tieneCarro" type="radio" id="option-2" class="mdl-radio__button" value="2" onclick="validarNoTengoCarro();" checked)
+													span(class="mdl-radio__label")	No												
+											else 
+												label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1")
+													input(name="tieneCarro" type="radio" id="option-1" class="mdl-radio__button" value="1" onclick="validarTengoCarro();" checked)
+													span(class="mdl-radio__label") Si
+												&nbsp;&nbsp;
+												label(class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2")
+													input(name="tieneCarro" type="radio" id="option-2" class="mdl-radio__button" value="2" onclick="validarNoTengoCarro();")
+													span(class="mdl-radio__label") No
 
-							if perfil.placa == "XXX0000"
-								div(id="formInPlaca" class="form-group" style="display:none")
-									div(class="form-group")
-										label(class="col-md-4 control-label") Placa
-										div(class="col-md-4")
-											input(id="inPlaca" name="placa" type="text" placeholder="Ejemplo:GYE1234" class="form-control" value="#{perfil.placa}" required)
-											p
-												span(id="msmError" style="color:blue")
-									div(class="form-group")
-										label(class="col-md-4 control-label") Capacidad Del Carro
-										div(class="col-md-4")
-											input(id="inCapacidad" name="capacidadCarro" type="number" placeholder="Capacidad" class="form-control" value="#{perfil.capacidadCarro}" min=0)
-							else
-								div(id="formInPlaca" class="form-group" style="display:inline")
-									div(class="form-group")
-										label(class="col-md-4 control-label") Placa
-										div(class="col-md-4")
-											input(id="inPlaca" name="placa" type="text" placeholder="Ejemplo:GYE1234" class="form-control" value="#{perfil.placa}" required)
-											p
-												span(id="msmError" style="color:blue")
-									div(class="form-group")
-										label(class="col-md-4 control-label") Capacidad Del Carro
-										div(class="col-md-4")
-											input(id="inCapacidad" name="capacidadCarro" type="number" placeholder="Capacidad" class="form-control" value="#{perfil.capacidadCarro}" min=0)
-							div(class="form-group")
-								label(class="col-md-4 control-label") Acerca de mi : 
-								div(class="col-md-4")
-									textarea(class="form-control"  rows="1" name="bio")=perfil.bio
-							div(class="form-group center-block")
-								div(class="col-md-offset-5 col-md-8 col-lg-12 center-block ")
-									button(type="submit" id="btnGuardar" class="mdl-button mdl-js-button mdl-button--primary" value="Guardar")
-										span(class="glyphicon glyphicon-ok")
-									button(id="btnCancelar" type="reset" class="mdl-button mdl-js-button mdl-button--accent" value="Cancelar")
-										span(class="glyphicon glyphicon-remove")
+								if perfil.placa == "XXX0000"
+									div(id="formInPlaca" class="form-group" style="display:none")
+										div(class="form-group")
+											label(class="col-md-4 control-label") Placa
+											div(class="col-md-4")
+												input(id="inPlaca" name="placa" type="text" placeholder="Ejemplo:GYE1234" class="form-control" value="#{perfil.placa}" required)
+												p
+													span(id="msmError" style="color:blue")
+										div(class="form-group")
+											label(class="col-md-4 control-label") Capacidad Del Carro
+											div(class="col-md-4")
+												input(id="inCapacidad" name="capacidadCarro" type="number" placeholder="Capacidad" class="form-control" value="#{perfil.capacidadCarro}" min=0)
+								else
+									div(id="formInPlaca" class="form-group" style="display:inline")
+										div(class="form-group")
+											label(class="col-md-4 control-label") Placa
+											div(class="col-md-4")
+												input(id="inPlaca" name="placa" type="text" placeholder="Ejemplo:GYE1234" class="form-control" value="#{perfil.placa}" required)
+												p
+													span(id="msmError" style="color:blue")
+										div(class="form-group")
+											label(class="col-md-4 control-label") Capacidad Del Carro
+											div(class="col-md-4")
+												input(id="inCapacidad" name="capacidadCarro" type="number" placeholder="Capacidad" class="form-control" value="#{perfil.capacidadCarro}" min=0)
+								div(class="form-group")
+									label(class="col-md-4 control-label") Acerca de mi : 
+									div(class="col-md-4")
+										textarea(class="form-control"  rows="1" name="bio")=perfil.bio
+								div(class="form-group center-block")
+									div(class="col-md-offset-5 col-md-8 col-lg-12 center-block ")
+										button(type="submit" id="btnGuardar" class="mdl-button mdl-js-button mdl-button--primary" value="Guardar")
+											span(class="glyphicon glyphicon-ok")
+										button(id="btnCancelar" type="reset" class="mdl-button mdl-js-button mdl-button--accent" value="Cancelar")
+											span(class="glyphicon glyphicon-remove")
 							
 	script(src='/javascripts/editar_perfil_val.js')
