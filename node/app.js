@@ -227,5 +227,6 @@ app.post('/nuevaRuta', function (req, res){
         db_handler.insertar_ruta(nuevaRuta, JSON.parse(req.body.array),function(queryRes){
         });
         res.end('{"success" : "Updated Successfully", "status" : 200}');
+    }
 })
 app.listen(8080);

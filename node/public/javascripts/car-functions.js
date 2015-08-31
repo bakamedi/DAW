@@ -96,7 +96,7 @@ function submitContent(){
 ;
     positions.push(obj2);
 
-    console.log("waypts listos" + JSON.stringify(positions) + " " + myNewData.hora + " " + myNewData.name + " " + myNewData.dias);
+    //console.log("waypts listos" + JSON.stringify(positions) + " " + myNewData.hora + " " + myNewData.name + " " + myNewData.dias);
     var str = JSON.stringify(positions);
     $.post( "/nuevaRuta",
             { 
@@ -113,12 +113,12 @@ function submitContent(){
                 agregandoData = false;
                 console.log("chao " + agregandoData);
                 clearNewDataForm();
-
-                //fadeout pickroutes
-                $('#pickRoute').fadeOut(function(){
-                    console.log("invinsible out");
-		    $('#pickRoute').toggleClass("invisible");
-                });
+                res = JSON.parse(data);
+                console.log(res.status);
+                    if(res.status == 200){
+                        $("body").load('/driver?error=0');
+                    }else
+                        console.log(data);
 
             });
     }
