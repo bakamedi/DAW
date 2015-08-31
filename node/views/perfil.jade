@@ -34,29 +34,30 @@ block content
 					img(alt="Imagen Perfil" id="imaUser" src="/images/user1.jpg"  class="img-responsive center-block img-circle text-center")
 				div(class="row col-xs-7 text-center center-block")
 				each perfil in listaPerfil
-					div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-						label(id="labelNombrePerfil")=perfil.nombre
-						&nbsp;
-						label(id="labelApellidoPerfil")=perfil.apellido
-					if perfil.placa == "XXX0000"
-						div(class="row" style="display:none")
-							div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-								label Placa del Carro:
-								label(id="labelPlaca")=perfil.placa
-							div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-								div(id="labelCapacidad")
+					if perfil.usuario == usuario
+						div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+							label(id="labelNombrePerfil")=perfil.nombre
+							&nbsp;
+							label(id="labelApellidoPerfil")=perfil.apellido
+						if perfil.placa == "XXX0000"
+							div(class="row" style="display:none")
+								div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
 									label Placa del Carro:
-									label=perfil.capacidadCarro
-					else 
-						div(class="row" )
-							div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-								label(id="labelPlaca")=perfil.placa
-							div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-								div(id="labelCapacidad")
-									label Capacidad del Carro:
-									label=perfil.capacidadCarro
-					div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-						label(id="labelBio")=perfil.bio
+									label(id="labelPlaca")=perfil.placa
+								div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+									div(id="labelCapacidad")
+										label Placa del Carro:
+										label=perfil.capacidadCarro
+						else 
+							div(class="row" )
+								div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+									label(id="labelPlaca")=perfil.placa
+								div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+									div(id="labelCapacidad")
+										label Capacidad del Carro:
+										label=perfil.capacidadCarro
+						div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+							label(id="labelBio")=perfil.bio
 		div(class="row")
 			div(class="form-group col-xs-4")
 			div(class="form-group col-xs-1 col-md-1 col-lg-1")

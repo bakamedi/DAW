@@ -46,7 +46,7 @@ app.get('/inicio', function (req, res) {
       console.log(req.carPoolSession.username);
       var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
       db_handler.obtener_usuario(user,function(queryRes){
-           res.render('perfil.jade',{listaPerfil : queryRes});
+           res.render('perfil.jade',{listaPerfil : queryRes ,usuario : req.carPoolSession.username});
       });
   }
 })
@@ -54,7 +54,7 @@ app.get('/inicio', function (req, res) {
 app.get('/editar',function (req,res){
   var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
       db_handler.obtener_usuario(user,function(queryRes){
-           res.render('editar_perfil.jade',{listaPerfil : queryRes});
+           res.render('editar_perfil.jade',{listaPerfil : queryRes,usuario : req.carPoolSession.username});
       });
 });
 
