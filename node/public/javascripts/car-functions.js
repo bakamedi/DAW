@@ -5,9 +5,9 @@ function loadData(){
 
 function checkDay(day){
 	if($('#check' + day).is(':checked'))
-		return '1';
+		return true;
 	else 
-		return '0';
+		return false;
 }
 
 function getPageType(){
@@ -16,8 +16,9 @@ function getPageType(){
 
 
 function getTimeInteger(time){
-        var hour = $("#routehour").index();
-        var min = $("#routemin").index();
+        var hour = $("#routehour")[0].selectedIndex;
+        var min = $("#routemin")[0].selectedIndex;
+        console.log(hour + " " + min)
         return hour * 60 + min;
 	}
 function clearNewDataForm(){
@@ -82,23 +83,27 @@ function submitContent(){
     myNewData.hora = getTimeInteger();
 
     var positions = [];
-    var obj = [];
-    obj.x = start.position.G;
-    obj.y = start.position.K;
+    var obj = {
+    x : start.position.G,
+    y : start.position.K
+    };
     positions.push(obj);
 
-    obj = [];
-    obj.x = end.position.G;
-    obj.y = end.position.K;
-    positions.push(obj);
+    var obj2 ={
+    x : end.position.G,
+    y : end.position.K
+    };
+;
+    positions.push(obj2);
 
-    console.log("waypts listos" + positions + " " + myNewData.hora + " " + myNewData.name + " " + myNewData.dias);
+    console.log("waypts listos" + JSON.stringify(positions) + " " + myNewData.hora + " " + myNewData.name + " " + myNewData.dias);
+    var str = JSON.stringify(positions);
     $.post( "/nuevaRuta",
             { 
                 nombre : myNewData.name,
+                hora   : myNewData.hora,
                 dias   : myNewData.dias,
-                puntos : positions,
-                hora   : myNewData.hora 
+                array  : str
             },
             function( data ) {
                 myRoutes[replaceWhitespace(myNewData.name)] = [start.position, end.position];
@@ -108,6 +113,13 @@ function submitContent(){
                 agregandoData = false;
                 console.log("chao " + agregandoData);
                 clearNewDataForm();
+
+                //fadeout pickroutes
+                $('#pickRoute').fadeOut(function(){
+                    console.log("invinsible out");
+		    $('#pickRoute').toggleClass("invisible");
+                });
+
             });
     }
     

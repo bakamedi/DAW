@@ -45,7 +45,6 @@ var inspect = require('util').inspect;
 /** End MariaSQL */
 function executeQuery(queryString, object, callback){
     var queryResult = [];
-    console.log(object);
         mariaClient.query(queryString, object)
                 .on('result', function(res) {
                     res.on('row', function(row) {
@@ -129,7 +128,7 @@ module.exports = {
     };
     executeQuery(queryStr, object, callback);
     var newRoute = new Route({
-        userId : route.idUser,
+        userId : route.iduser,
         name : route.nombre,
         points : puntos
    });
@@ -137,6 +136,8 @@ module.exports = {
        if(err){
            console.log("Error  al guardar con mongoose");
            return console.error(err);
+       } else {
+           console.log("stored " + newRoute);
        }
    });
   }
