@@ -197,7 +197,7 @@ app.post('/inicio', function (req, res){
                       });
                 }
                 else{
-                    res.redirect('/inicio?error=' + 1);
+                    res.redirect('/?error=' + 1);
                 }
 
             });
