@@ -45,16 +45,18 @@ app.get('/', function (req, res) {
 app.get('/inicio', function (req, res) {
   if(req.carPoolSession.username == null)
         res.redirect('/');
-  else
+  else{
+      console.log(req.carPoolSession.username);
       var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
-      db_handler.obtener_usuario(mariaClient,user,function(queryRes){
+      db_handler.obtener_usuario(user,function(queryRes){
            res.render('perfil.jade',{listaPerfil : queryRes});
       });
+  }
 })
 
 app.get('/editar',function (req,res){
   var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
-      db_handler.obtener_usuario(mariaClient,user,function(queryRes){
+      db_handler.obtener_usuario(user,function(queryRes){
            res.render('editar_perfil.jade',{listaPerfil : queryRes});
       });
 });
