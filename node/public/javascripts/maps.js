@@ -57,16 +57,17 @@ function isValidAlphaNumericName(str) {
 }
 
 function finishNewRoute(){
-	google.maps.event.clearListeners(map, 'click');
+	//google.maps.event.clearListeners(map, 'click');
         if(blinkHandler != null){
             console.log("finish");
             window.clearInterval(blinkHandler);
         }
-	$('#pickRoute').fadeOut(function(){
+        placeForm();
+
+	/**$('#pickRoute').fadeOut(function(){
             console.log("invinsible out");
 		$('#pickRoute').toggleClass("invisible");
-		placeForm();
-	});
+        });*/
 
 }
 
@@ -98,7 +99,13 @@ function returnWhitespace(name){
 function addLatLng(event){
     //Agrega un nuevo marcador en el mapa
 		//
-    console.log("clicked :" + event.latLng.A + " " +  event.latLng.F);
+    var propValue;
+    for(var propName in event.latLng) {
+            propValue = event.latLng[propName]
+
+                console.log(propName,propValue);
+    }
+    console.log("clicked :" + event.latLng.G + " " +  event.latLng.K);
     var marker = new google.maps.Marker({
     		position: event.latLng,
 				title: '#',
@@ -111,15 +118,16 @@ function addLatLng(event){
 				pickRoute.innerHTML = "Selecciona el destino de la nueva ruta";
 				return;
     }
-    /*else if (end == null){
+    else if (end == null){
 			end = marker;
+                        pickRoute.innerHTML = "Agrega puntos intermedios donde puedas recoger/dejar pasajeros";
 			finishNewRoute();
-		}
-    */else {
-				waypts.push(marker);
-				locations.push(marker.position);
-			//	end = marker;
-		}
+    }
+    else {
+        marker.stopover = false;
+	waypts.push(marker.position);
+	locations.push(marker.position);
+    }
 
     var request = {
 	origin: start.position,

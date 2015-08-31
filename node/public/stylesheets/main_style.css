@@ -434,4 +434,14 @@ blink_me {
     50% { opacity: 0.0; }
     100% { opacity: 1.0; }
 }
-
+select {
+    border: 1px solid #111;
+    background: #FF4081;
+    color: #FFFFFF;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
