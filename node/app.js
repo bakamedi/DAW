@@ -80,7 +80,7 @@ app.get('/registro', function (req, res) {
 app.post('/actualiza',function (req,res){
   if(req.carPoolSession.username == null)
         res.redirect('/');
-  else
+  else{
       var user = new db_handler.user( req.body.nombre,
                                       req.body.apellido,
                                       req.carPoolSession.username,
@@ -93,6 +93,7 @@ app.post('/actualiza',function (req,res){
               res.redirect('/inicio');
           });
       });
+    }
 });
 
 /**
@@ -118,7 +119,16 @@ app.post('/crear', function (req, res){
                         var argsCrear = {usuario: req.body.inUsuario};
                         soap.createClient(url, function(err , client){
                           client.wsInfoUsuario(argsCrear, function(err, result){
-                            console.log(result);
+                            if(result.wsInfoUsuarioResult === undefined){
+                              var Nombres = "";
+                              var Apellidos = "";
+                              //var bio = "--";
+                              var user = new db_handler.user(Nombres, Apellidos, req.body.inUsuario, req.body.inPlaca, req.body.inCapacidad,req.body.inBiografia);
+                              db_handler.crear_usuario(user,function(queryRes){
+                                   res.redirect('/');
+                              })
+                            }
+                            else{
                               var Nombres = result.wsInfoUsuarioResult.diffgram.NewDataSet.INFORMACIONUSUARIO.NOMBRES;
                               var Apellidos = result.wsInfoUsuarioResult.diffgram.NewDataSet.INFORMACIONUSUARIO.APELLIDOS;
                               //var bio = "--";
@@ -126,6 +136,7 @@ app.post('/crear', function (req, res){
                               db_handler.crear_usuario(user,function(queryRes){
                                    res.redirect('/');
                               })
+                            }
                           })
                         })/*
                       }
