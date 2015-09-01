@@ -4,16 +4,19 @@ block content
 	div(class="container")
 		div(class="row")
 			div(id="imagenPerfil" class=" col-xs-12 text-center")
-				div
-					img(alt="Imagen Perfil" id="imaUser" src="/images/user1.jpg"  class="img-responsive center-block img-circle text-center")
-				div(id="labelSeguidores-Siguiendo" style="padding:5px;")
-					div(class="row")
-						div(class="col-xs-7 text-center")
-					div(class="text-center")
-						label(id="labelSeguidores") Seguidores:
-					div(class="text-center")
-						label(id="labelSiguiendo") Siguiendo:
-			div(class="row text-center center-block")
+				div(class="col-xs-offset-4 col-xs-3 text-center")
+					- var ruta = "/uploads/"+usuario+".png";
+					img(alt="Imagen Perfil" id="imaUser" src=ruta  class="img-responsive center-block img-circle text-center")
+				div(class="form-group col-xs-1 col-md-1 col-lg-1")
+				div(class="row")
+				div(class="form-group col-xs-5")
+				//boton de subir imagen
+				div(class="form-group col-xs-1 col-md-1 col-lg-1")
+					form(role="form" action="/subir" method="post" enctype="multipart/form-data")
+						div(class="fileUpload btn btn-default")
+							span(class="glyphicon glyphicon-picture")
+							input(type="file" name="file" id="onixfile" class="upload")
+			div(class="row text-center center-block" style="padding:10px;")
 				div(class="form-group .col-md-3 .col-md-offset-5")
 					form(id="formularioUsuarioEditar" class="form-horizontal" action="/actualiza" method="POST")
 						each perfil in listaPerfil
@@ -81,5 +84,5 @@ block content
 											span(class="glyphicon glyphicon-ok")
 										button(id="btnCancelar" type="reset" class="mdl-button mdl-js-button mdl-button--accent" value="Cancelar")
 											span(class="glyphicon glyphicon-remove")
-							
 	script(src='/javascripts/editar_perfil_val.js')
+	link(rel="stylesheet", href="/stylesheets/perfil_style.css")

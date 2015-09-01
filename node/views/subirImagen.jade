@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	div(class="container")
+		div(class="row")
+			form(role="form" action="/subir" method="post" enctype="multipart/form-data")
+				div(class="fileUpload btn btn-default")
+					label(for="onixfile") Seleccione una Imagen
+					span(class="glyphicon glyphicon-folder-open")
+					input(type="file" class="upload" name="file" id="onixfile")
+				div(class="fileUpload btn btn-default")
+					span(class="glyphicon glyphicon-floppy-disk")
+					input(type="submit" class="upload")
+	div(class="row")
+		link(rel="stylesheet", href="/stylesheets/perfil_style.css")
+		
