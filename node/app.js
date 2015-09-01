@@ -5,9 +5,18 @@ var methodOverride  = require('method-override');
 var sessions        = require("client-sessions");
 var soap            = require('soap');
 var db_handler      = require('./db_handler');
-//uploading files wiht formidable
-//var formidable      = require('formidable');
-//var uploads         = require('./uploads')
+//uploading files with multer
+var multer  = require('multer');
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, req.carPoolSession.username+".png")
+  }
+});
+var upload = multer({ storage: storage });
+////////////////////////////////////
 var app             = express();
 
 
@@ -64,17 +73,15 @@ app.get('/editar',function (req,res){
       });
 });
 
-/*
-app.post('/subir', function upload(req, res){
- var form = new formidable.IncomingForm();
- form.parse(req, function (err, fields, files) {
-  res.writeHead(200, {'content-type': 'text/plain'});
-  res.end('File uploaded!');
-  console.log("Upload completed");
-  console.log(util.inspect(files));
- });
+app.get('/subirImagen',function (req,res){
+  console.dir(req.files);
+  res.render('subirImagen.jade');
 });
-*/
+
+app.post('/subir', upload.single('file'), function (req, res, next) {
+    //res.send({message:'Archivo guardado', file:req.file});
+    res.redirect('/inicio');
+});
 
 app.get('/registro', function (req, res) {
   res.render('registro.jade');

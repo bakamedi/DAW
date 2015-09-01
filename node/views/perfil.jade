@@ -1,63 +1,63 @@
 extends layout
 
 block content
-	div(class="modal fade" id="myModal" role="dialog")
-		div(class="modal-dialog modal-sm")
-			div(class="modal-content")
-				div(class="modal-header")
-					button(type="button" class="close" data-dismiss="modal") &times;
-					h4(class="modal-title") Mensajeria
-				div(class="row modal-body")
-					div(class="col-xs-3")
-						form(action="#")
-							div(class="mdl-textfield mdl-js-textfield mdl-textfield--expandable")
-								label(class="mdl-button mdl-js-button mdl-button--icon" for="sample6")
-									i(class="material-icons") search
-								div(class="mdl-textfield__expandable-holder")
-									input(class="mdl-textfield__input" type="text" id="sample6")
-									label(class="mdl-textfield__label" for="sample-expandable")
-					div(class="col-xs-3")
-						form(action="#")
-							div(class="mdl-textfield mdl-js-textfield")
-								textarea(class="mdl-textfield__input" type="text" rows= "3" id="sample5")
-								label(class="mdl-textfield__label" for="sample5") Text lines...
-					div(class="col-xs-6")
-					
-				div(class="modal-footer")
-					button(type="button" class="btn btn-default" data-dismiss="modal") Close
-
-
 	div(id="perfil" class="columna" style="height: 50%;width: 40%;")
 		div(class="row")
+			//modal de mensajeria
+			div(class="modal fade" id="myModal" role="dialog")
+				div(class="modal-dialog modal-sm")
+					div(class="modal-content")
+						div(class="modal-header")
+							button(type="button" class="close" data-dismiss="modal") &times;
+							h4(class="modal-title") Mensajeria
+						div(class="row modal-body")
+							div(class="col-xs-3")
+								form(action="#")
+									div(class="mdl-textfield mdl-js-textfield mdl-textfield--expandable")
+										label(class="mdl-button mdl-js-button mdl-button--icon" for="sample6")
+											i(class="material-icons") search
+										div(class="mdl-textfield__expandable-holder")
+											input(class="mdl-textfield__input" type="text" id="sample6")
+											label(class="mdl-textfield__label" for="sample-expandable")
+							div(class="col-xs-3")
+								form(action="#")
+									div(class="mdl-textfield mdl-js-textfield")
+										textarea(class="mdl-textfield__input" type="text" rows= "3" id="sample5")
+										label(class="mdl-textfield__label" for="sample5") Text lines...
+							div(class="col-xs-6")
+							
+						div(class="modal-footer")
+							button(type="button" class="btn btn-default" data-dismiss="modal") Close
 			div(id="imagenPerfil" class=" col-xs-12 text-center")
-				div(class="col-xs-5")
-					img(alt="Imagen Perfil" id="imaUser" src="/images/user1.jpg"  class="img-responsive center-block img-circle text-center")
-				div(id="perfilesUsuarios" class="row col-xs-7 text-center center-block")
 				each perfil in listaPerfil
 					if perfil.usuario == usuario
-						div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-							label(id="labelNombrePerfil")=perfil.nombre
-							&nbsp;
-							label(id="labelApellidoPerfil")=perfil.apellido
-						if perfil.placa == "XXX0000"
-							div(class="row" style="display:none")
-								div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-									label Placa del Carro:
-									label(id="labelPlaca")=perfil.placa
-								div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-									div(id="labelCapacidad")
+						- var ruta = "/uploads/"+perfil.usuario+".png";
+						div(class="col-xs-5")
+							img(alt="Imagen Perfil" id="imaUser" src=ruta class="img-responsive center-block img-circle text-center")
+						div(id="perfilesUsuarios" class="row col-xs-7 text-center center-block")
+							div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+								label(id="labelNombrePerfil")=perfil.nombre
+								&nbsp;
+								label(id="labelApellidoPerfil")=perfil.apellido
+							if perfil.placa == "XXX0000"
+								div(class="row" style="display:none")
+									div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
 										label Placa del Carro:
-										label=perfil.capacidadCarro
-						else 
-							div(class="row" )
-								div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-									label(id="labelPlaca")=perfil.placa
-								div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-									div(id="labelCapacidad")
-										label Capacidad del Carro:
-										label=perfil.capacidadCarro
-						div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-							label(id="labelBio")=perfil.bio
+										label(id="labelPlaca")=perfil.placa
+									div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+										div(id="labelCapacidad")
+											label Placa del Carro:
+											label=perfil.capacidadCarro
+							else 
+								div(class="row" )
+									div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+										label(id="labelPlaca")=perfil.placa
+									div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+										div(id="labelCapacidad")
+											label Capacidad del Carro:
+											label=perfil.capacidadCarro
+							div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+								label(id="labelBio")=perfil.bio
 		div(class="row")
 			div(class="form-group col-xs-4")
 			div(class="form-group col-xs-1 col-md-1 col-lg-1")
@@ -80,13 +80,12 @@ block content
 			//			br
 			//			button(type="submit" class="btn btn-danger") Subir
 			//imagen2
+			
 			div(class="form-group col-xs-1 col-md-1 col-lg-1")
-				form(method="POST", enctype="multipart/form-data", action="/subir")
+				form(action="/subirImagen" method="GET")
 					div(class="fileUpload btn btn-default")
 						span(class="glyphicon glyphicon-picture")
-						input(id="uploadBtn" type="file" class="upload" name="miarchivo")
-
-		
+						input(type="submit" class="upload")
 
 	nav(id="rutas-nav" class="columna")
 		div(id="div-rutas-nav")
