@@ -176,27 +176,34 @@ function clearRuta(){
     waypts = []
 }
 
-function addRouteMarkers(pos1, pos2){
+function addRouteMarkers(points){
     //Agrega un nuevo marcador en el mapa
 		//
-    console.log(pos1 + "|" + pos2);
-    var marker1 = new google.maps.Marker({
-    		position: pos1,
-				title: '#',
-				draggable:true,
-				map: map
+    for (var i = 0; i < points.length; i++){
+        var pos = new google.maps.LatLng(points[i].x, points[i].y);
+        var myMarker = new google.maps.Marker({
+    		position: pos,
+	        title: '#',
+	        draggable:true,
+	        map: map
     });
-    var marker2 = new google.maps.Marker({
-    		position: pos2,
-				title: '#',
-				draggable:true,
-				map: map
-    });
-    start = marker1;
-    end = marker2;
+        if(i == 0){
+            start = myMarker;
+            waypts = [];
+        }else if( i == points.length - 1)
+            end = myMarker;
+        else{
+            var point = {
+                location : pos,
+                stopover : false
+            };
+            waypts.push(point);
+        }
+    }
+    
     var request = {
-        origin: pos1,
-        destination: pos2,
+        origin: start.position,
+        destination: end.position,
         waypoints: waypts,
         optimizeWaypoints: true,
         travelMode: google.maps.TravelMode.DRIVING
@@ -242,13 +249,9 @@ function nombrarRuta(){
 
 
 
-function showRuta(name){
-	console.log("ruta: " + name);
-	var pos = myRoutes[name];
-	if(pos != null)
-		addRouteMarkers(pos[0], pos[1]);
-	else
-		console.log(name + " no esta en lista");
+function showRuta(points){
+    var routepts = JSON.parse(points);
+    addRouteMarkers(routepts);
 }
 
 function showDestino(name){
@@ -279,7 +282,7 @@ $(document).ready( function(){
                 clearRuta();
 		clearFollowersNotification();
                 if(getPageType() == "car"){
-		    showRuta(replaceWhitespace($(this).attr('data-name')));
+		    showRuta($(this).attr('data-pts'));
                     getFollowersNotifications();
                 }else{
 		    showDestino(replaceWhitespace($(this).attr('data-name')));

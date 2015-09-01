@@ -44,30 +44,40 @@ function processFollowingsNotifications(jArray){
 }
 function getDias(binary){
 	var out = "";
-	if(binary === "0000000")
-		return "N/A";
-	if(binary === "1111111")
+        if(binary === "l,m,x,j,v,s,d")
 		return "Todos";
-	else if(binary === "1111100")
+	else if(binary === "l,m,x,j,v")
 		return "Lunes a Viernes";
 	else{
-		if(binary.charAt(0) === '1')
+		if(binary.contains('l'))
 			out += "Lunes, ";
-		if(binary.charAt(1) === '1')
+		if(binary.contains('m'))
 			out += "Martes, ";		
-		if(binary.charAt(2) === '1')
+		if(binary.contains('x'))
 			out += "Miercoles, ";
-		if(binary.charAt(3) === '1')
+		if(binary.contains('j'))
 			out += "Jueves, ";
-		if(binary.charAt(4) === '1')
+		if(binary.contains('v'))
 			out += "Viernes, ";
-		if(binary.charAt(5) === '1')
+		if(binary.contains('s'))
 			out += "Sabado, ";
-		if(binary.charAt(6) === '1')
+		if(binary.contains('d'))
 			out += "Domingo, ";
-		return out.substring(0, out.length-2);
+		var result =  out.substring(0, out.length-2);
+                var index = result.lastIndexOf(',');
+                return result.substring(0,index) + ' y' + result.substring(index+1);
 	}
 	return null;
+}
+
+function getHourString(num){
+    var horas = num/60;
+    if(horas < 10)
+        horas = "0" + horas;
+    var min = num % 60;
+    if(min < 10)
+        min = "0" + min;
+    return "" + horas + ":" + min;
 }
 
 function processMyDestinations(jArray){
@@ -86,6 +96,7 @@ function processMyDestinations(jArray){
 	document.getElementById('rutasUL').innerHTML += out;
 }
 
+
 function addDest(jObject){
 	var i;
 	var start = '<li class="misRutas" data-name="';
@@ -99,21 +110,21 @@ function addDest(jObject){
 	document.getElementById('rutasUL').innerHTML += out;
 }
 
-function processMyRoutes(jArray){
+function processMyRoutes(response){
 	var i;
-	var start = '<li class="misRutas" data-name="';
-	var preName = '"><a href="#"><span style="font-size:28px">';	
-	var preHora = '</span><dd><span class="column-text" style="font-size:16px;">Hora de Partida:</span><span class="column-text" style="font-weight:lighter;font-size:14px;">';
+	var start = '<li class="misRutas" data-pts=\'';
+	var preName = '\'><a href="#"><span style="font-size:28px">';	
+	var preHora = '</span><dd><span class="column-text" style="font-size:16px;">Hora de Partida:&nbsp</span><span class="column-text" style="font-weight:lighter;font-size:14px;">';
 	var preDias = '</span></dd><dd><span class="column-text" style="font-size:16px;">Dias:</span><span class="column-text" style="font-weight:lighter;font-size:14px;">';
 	var end = '</span></dd></a></li>';
 	var out = "";
+        var jArray = response.array;
 	for (i=0; i<jArray.length; i++){
 		var jObject = jArray[i];
-		myRoutes[jObject.name] = [new google.maps.LatLng(jObject.startX, jObject.startY), new google.maps.LatLng(jObject.endX, jObject.endY)];
-		out += start + jObject.name + preName + jObject.name + preHora + jObject.hora + preDias + getDias(jObject.dias) + end;
+		out += start + JSON.stringify(jObject.points) + preName + jObject.name + preHora + getHourString(jObject.hour) + preDias + getDias(jObject.days) + end;
 	}
-	//console.log(out);
-	document.getElementById('rutasUL').innerHTML += out;
+	console.log("rutas: " + out);
+	document.getElementById('rutasUL').innerHTML = out;
 }
 
 function addRoute(jObject){
@@ -150,7 +161,7 @@ function processMyFollowers(jArray){
 
 
 function getMyRoutes(){
-	handleJSON('json/myRoutes.json', processMyRoutes);
+	handleJSON('/misRutas', processMyRoutes);
 }
 
 function getMyDestinations(){

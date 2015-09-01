@@ -230,10 +230,20 @@ app.post('/nuevaRuta', function (req, res){
     if(req.carPoolSession.username == null)
         res.redirect('/');
     else{
-        var nuevaRuta = new db_handler.ruta(req.carPoolSession.username, req.body.nombre, req.body.dias, req.body.hora);
-        db_handler.insertar_ruta(nuevaRuta, JSON.parse(req.body.array),function(queryRes){
+        db_handler.insertar_ruta(req.carPoolSession.username, req.body.nombre, req.body.dias, req.body.hora, JSON.parse(req.body.array),function(queryRes){
         });
         res.end('{"success" : "Updated Successfully", "status" : 200}');
     }
 })
+
+app.get('/misRutas', function (req, res){
+     if(req.carPoolSession.username == null)
+        res.redirect('/');
+     else{
+        db_handler.getMisRutas(req.carPoolSession.username, function misRutasCallback(queryRes){
+            res.end('{"status" : 200, "array" : ' + JSON.stringify(queryRes) +  '}'); 
+        });
+     }
+})
+   
 app.listen(8080);

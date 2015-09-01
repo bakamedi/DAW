@@ -13,6 +13,8 @@ db.once('open', function (callback) {
 var RouteSchema = new mongoose.Schema({
     userId : String,
     name : String,
+    days : String,
+    hour : Number,
     points : [{x : Number, y : Number}]
 });
 
@@ -118,21 +120,14 @@ module.exports = {
     executeQuery(queryStr, object, callback);
    },
 
-  insertar_ruta: function(route, puntos, callback){
-    var queryStr = 'call rapidin.insertar_ruta(:username, :nombre, :dias, :hora)';
-    var object = { 
-        username        : route.iduser,
-        nombre          : route.nombre,
-        dias            : route.dias,
-        hora            : route.hora
-    };
-    executeQuery(queryStr, object, callback);
-    var newRoute = new Route({
-        userId : route.iduser,
-        name : route.nombre,
-        points : puntos
-   });
-   newRoute.save(function (err, newRoute){
+  insertar_ruta: function(idusuario, nombre, dias, hora, puntos, callback){
+    var newRoute  = new Route({
+                userId : idusuario,
+                name   : nombre,
+                days   : dias,
+                hour   : hora,
+                points : puntos });    
+   newRoute.save(function saveRouteMongo(err, newRoute){
        if(err){
            console.log("Error  al guardar con mongoose");
            return console.error(err);
@@ -140,6 +135,19 @@ module.exports = {
            console.log("stored " + newRoute);
        }
    });
+  },
+
+  getMisRutas : function(username, callback){
+    var query = Route.find({ userId : username  });
+    query.select('userId name days hour points');
+    query.exec(function mongoDBExec(err, myRoute){
+        if(err)
+            console.error(err);
+        else{
+            callback(myRoute);
+        }
+
+    });
   }
 
 };
