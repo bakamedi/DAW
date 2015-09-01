@@ -79,25 +79,30 @@ function submitContent(){
         console.log("wrong days");
         return;
     }
+    console.log(JSON.stringify(locations));
 
     myNewData.hora = getTimeInteger();
-
+/*
     var positions = [];
+    //START POINT
     var obj = {
     x : start.position.G,
     y : start.position.K
     };
     positions.push(obj);
-
+   //WAYPOINTS 
+    for(point in locations){
+        positions.push(point);
+    }
+    //END POINT
     var obj2 ={
     x : end.position.G,
     y : end.position.K
     };
-;
     positions.push(obj2);
-
-    //console.log("waypts listos" + JSON.stringify(positions) + " " + myNewData.hora + " " + myNewData.name + " " + myNewData.dias);
-    var str = JSON.stringify(positions);
+*/
+    console.log("waypts listos" + JSON.stringify(locations) + " " + myNewData.hora + " " + myNewData.name + " " + myNewData.dias);
+    var str = JSON.stringify(locations);
     $.post( "/nuevaRuta",
             { 
                 nombre : myNewData.name,
