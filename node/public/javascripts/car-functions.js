@@ -5,9 +5,9 @@ function loadData(){
 
 function checkDay(day){
 	if($('#check' + day).is(':checked'))
-		return '1';
+		return true;
 	else 
-		return '0';
+		return false;
 }
 
 function getPageType(){
@@ -16,8 +16,9 @@ function getPageType(){
 
 
 function getTimeInteger(time){
-        var hour = $("#routehour").index();
-        var min = $("#routemin").index();
+        var hour = $("#routehour")[0].selectedIndex;
+        var min = $("#routemin")[0].selectedIndex;
+        console.log(hour + " " + min)
         return hour * 60 + min;
 	}
 function clearNewDataForm(){
@@ -78,27 +79,36 @@ function submitContent(){
         console.log("wrong days");
         return;
     }
+    console.log(JSON.stringify(locations));
 
     myNewData.hora = getTimeInteger();
-
+/*
     var positions = [];
-    var obj = [];
-    obj.x = start.position.G;
-    obj.y = start.position.K;
+    //START POINT
+    var obj = {
+    x : start.position.G,
+    y : start.position.K
+    };
     positions.push(obj);
-
-    obj = [];
-    obj.x = end.position.G;
-    obj.y = end.position.K;
-    positions.push(obj);
-
-    console.log("waypts listos" + positions + " " + myNewData.hora + " " + myNewData.name + " " + myNewData.dias);
+   //WAYPOINTS 
+    for(point in locations){
+        positions.push(point);
+    }
+    //END POINT
+    var obj2 ={
+    x : end.position.G,
+    y : end.position.K
+    };
+    positions.push(obj2);
+*/
+    console.log("waypts listos" + JSON.stringify(locations) + " " + myNewData.hora + " " + myNewData.name + " " + myNewData.dias);
+    var str = JSON.stringify(locations);
     $.post( "/nuevaRuta",
             { 
                 nombre : myNewData.name,
+                hora   : myNewData.hora,
                 dias   : myNewData.dias,
-                puntos : positions,
-                hora   : myNewData.hora 
+                array  : str
             },
             function( data ) {
                 myRoutes[replaceWhitespace(myNewData.name)] = [start.position, end.position];
@@ -108,6 +118,13 @@ function submitContent(){
                 agregandoData = false;
                 console.log("chao " + agregandoData);
                 clearNewDataForm();
+                res = JSON.parse(data);
+                console.log(res.status);
+                    if(res.status == 200){
+                        $("body").load('/driver?error=0');
+                    }else
+                        console.log(data);
+
             });
     }
     

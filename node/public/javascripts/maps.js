@@ -96,15 +96,26 @@ function blinker() {
 function returnWhitespace(name){
 		return name.replace(whitespace, " ");
 }
+
+function printObjProperties(object){
+    var propValue;
+        for(var propName in object) {
+            propValue = object[propName];
+            console.log(propName,propValue);
+        }
+}
+
+function addLocation(lat, lng){
+    locations.push({ x : lat,
+                    y : lng});
+}
+        
+
 function addLatLng(event){
     //Agrega un nuevo marcador en el mapa
 		//
-    var propValue;
-    for(var propName in event.latLng) {
-            propValue = event.latLng[propName]
-
-                console.log(propName,propValue);
-    }
+   var x = event.latLng.G;
+   var y = event.latLng.K;
     console.log("clicked :" + event.latLng.G + " " +  event.latLng.K);
     var marker = new google.maps.Marker({
     		position: event.latLng,
@@ -114,19 +125,26 @@ function addLatLng(event){
     });
 
     if(start == null){
-				start = marker;
-				pickRoute.innerHTML = "Selecciona el destino de la nueva ruta";
+        start = marker;
+        locations = [];
+        pickRoute.innerHTML = "Selecciona el destino de la nueva ruta";
+        addLocation(x,y);
 				return;
     }
     else if (end == null){
-			end = marker;
-                        pickRoute.innerHTML = "Agrega puntos intermedios donde puedas recoger/dejar pasajeros";
-			finishNewRoute();
+        end = marker;
+        pickRoute.innerHTML = "Agrega puntos intermedios donde puedas recoger/dejar pasajeros";
+        addLocation(x,y);
+        finishNewRoute();
     }
-    else {
-        marker.stopover = false;
-	waypts.push(marker.position);
-	locations.push(marker.position);
+    else {//Add waypoints
+        var point = {
+            location : marker.position,
+            stopover : false
+        };
+	waypts.push(point);
+        addLocation(x,y);
+        console.log(JSON.stringify(locations));
     }
 
     var request = {
