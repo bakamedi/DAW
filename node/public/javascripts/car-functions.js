@@ -1,6 +1,5 @@
 function loadData(){
     getMyRoutes();
-    getMyFollowers();
 }
 
 function checkDay(day){

@@ -11,16 +11,6 @@ bio varchar(140),
 PRIMARY KEY (usuario)
 );
 
-create table ruta(
-idRuta INT not null AUTO_INCREMENT ,
-idUsuario varchar(20) ,
-nombreRuta varchar(45),
-diaSemana varchar(14),
-hora SMALLINT,
-PRIMARY KEY(idRuta),
-foreign key (idUsuario) references usuario(usuario)
-);
-
 create table destino(
 idDestino INT not null AUTO_INCREMENT,
 idUsuario varchar(20),
@@ -56,8 +46,7 @@ idUsuario varchar(20),
 idRuta INT not null,
 fecha varchar(10),
 PRIMARY KEY(idViaje), 
-foreign key(idUsuario) references usuario(usuario),
-foreign key(idRuta) references ruta(idRuta)
+foreign key(idUsuario) references usuario(usuario)
 );
 
 create table pasajero(

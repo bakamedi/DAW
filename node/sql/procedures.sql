@@ -49,11 +49,3 @@ END;
 $$
 DELIMITER ;
 
-drop procedure if exists insertar_ruta;
-DELIMITER $$
-create procedure insertar_ruta(idUsuario VARCHAR(20),nombre VARCHAR(45),dias VARCHAR(14),hora SMALLINT)
-begin
-	insert into ruta values(NULL, idUsuario,nombre,dias,hora);
-END;
-$$
-DELIMITER ;
