@@ -13,7 +13,7 @@ drop procedure if exists obtener_usuario;
 DELIMITER $$ 
 create procedure obtener_usuario(usuarioInput VARCHAR(20))
 begin
-    select nombre,apellido,placa,capacidadCarro from usuario where usuario=usuarioInput;
+    select usuario,nombre,apellido,placa,capacidadCarro,bio from usuario where usuario=usuario;
 END;
 $$
 DELIMITER ;
@@ -35,7 +35,7 @@ drop procedure if exists obtener_usuario;
 DELIMITER $$
 CREATE PROCEDURE obtener_usuario(usuername VARCHAR(20))
 begin
-    select usuario,nombre,apellido,placa,capacidadCarro,bio from usuario where usuario=usuario;
+    select nombre,apellido,placa,capacidadCarro,bio from usuario where usuario=usuario;
 end;
 $$
 DELIMITER ;
@@ -53,7 +53,23 @@ drop procedure if exists insertar_ruta;
 DELIMITER $$
 create procedure insertar_ruta(idUsuario VARCHAR(20),nombre VARCHAR(45),dias VARCHAR(14),hora SMALLINT)
 begin
-	insert into ruta values(NULL, idUsuario,nombre,dias,hora);
+	insert into ruta (idUsuario,nombre,dias,hora) values(idUsuario,nombre,dias,hora);
 END;
 $$
 DELIMITER ;
+
+drop procedure if exists obtener_seguidor;
+
+DELIMITER $$ 
+
+create procedure obtener_seguidor()
+begin
+    select * from usuario ;
+END;
+$$
+
+DELIMITER ;
+
+select usuario.usuario,usuario.nombre,usuario.apellido,seguidores_siguiendo.idUsuario2Seguidor
+from usuario join seguidores_siguiendo
+on usuario.usuario = seguidores_siguiendo.idUsuario1Siguiendo;

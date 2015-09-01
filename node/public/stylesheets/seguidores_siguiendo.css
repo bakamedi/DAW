@@ -1,0 +1,36 @@
+.box2 {
+   display: inline-block;
+   /*vertical-align: top;*/
+   width: 75%;
+}
+
+.clearfix {
+ overflow: auto;
+}
+
+.UsuImage {
+  float: left;
+  /*display: inline-block;
+  vertical-align: top;*/
+  width: 25%;
+}
+
+.btn_seguir{
+	float: right;
+}
+.modal-title{
+    font-family: "tu fuente", sans-serif !important;
+    font-size: 40px;
+    font-weight: bold;
+    color: #337ab7;
+}
+
+/*div {
+    background-color: lightgrey;
+    width: 300px;
+    padding: 25px;
+    border: 25px solid navy;
+    margin: 25px;
+}*/
+
+

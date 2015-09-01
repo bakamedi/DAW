@@ -75,6 +75,11 @@ module.exports = {
     this.bio = bio;    
   },
 
+  obtener_seguidor: function (usuario, callback) {
+    var queryStr = 'call rapidin.obtener_seguidor()';
+    executeQuery(queryStr, '', callback);
+  },
+
    ruta: function(iduser, nombre, dias, hora) {
     this.iduser = iduser;
     this.nombre = nombre;
@@ -121,24 +126,20 @@ module.exports = {
   insertar_ruta: function(route, puntos, callback){
     var queryStr = 'call rapidin.insertar_ruta(:username, :nombre, :dias, :hora)';
     var object = { 
-        username        : route.iduser,
+        username        : route.idUser,
         nombre          : route.nombre,
         dias            : route.dias,
         hora            : route.hora
     };
     executeQuery(queryStr, object, callback);
     var newRoute = new Route({
-        userId : route.iduser,
-        name : route.nombre,
+        userId : route.idUser,
+        nombre : route.nombre,
         points : puntos
    });
    newRoute.save(function (err, newRoute){
-       if(err){
-           console.log("Error  al guardar con mongoose");
+       if(err)
            return console.error(err);
-       } else {
-           console.log("stored " + newRoute);
-       }
    });
   }
 

@@ -1,0 +1,21 @@
+extends layout
+
+block content
+	div(class="container-fluit")
+	each seguir in listaSeguidor
+		div(class="row")
+			div(class="modal-content")
+				div(class="modal-body")
+					div(id="imagenPerfil" class="clearfix")
+						img(alt="Imagen Perfil" src="/images/user.jpg"  class="img-responsive center-block img-circle text-center UsuImage")
+						label(class="modal-title")=seguir.nombre +" "+ seguir.apellido
+						div(class="text-center")
+							label=seguir.bio
+				div(class="modal-footer")
+					if seguir.usuario == usuario
+						div(style="display:none")
+							a(class="btn btn-default btn_seguir" href="/editar/#{seguir.idUsuario}" alt="EDITAR") seguir 
+								span(class="glyphicon glyphicon-eye-open" aria-hidden="true")
+					else
+						a(class="btn btn-default btn_seguir" href="/seguidor/#{seguir.usuario}" alt="EDITAR") seguir 
+							span(class="glyphicon glyphicon-eye-open" aria-hidden="true")

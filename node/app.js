@@ -197,7 +197,7 @@ app.post('/inicio', function (req, res){
                       });
                 }
                 else{
-                    res.redirect('/?error=' + 1);
+                    res.redirect('/inicio?error=' + 1);
                 }
 
             });
@@ -206,27 +206,24 @@ app.post('/inicio', function (req, res){
 
 
 app.get('/pass', function (req, res){
-    if(req.carPoolSession.username == null)
-        res.redirect('/');
-    else
-        res.render('pasajero.jade');
+    res.render('pasajero.jade');
 })
 
 app.get('/driver', function (req, res){
-    if(req.carPoolSession.username == null)
-        res.redirect('/');
-    else
-        res.render('driver.jade');
+    res.render('driver.jade');
 })
 
-app.post('/nuevaRuta', function (req, res){
-    if(req.carPoolSession.username == null)
-        res.redirect('/');
-    else{
-        var nuevaRuta = new db_handler.ruta(req.carPoolSession.username, req.body.nombre, req.body.dias, req.body.hora);
-        db_handler.insertar_ruta(nuevaRuta, JSON.parse(req.body.array),function(queryRes){
-        });
-        res.end('{"success" : "Updated Successfully", "status" : 200}');
-    }
+app.get('/seguir/?', function (req, res) {
+  if(req.carPoolSession.username == null){
+    res.redirect('/');
+  }
+  else{
+    var user = new db_handler.user('req.carPoolSession.Nombre','req.carPoolSession.apellido','','','','req.carPoolSession.bio');
+    db_handler.obtener_seguidor(user,function(queryResult){
+      res.render('seguir.jade', {listaSeguidor : queryResult,usuario: req.carPoolSession.username})
+      
+    })
+  }
 })
+
 app.listen(8080);
