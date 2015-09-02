@@ -1,0 +1,98 @@
+extends layout_chat
+
+block content
+    script(type="text/javascript").
+        var socket = io();
+
+
+        $(document).ready(function()        {
+            var name = document.getElementById("username_chat").value;
+            socket.emit("loginUser",name);
+        });
+
+        function animateScroll()
+        {
+            var container = $('#containerMessages');
+            container.animate({"scrollTop": $('#containerMessages')[0].scrollHeight}, "slow");
+        }
+
+        $(function(){
+
+            animateScroll();
+            $(".sendMsg").on("click",function(){
+                var mensaje = $("#mensaje").val();
+                if(message=='') return false;
+                //evento menssaje ene l server nodejs
+                socket.emit('addNewMEssage', mensaje);
+                $("#mensaje").val('').focus();
+                return false;
+            });
+            
+            //actualizamos el sidebar que contiene los usuarios conectados cuando
+            //alguno se conecta o desconecta, el parámetro son los usuarios online actualmente
+            socket.on('message',function(action, message){
+                if(action == "conectado")
+                {
+                    $("#chatMsgs").append("<p class='col-md-12 alert-info'>" + message + "</p>");
+                }
+                //si es una desconexión
+                else if(action == "desconectado")
+                {
+                    $("#chatMsgs").append("<p class='col-md-12 alert-danger'>" + message + "</p>");
+                }
+                //si es un nuevo mensaje 
+                else if(action == "msg")
+                {
+                    $("#chatMsgs").append("<p class='col-md-12 alert-warning'>" + message + "</p>");
+                }
+                //si el que ha conectado soy yo
+                else if(action == "yo")
+                {
+                    $("#chatMsgs").append("<p class='col-md-12 alert-success'>" + message + "</p>");
+                }
+                animateScroll();
+            });
+
+            socket.on("updateSidebarUsers", function(usersOnline){
+                //limpiamos el sidebar donde almacenamos usuarios
+                $("#chatUsers").html("");
+                //si hay usuarios conectados, para evitar errores
+                if(!jQuery.isEmptyObject(usersOnline))
+                {
+                    //recorremos el objeto y los mostramos en el sidebar, los datos
+                    //están almacenados con {clave : valor}
+                    $.each(usersOnline, function(key, val)
+                    {
+                        $("#chatUsers").append("<p class='col-md-12 alert-info'>" + key + "</p>");
+                    })
+                }
+            });
+
+        });
+        
+        
+
+        
+
+
+    ul(id="message")
+    input(type="text" value=user id="username_chat" style="display:none;")
+
+    div(class="row")
+        div(class="container-fluid col-xs-12" align="center")
+            h1 Bienvenido al Chat
+    div(class="row")
+        div(class="container-fluid col-sm-9" id="containerMessages")
+            div(class="panel panel-primary head")
+                div(class="panel-heading")
+                    p Mensajes de la Sala
+                div(id="chatMsgs")
+        div(class="container-fluid col-sm-3" id="containerUsers")
+            div(class="panel panel-primary head")
+                div(class="panel-heading")
+                    p Usuarios
+            div(id="chatUsers")
+        div(class="col-md-7" id="containerSendMessages" )
+            input(type="text" id="mensaje" placeholder="Escribe un mensaje" class="message col-md-12 form-control")
+        div(class="col-md-2" id="containerSendMessages")
+            input(type="button" class="btn btn-large btn-block btn-primary sendMsg" value="Enviar Mensaje") 

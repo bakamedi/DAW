@@ -18,10 +18,55 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 ////////////////////////////////////
 var app             = express();
-
+var http            = require('http').Server(app);
+var io              = require('socket.io')(http);
+var PORT            = 8080;
+var usuariosOnline  = {};
 
 //var misc = require('./public/javascripts/val_login');
+///////////////////////////////////////////////////////////
+var usuariosOnline = {};
 
+io.on('connection', function(socket){
+
+     socket.on("loginUser",function(username){
+
+          console.log(username);
+          socket.username = username;
+          usuariosOnline[username] = socket.username;
+
+          console.log(usuariosOnline);
+
+          socket.emit("message","yo","Bienvenido " + socket.username + ", te has conectado correctamente")
+          socket.broadcast.emit("message","conectado","El usuario "+socket.username + "se ha conectado al chat.")
+
+          io.sockets.emit("updateSidebarUsers",usuariosOnline);
+    });
+
+    socket.on('addNewMEssage', function(message){
+          socket.emit('message',"msg", "Yo: " +message + ".");
+          socket.broadcast.emit("message","msg",socket.username+ "dice: "+ message);
+    });
+
+    //cuando el usuario cierra o actualiza el navegador
+    socket.on("disconnect", function(){
+      //si el usuario, por ejemplo, sin estar logueado refresca la
+      //página, el typeof del socket username es undefined, y el mensaje sería 
+      //El usuario undefined se ha desconectado del chat, con ésto lo evitamos
+      if(typeof(socket.username) == "undefined")
+      {
+        return;
+      }
+      //en otro caso, eliminamos al usuario
+      delete usuariosOnline[socket.username];
+      //actualizamos la lista de usuarios en el chat, zona cliente
+      io.sockets.emit("updateSidebarUsers", usuariosOnline);
+      //emitimos el mensaje global a todos los que están conectados con broadcasts
+      socket.broadcast.emit("refreshChat", "desconectado", "El usuario " + socket.username + " se ha desconectado del chat.");
+    });
+
+});
+///////////////////////////////////////////////////////////
 
 app.use(express.static(__dirname + '/public'));       // set the static files location /public/img will be /img for users
 app.use(express.static(__dirname + '/public/images'));
@@ -37,6 +82,15 @@ app.use(sessions({
   duration: 30 * 60 * 1000, // how long the session will stay valid in ms
   activeDuration: 1000 * 60 * 15 // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
 }));
+
+
+app.get('/chat', function (req, res) {
+  /*if(req.carPoolSession.username != null)
+        res.redirect('/inicio');
+  else*/
+        res.render('chat.jade',{user: req.carPoolSession.username})
+})
+
 
 /**
 * Pagina de login
@@ -259,4 +313,6 @@ app.get('/misRutas', function (req, res){
      }
 })
    
-app.listen(8080);
+http.listen(PORT, function() {
+  console.log('el Servidor esta escuchando en el puerto %s',PORT)
+});
