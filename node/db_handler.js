@@ -77,6 +77,11 @@ module.exports = {
     this.bio = bio;    
   },
 
+  obtener_seguidor: function (usuario, callback) {
+    var queryStr = 'call rapidin.obtener_seguidor()';
+    executeQuery(queryStr, '', callback);
+  },
+
    ruta: function(iduser, nombre, dias, hora) {
     this.iduser = iduser;
     this.nombre = nombre;

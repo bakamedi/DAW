@@ -1,0 +1,25 @@
+extends layout
+
+block content
+	div(class="container-fluit")
+	each seguir in listaSeguidor
+		ul(class="bloques")
+			li(class="cara")
+				div(class="box")
+					div(class="poster")
+						img(alt="Imagen Perfil" src="/images/user.jpg"  class="img-responsive center-block img-circle text-center UsuImage")
+					div(class="info")
+						header
+							h1=seguir.apellido
+							span(class="subtitulo")=seguir.nombre
+							p=seguir.bio
+						if seguir.usuario == usuario
+							div(style="display:none")
+							a(class="btn btn-default" href="/editar/#{seguir.idUsuario}" alt="EDITAR") seguir 
+								span(class="glyphicon glyphicon-eye-open" aria-hidden="true")
+						else
+							a(class="btn btn-default" href="/" alt="EDITAR") seguir 
+								span(class="glyphicon glyphicon-eye-open" aria-hidden="true")
+	
+
+	link(rel="stylesheet", href="/stylesheets/seguidores_siguiendo.css")

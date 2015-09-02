@@ -236,6 +236,19 @@ app.post('/nuevaRuta', function (req, res){
     }
 })
 
+app.get('/seguir/?', function (req, res) {
+  if(req.carPoolSession.username == null){
+    res.redirect('/');
+  }
+  else{
+    var user = new db_handler.user('req.carPoolSession.Nombre','req.carPoolSession.apellido','','','','req.carPoolSession.bio');
+    db_handler.obtener_seguidor(user,function(queryResult){
+      res.render('seguir.jade', {listaSeguidor : queryResult,usuario: req.carPoolSession.username})
+      
+    })
+  }
+})
+
 app.get('/misRutas', function (req, res){
      if(req.carPoolSession.username == null)
         res.redirect('/');
