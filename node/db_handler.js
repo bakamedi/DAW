@@ -66,6 +66,24 @@ function executeQuery(queryString, object, callback){
              });
     }
 
+function isRouteClose(array, startX, startY, endX, endY){
+    var tolerance = 0.003;
+    var pointsMatched = 0;
+    for(var i = 0; i < array.length; i++){
+       if(pointsMatched == 0){
+           if(Math.abs(startX - array[i].x) < tolerance && Math.abs(startY - array[i].y) < tolerance){
+               pointsMatched = 1;
+           }
+        } else if(pointsMatched == 1){
+           if(Math.abs(endX - array[i].x) < tolerance && Math.abs(endY - array[i].y) < tolerance){
+               pointsMatched = 2;
+           }
+        }
+    }
+    return pointsMatched == 2;
+}
+
+
 module.exports = {
  
   user: function(nombre, apellido, username, placa, capacidad, bio) {
@@ -153,8 +171,34 @@ module.exports = {
         }
 
     });
-  }
+  },
 
+  getRutasCerca : function(day, time, startX, startY, endX, endY, callback){
+    time = parseInt(time);
+    startX = parseFloat(startX);
+    startY = parseFloat(startY);
+    endX = parseFloat(endX);
+    endY = parseFloat(endY);
+    var upperLimit = time + 120;
+    var query = Route.find({ "days" : {  "$regex" : day, "$options" : "i"  },
+                             "hour" : {  "$gt" : time, "$lt" : upperLimit} });
+    query.select('userId name days hour points');
+    query.exec(function mongoDBExec(err, todaysRoutes){
+        if(err)
+            console.error(err);
+        else{
+            var closeRoutes = [];
+            console.log("searching in " + todaysRoutes.length + " routes");
+            for(var i = 0; i < todaysRoutes.length; i++){
+               if(isRouteClose(todaysRoutes[i].points, startX, startY, endX, endY))
+                   closeRoutes.push(todaysRoutes[i]);
+            }
+            callback(closeRoutes);
+        }
+
+
+    });
+  }
 };
 
 

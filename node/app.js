@@ -258,5 +258,12 @@ app.get('/misRutas', function (req, res){
         });
      }
 })
-   
+app.get('/rutasCerca', function (req, res){
+        db_handler.getRutasCerca(req.query.day, req.query.time, req.query.startX, req.query.startY, req.query.endX, req.query.endY, function misRutasCallback(queryRes){
+            res.end('{"status" : 200, "array" : ' + JSON.stringify(queryRes) +  '}'); 
+        });
+})
+  
 app.listen(8080);
+
+
