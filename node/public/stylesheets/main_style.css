@@ -2,13 +2,13 @@ html, body{
 
     height:95%;
     width:100%;
-		margin-right: auto;
-		margin-left: auto;
+        margin-right: auto;
+        margin-left: auto;
 }
 
 .page-content{
-		height:100%;
-	}
+        height:100%;
+    }
 
 #map-canvas{
     height:100%;
@@ -110,7 +110,7 @@ html, body{
      bottom : 0px
 }
 .darken {
-		opacity: 0.5;
+        opacity: 0.5;
     background: black;
     -webkit-transition: all 0.5s linear;
        -moz-transition: all 0.5s linear;
@@ -120,18 +120,18 @@ html, body{
 }
 
 .mensaje {
-	position: relative;
-	color : #FFFFFF;
-	left: 5%;
-	-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+    position: relative;
+    color : #FFFFFF;
+    left: 5%;
+    -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: fadein 1s; /* Firefox < 16 */
 }
 
 .bar-item {
-	margin-top : 17px;
-	margin-left : 40px;
-	margin-bottom : 0px;
-	-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+    margin-top : 17px;
+    margin-left : 40px;
+    margin-bottom : 0px;
+    -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
   -moz-animation: fadein 1s; /* Firefox < 16 */
 }
 
@@ -153,18 +153,7 @@ html, body{
 }
 
 .input_txt{
-	border-radius: 15px;
-}
-
-@font-face {
-    font-family: "tu fuente";
-    src: url("../font/02.TTF") format("truetype");
-}
-
-.modal label{
-    font-family: "tu fuente", sans-serif !important;
-    font-size: 20px;
-    font-weight: bold;
+    border-radius: 15px;
 }
 
 .resize img{
@@ -175,35 +164,6 @@ html, body{
 .resize {
     height: 55%;
     width: 30%;
-}
-
-.modal-dialog {
-    width: 65%;
-}
-
-.modal-title{
-    font-family: "tu fuente", sans-serif !important;
-    font-size: 40px;
-    font-weight: bold;
-    color: #337ab7;
-}
-
-.nav .dropdown-menu{
-    font-family: "tu fuente", sans-serif !important;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.nav h3{
-    font-family: "tu fuente", sans-serif !important;
-    font-size: 40px;
-    font-weight: bold;
-}
-
-.columna li a{
-    font-family: "tu fuente", sans-serif !important;
-    font-size: 20px;
-    font-weight: bold;
 }
 
 .glyphicon-menu-hamburger {
@@ -231,28 +191,28 @@ html, body{
 }
 
 .nearby-fllwr{
-	float : left;
-	display : inline;
-	max-width : 120px;
+    float : left;
+    display : inline;
+    max-width : 120px;
 }
 @media only screen and (max-width: 950px) {
     .label-success{
-		margin-top : 8px;
-		margin-left : 10px;
-		}
+        margin-top : 8px;
+        margin-left : 10px;
+        }
 
 }
 @media only screen and (min-width: 950px) {
     .label-success{
-			position : fixed;
-			right : 8px;
-			margin-top : 8px;
-		}
+            position : fixed;
+            right : 8px;
+            margin-top : 8px;
+        }
 }
 
 
 .near-container{
-	width:100%;
+    width:100%;
         padding : 5px;
 }
 
@@ -266,12 +226,12 @@ html, body{
 }
 
 hr{
-	margin-top : 20px;
+    margin-top : 20px;
         margin-bottom : 0px;
 }
 
 .column-text{
-	font-family:"Helvetica";
+    font-family:"Helvetica";
 }
 
 .form-text{
@@ -280,13 +240,13 @@ hr{
 }
 
 #emptyNotif{
-		color:grey;
-		text-align:center;
-		margin-top:10px;
+        color:grey;
+        text-align:center;
+        margin-top:10px;
 }
 
 #active-follower-list{
-		position:relative
+        position:relative
 }
 
 div.material-icons{
@@ -338,10 +298,10 @@ div.material-icons{
     min-height: 400px;
     float:left;
     margin:7px;
-	border-radius: 102px 102px 102px 102px;
-	-moz-border-radius: 102px 102px 102px 102px;
-	-webkit-border-radius: 102px 102px 102px 102px;
-	border: 5px solid  #2CC0C5;
+    border-radius: 102px 102px 102px 102px;
+    -moz-border-radius: 102px 102px 102px 102px;
+    -webkit-border-radius: 102px 102px 102px 102px;
+    border: 5px solid  #2CC0C5;
 }
 
 a.card-title {
@@ -434,14 +394,41 @@ blink_me {
     50% { opacity: 0.0; }
     100% { opacity: 1.0; }
 }
-select {
-    border: 1px solid #111;
-    background: #FF4081;
-    color: #FFFFFF;
-    padding: 5px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+
+.mdl-badge[data-badge]:after {
+    content: attr(data-badge);
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-content: center;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    position: absolute;
+    top: -11px;
+    right: -24px;
+    font-family: 'Roboto','Helvetica','Arial',sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgb(64, 174, 255);
+    color: #fff;
 }
