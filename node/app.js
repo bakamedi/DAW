@@ -17,14 +17,16 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage });
 ////////////////////////////////////
+
+var POLLING_INTERVAL = 3000;
+var pollingTimer;
+
 var app             = express();
 var http            = require('http').Server(app);
 var io              = require('socket.io')(http);
 var PORT            = 8080;
 var usuariosOnline  = {};
 
-//var misc = require('./public/javascripts/val_login');
-///////////////////////////////////////////////////////////
 var usuariosOnline = {};
 
 io.on('connection', function(socket){
@@ -64,8 +66,22 @@ io.on('connection', function(socket){
       //emitimos el mensaje global a todos los que están conectados con broadcasts
       socket.broadcast.emit("refreshChat", "desconectado", "El usuario " + socket.username + " se ha desconectado del chat.");
     });
+    ////////////////////////
+    socket.on('notificacion',function (){
+      //notificacion
+    });
 
 });
+///////////////////////////////////////////////////////////
+/*
+var pollingLoop = function () {
+  var mensajeria = new db_handler.mensajeria(req.carPoolSession.username,'hjupiter','llevame','12-12-2015','null','1','0');
+    db_handler.enviar_mensaje(mensajeria,function(queryRes){
+      res.redirect('/inicio');
+    });
+};
+*/
+
 ///////////////////////////////////////////////////////////
 
 app.use(express.static(__dirname + '/public'));       // set the static files location /public/img will be /img for users
@@ -115,7 +131,11 @@ app.get('/inicio', function (req, res) {
     console.log(req.carPoolSession.username);
     var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
     db_handler.obtener_usuario(user,function(queryRes){
-         res.render('perfil.jade',{listaPerfil : queryRes,usuario : req.carPoolSession.username});
+      //var obtener_ruta_usuarios = db_handler.user('', '', req.carPoolSession.username, '', '','');
+        db_handler.obtener_ruta_usuarios(user,function(queryResSeguidor){
+          res.render('perfil.jade',{listaPerfil : queryRes,usuario : req.carPoolSession.username,listaSeguidor : queryResSeguidor});
+        });
+         //res.render('perfil.jade',{listaPerfil : queryRes,usuario : req.carPoolSession.username});
     });
   }
 })
@@ -158,6 +178,17 @@ app.post('/actualiza',function (req,res){
           });
       });
     }
+});
+
+app.get('/llevame',function (req, res){
+  if(req.carPoolSession.username == null){
+        res.redirect('/');
+  }else{
+    var mensajeria = new db_handler.mensajeria(req.carPoolSession.username,'hjupiter','llevame','12-12-2015','null','1','0');
+    db_handler.enviar_mensaje(mensajeria,function(queryRes){
+      res.redirect('/inicio');
+    });
+  }
 });
 
 /**

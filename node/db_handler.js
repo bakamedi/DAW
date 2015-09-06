@@ -13,8 +13,6 @@ db.once('open', function (callback) {
 var RouteSchema = new mongoose.Schema({
     userId : String,
     name : String,
-    days : String,
-    hour : Number,
     points : [{x : Number, y : Number}]
 });
 
@@ -77,17 +75,23 @@ module.exports = {
     this.bio = bio;    
   },
 
-  obtener_seguidor: function (usuario, callback) {
-    var queryStr = 'call rapidin.obtener_seguidor()';
-    executeQuery(queryStr, '', callback);
-  },
-
    ruta: function(iduser, nombre, dias, hora) {
     this.iduser = iduser;
     this.nombre = nombre;
     this.dias = dias;
     this.hora = hora;
-  },  
+  },
+
+  mensajeria: function(idUsuarioRemitente,idUsuarioRemisor,contenido,fecha,ubicacionActual,tipo,leido){
+    this.idUsuarioRemitente = idUsuarioRemitente;
+    this.idUsuarioRemisor   = idUsuarioRemisor;
+    this.contenido          = contenido;
+    this.fecha              = fecha;
+    this.ubicacionActual    = ubicacionActual;
+    this.tipo               = tipo;
+    this.leido              = leido;
+  },
+
   crear_usuario: function (usuario, callback) {
     var queryStr = 'call rapidin.crear_usuario(:nombre, :apellido, :username, :placa, :capacidad, :bio)';
     var object = { nombre : usuario.nombre,
@@ -125,34 +129,63 @@ module.exports = {
     executeQuery(queryStr, object, callback);
    },
 
-  insertar_ruta: function(idusuario, nombre, dias, hora, puntos, callback){
-    var newRoute  = new Route({
-                userId : idusuario,
-                name   : nombre,
-                days   : dias,
-                hour   : hora,
-                points : puntos });    
-   newRoute.save(function saveRouteMongo(err, newRoute){
-       if(err){
-           console.log("Error  al guardar con mongoose");
+  insertar_ruta: function(route, puntos, callback){
+    var queryStr = 'call rapidin.insertar_ruta(:username, :nombre, :dias, :hora)';
+    var object = { 
+        username        : route.idUser,
+        nombre          : route.nombre,
+        dias            : route.dias,
+        hora            : route.hora
+    };
+    executeQuery(queryStr, object, callback);
+    var newRoute = new Route({
+        userId : route.idUser,
+        nombre : route.nombre,
+        points : puntos
+   });
+   newRoute.save(function (err, newRoute){
+       if(err)
            return console.error(err);
-       } else {
-           console.log("stored " + newRoute);
-       }
    });
   },
 
-  getMisRutas : function(username, callback){
-    var query = Route.find({ userId : username  });
-    query.select('userId name days hour points');
-    query.exec(function mongoDBExec(err, myRoute){
-        if(err)
-            console.error(err);
-        else{
-            callback(myRoute);
-        }
+  obtener_seguidor: function (usuario, callback) {
+    var queryStr = 'call rapidin.obtener_seguidor()';
+    executeQuery(queryStr, '', callback);
+  },
 
-    });
+  enviar_mensaje: function(mensajeria,callback){
+    var queryStr = 'call rapidin.enviar_mensaje(:idUsuarioRemitente, :idUsuarioRemisor, :contenido, :fecha, :ubicacionActual, :tipo, :leido)';
+    var object = { 
+        idUsuarioRemitente : mensajeria.idUsuarioRemitente,
+        idUsuarioRemisor   : mensajeria.idUsuarioRemisor,
+        contenido          : mensajeria.contenido,
+        fecha              : mensajeria.fecha,
+        ubicacionActual    : mensajeria.ubicacionActual,
+        tipo               : mensajeria.tipo,
+        leido              : mensajeria.leido
+    };
+    executeQuery(queryStr, object, callback);
+  },
+
+  notificar_mensaje: function(mensajeria,callback){
+    var queryStr = 'call rapidin.enviar_mensaje(:idUsuarioRemitente, :idUsuarioRemisor, :contenido, :fecha, :ubicacionActual, :tipo, :leido)';
+    var object = { 
+        idUsuarioRemitente : mensajeria.idUsuarioRemitente,
+        idUsuarioRemisor   : mensajeria.idUsuarioRemisor,
+        contenido          : mensajeria.contenido,
+        fecha              : mensajeria.fecha,
+        ubicacionActual    : mensajeria.ubicacionActual,
+        tipo               : mensajeria.tipo,
+        leido              : mensajeria.leido
+    };
+    executeQuery(queryStr, object, callback);
+  },
+
+  obtener_ruta_usuarios: function(usuario,callback){
+    queryStr = 'call rapidin.obtener_ruta_usuarios(:username)';
+    var object = {username : usuario.username};
+    executeQuery(queryStr,object,callback);
   }
 
 };

@@ -18,7 +18,7 @@ function archivo(evt) {
 }
 
 function habilitaImagenDiv(){
-    var formularioImagen = document.getElementById("formularioImagen");
+  var formularioImagen = document.getElementById("formularioImagen");
     formularioImagen.setAttribute("style","display:normal;");
 }
 
@@ -27,23 +27,22 @@ function desabilitaImagenDiv(){
     formularioImagen.setAttribute("style","display:none;");
 }
 
-function initialize()
-{
-  var mapProp = {
-    center: new google.maps.LatLng(51.508742,-0.120850),
-    zoom:7,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-  var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+function iniciarRuta(inicioX,inicioY,destinoX,destinoY){
+    var mapaRutaSeguidor = {
+      center:new google.maps.LatLng(inicioX,inicioY),
+      zoom:15,
+      mapType:google.maps.MapTypeid.HYBRID
+    };
+    var map = new google.maps.Map(document.getElementById("mapaSeguidor"),mapaRutaSeguidor);
+    var lugarInicio = new google.maps.LatLng(inicioX,inicioY);
+    var lugarFinal  = new google.maps.LatLng(destinoX,destinoY);
+    var rutaSeguidor = [lugarInicio,lugarFinal];
+    //var path = 
+    var trazoVuelo = new google.maps.Polyline({path:rutaSeguidor,strokeColor:"#0000FF",strokeOpacity:0.8,strokeWeight:3});
+    trazoVuelo.setMap(map);
 }
+google.maps.event.addDomListener(window,'load',iniciarRuta);
 
-function loadScript()
-{
-  var script = document.createElement("script");
-  script.type = "text/javascript";
-  script.src = "http://maps.googleapis.com/maps/api/js?key=&sensor=false&callback=initialize";
-  document.body.appendChild(script);
-}
-
-window.onload = loadScript;
+//window.addEventListener('load', loadScript, false);
+//window.onload = loadScript;
 document.getElementById('files').addEventListener('change', archivo, false);
