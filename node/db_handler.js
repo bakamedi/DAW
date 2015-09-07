@@ -51,14 +51,14 @@ function executeQuery(queryString, object, callback){
                 .on('result', function(res) {
                     res.on('row', function(row) {
                              console.log('Result row: ' + inspect(row));
-                             queryResult.push(row)
+                             queryResult.push(row);
                            })
                        .on('error', function(err) {
                                 console.log('Result error: ' + inspect(err));
                            })
                           .on('end', function(info) {
                                    console.log('Result finished successfully');
-                            })
+                            });
                 })
              .on('end', function endDBExecutionCallback() {
               console.log(queryResult);
@@ -70,7 +70,7 @@ function isRouteClose(array, startX, startY, endX, endY){
     var tolerance = 0.003;
     var pointsMatched = 0;
     for(var i = 0; i < array.length; i++){
-       if(pointsMatched == 0){
+       if(pointsMatched === 0){
            if(Math.abs(startX - array[i].x) < tolerance && Math.abs(startY - array[i].y) < tolerance){
                pointsMatched = 1;
            }
@@ -106,6 +106,15 @@ module.exports = {
     this.dias = dias;
     this.hora = hora;
   },  
+    mensajeria: function(idUsuarioRemitente,idUsuarioRemisor,contenido,fecha,ubicacionActual,tipo,leido){
+      this.idUsuarioRemitente = idUsuarioRemitente;
+      this.idUsuarioRemisor   = idUsuarioRemisor;
+      this.contenido          = contenido;
+      this.fecha              = fecha;
+      this.ubicacionActual    = ubicacionActual;
+      this.tipo               = tipo;
+      this.leido              = leido;
+  },
   crear_usuario: function (usuario, callback) {
     var queryStr = 'call rapidin.crear_usuario(:nombre, :apellido, :username, :placa, :capacidad, :bio)';
     var object = { nombre : usuario.nombre,
@@ -198,7 +207,41 @@ module.exports = {
 
 
     });
-  }
+  },
+
+ enviar_mensaje: function(mensajeria,callback){
+       var queryStr = 'call rapidin.enviar_mensaje(:idUsuarioRemitente, :idUsuarioRemisor, :contenido, :fecha, :ubicacionActual, :tipo, :leido)';
+       var object = { 
+               idUsuarioRemitente : mensajeria.idUsuarioRemitente,
+               idUsuarioRemisor   : mensajeria.idUsuarioRemisor,
+               contenido          : mensajeria.contenido,
+               fecha              : mensajeria.fecha,
+               ubicacionActual    : mensajeria.ubicacionActual,
+               tipo               : mensajeria.tipo,
+               leido              : mensajeria.leido
+               };
+       executeQuery(queryStr, object, callback);
+     },
+
+ notificar_mensaje: function(mensajeria,callback){
+       var queryStr = 'call rapidin.enviar_mensaje(:idUsuarioRemitente, :idUsuarioRemisor, :contenido, :fecha, :ubicacionActual, :tipo, :leido)';
+       var object = { 
+               idUsuarioRemitente : mensajeria.idUsuarioRemitente,
+               idUsuarioRemisor   : mensajeria.idUsuarioRemisor,
+               contenido          : mensajeria.contenido,
+               fecha              : mensajeria.fecha,
+               ubicacionActual    : mensajeria.ubicacionActual,
+               tipo               : mensajeria.tipo,
+               leido              : mensajeria.leido
+               };
+       executeQuery(queryStr, object, callback);
+     },
+
+ obtener_ruta_usuarios: function(usuario,callback){
+       queryStr = 'call rapidin.obtener_ruta_usuarios(:username)';
+       var object = {username : usuario.username};
+       executeQuery(queryStr,object,callback);
+     }
 };
 
 

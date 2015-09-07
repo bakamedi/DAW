@@ -17,7 +17,7 @@ function getPageType(){
 function getTimeInteger(time){
         var hour = $("#routehour")[0].selectedIndex;
         var min = $("#routemin")[0].selectedIndex;
-        console.log(hour + " " + min)
+        console.log(hour + " " + min);
         return hour * 60 + min;
 	}
 function clearNewDataForm(){
@@ -73,7 +73,7 @@ function submitContent(){
     }
     
     myNewData.dias = constructDays();
-    if(myNewData.dias.length == 0)
+    if(myNewData.dias.length === 0)
     {
         console.log("wrong days");
         return;

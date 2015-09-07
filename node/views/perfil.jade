@@ -1,134 +1,128 @@
 extends layout
 
 block content
-	div(id="perfil" class="columna" style="height: 50%;width: 40%;")
-		div(class="row")
-			//modal de mensajeria
-			div(class="modal fade" id="myModal" role="dialog")
-				div(class="modal-dialog modal-sm")
-					div(class="modal-content")
-						div(class="modal-header")
-							button(type="button" class="close" data-dismiss="modal") &times;
-							h4(class="modal-title") Mensajeria
-						div(class="row modal-body")
-							div(class="col-xs-3")
-								form(action="#")
-									div(class="mdl-textfield mdl-js-textfield mdl-textfield--expandable")
-										label(class="mdl-button mdl-js-button mdl-button--icon" for="sample6")
-											i(class="material-icons") search
-										div(class="mdl-textfield__expandable-holder")
-											input(class="mdl-textfield__input" type="text" id="sample6")
-											label(class="mdl-textfield__label" for="sample-expandable")
-							div(class="col-xs-3")
-								form(action="#")
-									div(class="mdl-textfield mdl-js-textfield")
-										textarea(class="mdl-textfield__input" type="text" rows= "3" id="sample5")
-										label(class="mdl-textfield__label" for="sample5") Text lines...
-							div(class="col-xs-6")
-							
-						div(class="modal-footer")
-							button(type="button" class="btn btn-default" data-dismiss="modal") Close
+	nav(id="rutas-nav" class="columna")
+		div(id="perfil" class="columna" style="height: 100%;width: 150%;")
 			div(id="imagenPerfil" class=" col-xs-12 text-center")
+				div(class="row")
 				each perfil in listaPerfil
 					if perfil.usuario == usuario
 						- var ruta = "/uploads/"+perfil.usuario+".png";
-						div(class="col-xs-5")
-							img(alt="Imagen Perfil" id="imaUser" src=ruta class="img-responsive center-block img-circle text-center")
-						div(id="perfilesUsuarios" class="row col-xs-7 text-center center-block")
-							div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+						//imagen
+						div(id="id1" class="col-md-5")
+							ul(class="nav nav-pills nav-stacked")
+								li(class="active")
+									a(href="#" class="text-center")
+										i(class="fa fa-list-alt fa-fw")=usuario
+								//editar
+								li()
+									a(href="/editar" class="text-center")
+										span(class="glyphicon glyphicon-pencil text-center")
+								//mensajeria
+								li()
+									a(href="/chat" class="text-center")
+										span(class="glyphicon glyphicon-envelope mdl-badge" data-badge="1")
+
+								//imagen
+								li()
+									a(href="#" class="text-center" onclick="habilitaImagenDiv();")
+										span(class="glyphicon glyphicon-picture")
+						div(id="perfilesUsuarios" class=" text-center center-block")
+							if ruta = "/uploads/"+perfil.usuario+".png"
+								div(id="list" class="col-xs-6")
+									img(alt="Imagen Perfil" id="imaUser" src=ruta class="img-responsive center-block img-circle text-center")
+							else
+								- var ruta = "/uploads/user.jpg";								
+								div(id="list" class="col-xs-6")									
+									img(alt="Imagen Perfil" id="imaUser" src=ruta class="img-responsive center-block img-circle text-center")
+				div(class="row")
+					div(class="col-md-7 col-md-offset-2")
+						hr
+						each perfil in listaPerfil
+							if perfil.usuario == usuario
 								label(id="labelNombrePerfil")=perfil.nombre
 								&nbsp;
 								label(id="labelApellidoPerfil")=perfil.apellido
-							if perfil.placa == "XXX0000"
-								div(class="row" style="display:none")
-									div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-										label Placa del Carro:
-										label(id="labelPlaca")=perfil.placa
-									div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-										div(id="labelCapacidad")
+								br
+								if perfil.placa == "XXX0000"
+									div(class="row" style="display:none")
+										div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
 											label Placa del Carro:
-											label=perfil.capacidadCarro
-							else 
-								div(class="row" )
-									div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-										label(id="labelPlaca")=perfil.placa
-									div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-										div(id="labelCapacidad")
-											label Capacidad del Carro:
-											label=perfil.capacidadCarro
-							div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-								label(id="labelBio")=perfil.bio
-		div(class="row")
-			div(class="form-group col-xs-4")
-			div(class="form-group col-xs-1 col-md-1 col-lg-1")
-				form(action="/editar" method="GET")
-					div(class="fileUpload btn btn-default")
-						span(class="glyphicon glyphicon-pencil")
-						input(type="submit" class="upload")
-			//mensajeria
-			div(class="form-group col-xs-1 col-md-1 col-lg-1")
-				form(action="#" method="")
-					div(class="fileUpload btn btn-default")
-						span(class="glyphicon glyphicon-envelope")
-						input(type="submit" class="upload" data-toggle="modal" data-target="#myModal")
-			//imagen1
-			//div(class="form-group col-xs-1")
-			//	form(method="POST", enctype="multipart/form-data", action="/subir")
-			//		fieldset
-			//			label Seleccciona una imagen1
-			//			input(type="file" name="image")
-			//			br
-			//			button(type="submit" class="btn btn-danger") Subir
-			//imagen2
-			
-			div(class="form-group col-xs-1 col-md-1 col-lg-1")
-				form(action="/subirImagen" method="GET")
-					div(class="fileUpload btn btn-default")
-						span(class="glyphicon glyphicon-picture")
-						input(type="submit" class="upload")
-
-	nav(id="rutas-nav" class="columna")
+											label(id="labelPlaca")=perfil.placa
+										div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+											div(id="labelCapacidad")
+												label Placa del Carro:
+												label=perfil.capacidadCarro
+								else 
+									div(class="row" )
+										div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+											label Placa del Carro:
+											label(id="labelPlaca")=perfil.placa
+										div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+											div(id="labelCapacidad")
+												label Capacidad del Carro:
+												label=perfil.capacidadCarro
+								div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
+									label(id="labelBio")=perfil.bio
+				div(class="row")
+					div(id="formularioImagen" class="container" style="display:none")
+						//div(class="row")
+							div(id="perfilesUsuarios" class="row col-md-3 text-center center-block")
+								div(id="list")
+									//img(alt="Imagen Perfil" id="imaUser" src=ruta class="img-responsive center-block img-circle text-center")
+						div(class="row")
+							div(class="form-group col-md-5")
+								form(role="form" action="/subir" method="post" enctype="multipart/form-data")
+									div(class="fileUpload btn btn-default")
+										label  Seleccione una imagen ..
+										span(class="glyphicon glyphicon-folder-open")
+										input(name="file" type="file" id="files" class="upload")
+									div(class="form-group")
+										div()
+											button(type="submit" class="btn btn-default" onclick="habilitaImagenDiv();")
+												span(class="glyphicon glyphicon-ok-circle")
+											&nbsp; &nbsp; 
+											button(type="submit" class="btn btn-default" onclick="desabilitaImagenDiv();")
+												span(class="glyphicon glyphicon-remove-circle")
+	//nav rutas
+	nav(id="rutas-nav" class="columna col-md-offset-2" style="width: 50%;")
 		div(id="div-rutas-nav")
-			div(id="rutaPerfil" class="text-center")
-				p Mis Rutas
-					span(class="glyphicon glyphicon-map-marker")
-			ul(class="nav nav-pills nav-stacked")
-				li(class="misRutas" data-name="Casa")
-					a(href="#")
-						div(class="row")
-							div(class="text-left col-md-3")
-								img(alt="Imagen GoogleMaps" id=""  class="img-responsive img-circle" src="/images/icon.png")
-							div(class="text-center col-md-9")
-								span ESPOL - PUERTO MORO
-				hr
-				li(class="" data-name="")
-					a(href="#")
-						div(class="row")
-							div(class="text-left col-md-3")
-								img(alt="Imagen GoogleMaps" id=""  class="img-responsive img-circle" src="/images/icon.png")
-							div(class="text-center col-md-9")
-								span ESPOL - FIEC
-				hr
-	nav(id="rutas-nav" class="columna")
-		div(id="rutaSeguidores" class="text-center")
-			p Rutas de mis Seguidores
-				span(class="glyphicon glyphicon-map-marker")
-		ul(id="listaSeguidoresRutas" class="nav nav-pills nav-stacked")
-			li(class="misRutas" data-name="Casa")
-				a(href="#")
-					div(class="row")
-						div(class="text-left col-md-3")
-							img(alt="Imagen GoogleMaps" id=""  class="img-responsive img-circle" src="/images/user2.jpg")
-						div(class="text-center col-md-9")
-							span FIEC - MALL DEL SOL
-			hr
-			li(class="misRutas" data-name="Casa")
-				a(href="#")
-					div(class="row")
-						div(class="text-left col-md-3")
-							img(alt="Imagen GoogleMaps" id=""  class="img-responsive img-circle" src="/images/user3.jpg")
-						div(class="text-center col-md-9")
-							span RIO CENTRO NORTE - ESPOL
-			hr
+			div(class="row")
+				div(id="rutaPerfil" class="text-center")
+					p Mis Rutas
+						span(class="glyphicon glyphicon-map-marker")
+					each seguidor in listaSeguidor 
+						div(class="col-md-3")
+							ul(class="nav nav-pills nav-stacked")
+								//usuario
+								li()
+									a(href="#" class="text-center")=seguidor.usuario
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										i(class="material-icons") perm_identity
+								//fecha
+								li()
+									a(href="#" class="text-center")=seguidor.hora
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										i(class="material-icons") access_time
+								//capacidad
+								li()
+									a(href="#" class="text-center")=seguidor.capacidadCarro
+										&nbsp;
+										i(class="material-icons") supervisor_account
+								li()
+									a(href="/llevame" class="text-center" method="POST") llevame
+										&nbsp;&nbsp;&nbsp;&nbsp;
+										i(class="material-icons") room
+								li()
+									a(href="#" class="text-center") cerrar ruta
+										i(class="material-icons") highlight_off
+						div(id="perfilesUsuarios" class=" text-center center-block")
+							div(id="list" class="col-md-7")
+								//div(id="googleMap" style="width:500px;height:300px;")
+								- var inicioX  = seguidor.puntoX;
+								- var inicioY  = seguidor.puntoY;
+								- var destinoX = seguidor.destinoPosX;
+								- var destinoY = seguidor.destinoPosY;
+								div(id="mapaSeguidor" style="width:500px;height:300px;" onload="iniciarRuta(inicioX,inicioY,destinoX,destinoY);")
 	script(src='/javascripts/perfil_val.js')
 	link(rel="stylesheet", href="/stylesheets/perfil_style.css")

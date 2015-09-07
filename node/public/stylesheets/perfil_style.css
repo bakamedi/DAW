@@ -2,67 +2,6 @@
     padding-top: 10px;
 }
 
-#msmError,#msmErrorApellido,#msmErrorNombre {
-    font-family: "tu fuente", sans-serif !important;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-@font-face {
-    font-family: "tu fuente";
-    src: url("../font/02.TTF") format("truetype");
-}
-
-#barra-navegacion span{
-    font-family: "tu fuente", sans-serif !important;
-    font-size: 26px;
-    font-weight: bold;
-}
-
-#rutaPerfil p{
-    font-family: "tu fuente", sans-serif !important;
-    font-size: 26px;
-    font-weight: bold;
-}
-
-#rutaSeguidores p{
-    font-family: "tu fuente", sans-serif !important;
-    font-size: 26px;
-    font-weight: bold;
-}
-
-#rutaSeguidores{
-    background-color: rgb(33,150,243);
-    color: #fff;
-}
-
-#imagenPerfil button{
-    font-family: "tu fuente", sans-serif !important;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-#labelSeguidores-Siguiendo div label{
-    font-family: "tu fuente", sans-serif !important;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-
-
-#formularioPerfil div div label{
-    font-family: "tu fuente", sans-serif !important;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-
-#formularioPerfil div div input{
-    font-family: "tu fuente", sans-serif !important;
-    font-size: 20px;
-    font-weight: bold;
-}
-
 #perfil{
     -moz-box-shadow: 0 0 5px #888;
 -webkit-box-shadow: 0 0 5px#888;
@@ -117,18 +56,6 @@ box-shadow: 0 0 5px #888;
     padding-left: 30%;
 }
 
-#btnMensaje{
-    font-family: "tu fuente", sans-serif !important;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-#btnCerrarMensaje{
-    font-family: "tu fuente", sans-serif !important;
-    font-size: 20px;
-    font-weight: bold;
-}
-
 #modal-mensaje{
     height: 60%;
     width: 50%;
@@ -150,4 +77,8 @@ box-shadow: 0 0 5px #888;
     cursor: pointer;
     opacity: 0;
     filter: alpha(opacity=0);
+}
+
+.nav .active a {
+    background: rgb(33,150,243)!important;
 }
