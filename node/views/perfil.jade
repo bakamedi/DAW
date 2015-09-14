@@ -21,25 +21,31 @@ block content
 								ul(class="nav")
 									li()
 										a(href="/editar")
-											i(class="glyphicon glyphicon-user text-center") Editar
+											i(class="glyphicon glyphicon-pencil")
+											label(class="text-center") Editar
 									li()
 										a(href="/chat" target="_blank")
-											i(class="glyphicon glyphicon-envelope text-center") Mensajeria
+											i(class="glyphicon glyphicon-envelope")
+											label(class="text-center") Mensajeria
 									li()
 										a(href="#" onclick="habilitaImagenDiv();")
-											i(class="glyphicon glyphicon-picture text-center") Editar Imagen
+											i(class="glyphicon glyphicon-picture text-center")
+											label(class="text-center") Editar Imagen
 									if perfil.placa != "XXX0000"
 										li()
 											a(href="#")
 												- var placaCarro = "Placa : "+perfil.placa;
-												i(class="glyphicon glyphicon-flag text-center")=placaCarro
+												i(class="glyphicon glyphicon-flag text-center")
+												label(class="text-center")=placaCarro
 										li()
 											a(href="#")
 												- var capacidad= "Capacidad del Carro: "+perfil.capacidadCarro;
-												i(class="glyphicon glyphicon-scale text-center")=capacidad
+												i(class="glyphicon glyphicon-scale text-center")
+												label(class="text-center")=capacidad
 									li()
 										a(href="#")
-											i(class="glyphicon glyphicon-star text-center")=perfil.bio
+											i(class="glyphicon glyphicon-star text-center")
+											label(class="text-center")=perfil.bio
 				div(id="formularioImagen" style="display:none" class="profile-sidebar")
 					div(class="form-group")
 						form(role="form" action="/subir" method="post" enctype="multipart/form-data")
@@ -55,9 +61,34 @@ block content
 									button(type="submit" class="btn btn-default" onclick="desabilitaImagenDiv();")
 										span(class="glyphicon glyphicon-remove-circle")
 			div(class="col-md-9")
-				div(class="profile-content") ASDSADSAFASDFASF
-
-		
+				div(class="profile-content")
+					div(class="row")
+						//Seguidores
+						div(class="col-md-4 col-sm-6")
+							div(class="thumbnail")
+								div(class="profile-userpic")
+									img(src="/uploads/user.jpg" class="img-responsive" alt="...")
+								div(class="caption")
+									div(class="profile-usertitle")
+										a(href="#")
+											div(class="profile-usertitle-name")
+												p
+													span(class="glyphicon glyphicon-user") Usuario
+									p ver ruta
+									div(class="profile-userbuttons")
+										div(class="btn-group btn-group-justified" role="group" aria-label="...")
+											div(class="btn-group" role="group")
+												a(href="#")
+													i(class="glyphicon glyphicon-flag")
+														label() llevame
+											div(class="btn-group" role="group")
+												a(href="#")
+													i(class="glyphicon glyphicon-plus")
+														label() 3
+											div(class="btn-group" role="group")
+												a(href="#")
+													i(class="glyphicon glyphicon-time")
+														label() hora
 	script(src='/javascripts/perfil_val.js')
 	script(src='https://code.jquery.com/jquery-latest.js')
 	link(rel="stylesheet", href="/stylesheets/perfil_style.css")
