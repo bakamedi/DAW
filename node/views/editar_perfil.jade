@@ -19,11 +19,15 @@ block content
 								div(class="form-group")
 									label(class="col-md-4 control-label") Nombres
 									div(class="col-md-4")
-										input(name="nombre" type="text" placeholder="Nombres" class="form-control" value="#{perfil.nombre}")
+										input(id="nombrePerfil" onkeyup="validarPalabraNombre();" name="nombre" type="text" placeholder="Nombres" class="form-control" value="#{perfil.nombre}" required)
+										p
+											span(id="msmErrorNombre" style="color:blue")
 								div(class="form-group")
 									label(class="col-md-4 control-label") Apellidos
 									div(class="col-md-4")
-										input(name="apellido" type="text" placeholder="Apellidos" class="form-control" value="#{perfil.apellido}")
+										input(id="apellidoPerfil" onkeyup="validarPalabraApellido();" name="apellido" type="text" placeholder="Apellidos" class="form-control" value="#{perfil.apellido}" required)
+										p
+											span(id="msmErrorApellido" style="color:blue")
 								div(class="form-group")
 									label(class="col-md-4 control-label" for="radios") Tiene Carro
 									div(class="col-md-4")
@@ -50,7 +54,7 @@ block content
 										div(class="form-group")
 											label(class="col-md-4 control-label") Placa
 											div(class="col-md-4")
-												input(id="inPlaca" name="placa" type="text" placeholder="Ejemplo:GYE1234" class="form-control" value="#{perfil.placa}" required)
+												input(id="inPlaca" onkeyup="validarPlaca();" name="placa" type="text" placeholder="Ejemplo:GYE1234" class="form-control" value="#{perfil.placa}" required)
 												p
 													span(id="msmError" style="color:blue")
 										div(class="form-group")
@@ -62,7 +66,7 @@ block content
 										div(class="form-group")
 											label(class="col-md-4 control-label") Placa
 											div(class="col-md-4")
-												input(id="inPlaca" name="placa" type="text" placeholder="Ejemplo:GYE1234" class="form-control" value="#{perfil.placa}" required)
+												input(id="inPlaca" onkeyup="validarPlaca();" name="placa" type="text" placeholder="Ejemplo:GYE1234" class="form-control" value="#{perfil.placa}" required)
 												p
 													span(id="msmError" style="color:blue")
 										div(class="form-group")
