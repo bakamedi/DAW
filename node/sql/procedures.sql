@@ -82,27 +82,3 @@ END;
 $$
 DELIMITER ;
 
-drop procedure if exists obtener_ruta_usuarios;
-DELIMITER $$
-create procedure obtener_ruta_usuarios(username VARCHAR(20))
-
-begin
-	set @idUsuario2Seguidor = (select DISTINCT seguidores_siguiendo.idUsuario2Seguidor 
-										from usuario,seguidores_siguiendo 
-										where seguidores_siguiendo.idUsuario1Siguiendo = username);
-	set @idRuta = (select ruta.idRuta 
-						from usuario,ruta 
-						where usuario.usuario = @idUsuario2Seguidor);
-						
-	select DISTINCT usuario.usuario,
-						 usuario.capacidadCarro,
-						 ruta.diaSemana,ruta.hora,
-						 puntoRuta.puntoX,puntoRuta.puntoY,
-						 destino.destinoPosX,destino.destinoPosY 
-	from usuario,ruta,puntoRuta,destino 
-	where usuario.usuario =  ruta.usuario and 
-			puntoRuta.idRuta = @idRuta and 
-			destino.usuario = @idUsuario2Seguidor;
-END;
-$$
-DELIMITER;
