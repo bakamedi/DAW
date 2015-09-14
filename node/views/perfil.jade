@@ -1,128 +1,63 @@
 extends layout
 
 block content
-	nav(id="rutas-nav" class="columna")
-		div(id="perfil" class="columna" style="height: 100%;width: 150%;")
-			div(id="imagenPerfil" class=" col-xs-12 text-center")
-				div(class="row")
-				each perfil in listaPerfil
-					if perfil.usuario == usuario
-						- var ruta = "/uploads/"+perfil.usuario+".png";
-						//imagen
-						div(id="id1" class="col-md-5")
-							ul(class="nav nav-pills nav-stacked")
-								li(class="active")
-									a(href="#" class="text-center")
-										i(class="fa fa-list-alt fa-fw")=usuario
-								//editar
-								li()
-									a(href="/editar" class="text-center")
-										span(class="glyphicon glyphicon-pencil text-center")
-								//mensajeria
-								li()
-									a(href="/chat" class="text-center")
-										span(class="glyphicon glyphicon-envelope mdl-badge" data-badge="1")
+	div(class="container")
+		div(class="row profile")
+			div(class="col-md-3")
+				div(class="profile-sidebar")
+					each perfil in listaPerfil
+						if perfil.usuario == usuario
+							- var ruta = "/uploads/"+perfil.usuario+".png";
+							div(class="profile-userpic")
+								img(src=ruta class="img-responsive" alt="")
+							div(class="profile-usertitle")
+								- var nombrePerfil = perfil.nombre+" "+perfil.apellido
+								div(class="profile-usertitle-name")=nombrePerfil
+								div(class="profile-usertitle-job")=perfil.usuario
+							div(class="profile-userbuttons")
+								button(type="button" class="btn btn-success btn-sm") Seguidores
+								button(type="button" class="btn btn-danger btn-sm") Siguiendo
+							div(class="profile-usermenu")
+								ul(class="nav")
+									li()
+										a(href="/editar")
+											i(class="glyphicon glyphicon-user text-center") Editar
+									li()
+										a(href="/chat" target="_blank")
+											i(class="glyphicon glyphicon-envelope text-center") Mensajeria
+									li()
+										a(href="#" onclick="habilitaImagenDiv();")
+											i(class="glyphicon glyphicon-picture text-center") Editar Imagen
+									if perfil.placa != "XXX0000"
+										li()
+											a(href="#")
+												- var placaCarro = "Placa : "+perfil.placa;
+												i(class="glyphicon glyphicon-flag text-center")=placaCarro
+										li()
+											a(href="#")
+												- var capacidad= "Capacidad del Carro: "+perfil.capacidadCarro;
+												i(class="glyphicon glyphicon-scale text-center")=capacidad
+									li()
+										a(href="#")
+											i(class="glyphicon glyphicon-star text-center")=perfil.bio
+				div(id="formularioImagen" style="display:none" class="profile-sidebar")
+					div(class="form-group")
+						form(role="form" action="/subir" method="post" enctype="multipart/form-data")
+							div(class="fileUpload btn btn-default")
+								label  Seleccione una imagen ..
+								span(class="glyphicon glyphicon-folder-open")
+								input(name="file" type="file" id="files" class="upload")
+							div(class="form-group")
+								div()
+									button(type="submit" class="btn btn-default" onclick="habilitaImagenDiv();")
+										span(class="glyphicon glyphicon-ok-circle")
+									&nbsp; &nbsp; 
+									button(type="submit" class="btn btn-default" onclick="desabilitaImagenDiv();")
+										span(class="glyphicon glyphicon-remove-circle")
+			div(class="col-md-9")
+				div(class="profile-content") ASDSADSAFASDFASF
 
-								//imagen
-								li()
-									a(href="#" class="text-center" onclick="habilitaImagenDiv();")
-										span(class="glyphicon glyphicon-picture")
-						div(id="perfilesUsuarios" class=" text-center center-block")
-							if ruta = "/uploads/"+perfil.usuario+".png"
-								div(id="list" class="col-xs-6")
-									img(alt="Imagen Perfil" id="imaUser" src=ruta class="img-responsive center-block img-circle text-center")
-							else
-								- var ruta = "/uploads/user.jpg";								
-								div(id="list" class="col-xs-6")									
-									img(alt="Imagen Perfil" id="imaUser" src=ruta class="img-responsive center-block img-circle text-center")
-				div(class="row")
-					div(class="col-md-7 col-md-offset-2")
-						hr
-						each perfil in listaPerfil
-							if perfil.usuario == usuario
-								label(id="labelNombrePerfil")=perfil.nombre
-								&nbsp;
-								label(id="labelApellidoPerfil")=perfil.apellido
-								br
-								if perfil.placa == "XXX0000"
-									div(class="row" style="display:none")
-										div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-											label Placa del Carro:
-											label(id="labelPlaca")=perfil.placa
-										div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-											div(id="labelCapacidad")
-												label Placa del Carro:
-												label=perfil.capacidadCarro
-								else 
-									div(class="row" )
-										div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-											label Placa del Carro:
-											label(id="labelPlaca")=perfil.placa
-										div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-											div(id="labelCapacidad")
-												label Capacidad del Carro:
-												label=perfil.capacidadCarro
-								div(class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label")
-									label(id="labelBio")=perfil.bio
-				div(class="row")
-					div(id="formularioImagen" class="container" style="display:none")
-						//div(class="row")
-							div(id="perfilesUsuarios" class="row col-md-3 text-center center-block")
-								div(id="list")
-									//img(alt="Imagen Perfil" id="imaUser" src=ruta class="img-responsive center-block img-circle text-center")
-						div(class="row")
-							div(class="form-group col-md-5")
-								form(role="form" action="/subir" method="post" enctype="multipart/form-data")
-									div(class="fileUpload btn btn-default")
-										label  Seleccione una imagen ..
-										span(class="glyphicon glyphicon-folder-open")
-										input(name="file" type="file" id="files" class="upload")
-									div(class="form-group")
-										div()
-											button(type="submit" class="btn btn-default" onclick="habilitaImagenDiv();")
-												span(class="glyphicon glyphicon-ok-circle")
-											&nbsp; &nbsp; 
-											button(type="submit" class="btn btn-default" onclick="desabilitaImagenDiv();")
-												span(class="glyphicon glyphicon-remove-circle")
-	//nav rutas
-	nav(id="rutas-nav" class="columna col-md-offset-2" style="width: 50%;")
-		div(id="div-rutas-nav")
-			div(class="row")
-				div(id="rutaPerfil" class="text-center")
-					p Mis Rutas
-						span(class="glyphicon glyphicon-map-marker")
-					each seguidor in listaSeguidor 
-						div(class="col-md-3")
-							ul(class="nav nav-pills nav-stacked")
-								//usuario
-								li()
-									a(href="#" class="text-center")=seguidor.usuario
-										&nbsp;&nbsp;&nbsp;&nbsp;
-										i(class="material-icons") perm_identity
-								//fecha
-								li()
-									a(href="#" class="text-center")=seguidor.hora
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										i(class="material-icons") access_time
-								//capacidad
-								li()
-									a(href="#" class="text-center")=seguidor.capacidadCarro
-										&nbsp;
-										i(class="material-icons") supervisor_account
-								li()
-									a(href="/llevame" class="text-center" method="POST") llevame
-										&nbsp;&nbsp;&nbsp;&nbsp;
-										i(class="material-icons") room
-								li()
-									a(href="#" class="text-center") cerrar ruta
-										i(class="material-icons") highlight_off
-						div(id="perfilesUsuarios" class=" text-center center-block")
-							div(id="list" class="col-md-7")
-								//div(id="googleMap" style="width:500px;height:300px;")
-								- var inicioX  = seguidor.puntoX;
-								- var inicioY  = seguidor.puntoY;
-								- var destinoX = seguidor.destinoPosX;
-								- var destinoY = seguidor.destinoPosY;
-								div(id="mapaSeguidor" style="width:500px;height:300px;" onload="iniciarRuta(inicioX,inicioY,destinoX,destinoY);")
+		
 	script(src='/javascripts/perfil_val.js')
+	script(src='https://code.jquery.com/jquery-latest.js')
 	link(rel="stylesheet", href="/stylesheets/perfil_style.css")
