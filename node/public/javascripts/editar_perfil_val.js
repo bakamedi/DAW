@@ -63,7 +63,7 @@ function validarPlaca() {
         estadoNombre.innerHTML = "";
         //estadoNombre.style.color = "red";
     }
-    else { 
+    else {
         estadoNombre.innerHTML = "Placa incorrecta";
         estadoNombre.style.color = "red";
     }
@@ -111,7 +111,7 @@ function validarPalabraNombre() {
             }
         }
     }
-    else { 
+    else {
         estadoNombre.innerHTML = "El Nombre no debe estar Vacio";
         estadoNombre.style.color = "red";
     }
@@ -132,7 +132,7 @@ function validarPalabraApellido() {
             }
         }
     }
-    else { 
+    else {
         estadoNombre.innerHTML = "El Nombre no debe estar Vacio";
         estadoNombre.style.color = "red";
     }
@@ -160,7 +160,7 @@ function validarPlaca() {
         estadoNombre.innerHTML = "";
         //estadoNombre.style.color = "red";
     }
-    else { 
+    else {
         estadoNombre.innerHTML = "Placa incorrecta";
         estadoNombre.style.color = "red";
     }

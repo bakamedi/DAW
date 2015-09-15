@@ -1,6 +1,5 @@
 var credentials     = require('./credentials');
 var moment          = require('moment');
-
 /** MongoDB Stuff */
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/rapidin');
@@ -9,7 +8,6 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
   console.log('MongoDB connected');
-  mongoose.set("debug", true);
 });
 
 var RouteSchema = new mongoose.Schema({
@@ -17,7 +15,6 @@ var RouteSchema = new mongoose.Schema({
     name : String,
     days : String,
     hour : Number,
-    capacidad : Number,
     points : [{x : Number, y : Number}]
 });
 
@@ -28,10 +25,8 @@ var ViajeSchema = new mongoose.Schema({
     capacidad : Number,
 });
 
-
 var Route = mongoose.model('Route', RouteSchema);
 var Viaje = mongoose.model('Viaje', ViajeSchema);
-
 /** End MongoDB */
 
 /** MariaSQL stuff */
@@ -69,16 +64,17 @@ function executeQuery(queryString, object, callback){
                                 console.log('Result error: ' + inspect(err));
                            })
                           .on('end', function(info) {
-                                   console.log('Result finished successfully ' + queryString +  ' ' +  inspect(info));
+                                   console.log('Result finished successfully');
                             });
                 })
              .on('end', function endDBExecutionCallback() {
+              console.log(queryResult);
                  callback(queryResult);
              });
     }
 
 function isRouteClose(array, startX, startY, endX, endY){
-    var tolerance = 0.0003;
+    var tolerance = 0.003;
     var pointsMatched = 0;
     for(var i = 0; i < array.length; i++){
        if(pointsMatched === 0){
@@ -96,14 +92,14 @@ function isRouteClose(array, startX, startY, endX, endY){
 
 
 module.exports = {
- 
+
   user: function(nombre, apellido, username, placa, capacidad, bio) {
     this.nombre = nombre;
     this.apellido = apellido;
     this.username = username;
     this.placa = placa;
     this.capacidad = capacidad;
-    this.bio = bio;    
+    this.bio = bio;
   },
 
   obtener_seguidor: function (usuario, callback) {
@@ -116,7 +112,7 @@ module.exports = {
     this.nombre = nombre;
     this.dias = dias;
     this.hora = hora;
-  },  
+  },
     mensajeria: function(idUsuarioRemitente,idUsuarioRemisor,contenido,fecha,ubicacionActual,tipo,leido){
       this.idUsuarioRemitente = idUsuarioRemitente;
       this.idUsuarioRemisor   = idUsuarioRemisor;
@@ -146,13 +142,13 @@ module.exports = {
 
   obtener_usuario: function (usuario,callback){
       var queryStr = 'call rapidin.obtener_usuario(:username)';
-      var object = {username : usuario};
+      var object = {username : usuario.username};
       executeQuery(queryStr,object,callback);
    },
 
   update_usuario: function(usuario, callback){
     var queryStr = 'call rapidin.update_usuario(:nombre, :apellido, :username, :placa, :capacidadCarro,:bio)';
-    var object = { 
+    var object = {
         nombre          : usuario.nombre,
         apellido        : usuario.apellido,
         username        : usuario.username,
@@ -164,37 +160,32 @@ module.exports = {
    },
 
   insertar_ruta: function(idusuario, nombre, dias, hora, puntos, callback){
-      module.exports.obtener_usuario(idusuario, function getUserCapacity(queryRes){
-          var cap = queryRes[0].capacidadCarro;
-            var newRoute  = new Route({
-                        userId    : idusuario,
-                        name      : nombre,
-                        days      : dias,
-                        hour      : hora,
-                        capacidad : cap,
-                        points : puntos });    
-           newRoute.save(function saveRouteMongo(err, newRoute){
-               if(err){
-                   console.log("Error  al guardar con mongoose");
-                   return console.error(err);
-               } else {
-                   console.log("stored " + newRoute);
-               }
-           });
+    var newRoute  = new Route({
+                userId : idusuario,
+                name   : nombre,
+                days   : dias,
+                hour   : hora,
+                points : puntos });
+   newRoute.save(function saveRouteMongo(err, newRoute){
+       if(err){
+           console.log("Error  al guardar con mongoose");
+           return console.error(err);
+       } else {
+           console.log("stored " + newRoute);
+       }
    });
-  },
-
-   insertar_viaje: function(route, tiempo, cap){
+ },
+  insertar_viaje: function(route, tiempo, cap){
     var newTrip  = new Viaje({
                 routeId     : route,
                 time        : tiempo,
                 pasajeros   : 0,
-                capacidad   : cap });    
+                capacidad   : cap });
    newTrip.save(function savetripMongo(err, newTrip){
        if(err){
            console.log("Error  al guardar viaje con mongoose");
            return console.error(err);
-       } 
+       }
    });
   },
 
@@ -219,6 +210,7 @@ module.exports = {
     var upperLimit = time + 120;
     var query = Route.find({ "days" : {  "$regex" : day, "$options" : "i"  },
                              "hour" : {  "$gt" : time, "$lt" : upperLimit} });
+    query.select('userId name days hour points');
     query.exec(function mongoDBExec(err, todaysRoutes){
         if(err)
             console.error(err);
@@ -229,60 +221,61 @@ module.exports = {
                if(isRouteClose(todaysRoutes[i].points, startX, startY, endX, endY))
                    closeRoutes.push(todaysRoutes[i]);
             }
-            module.exports.getViajesCerca(closeRoutes, callback);
+            callback(closeRoutes);
         }
 
 
     });
   },
+  
+  getViajesCerca : function(rutas, callback){
+          var id_list = [];
+          var rutas_map = [];
+          var viajes_map = [];
+          var resultado = [];
+          var i;
+          var currentDate = moment(Date.now()).format('DD-MM-YYYY');
+          for(i=0 ; i < rutas.length; i++ ){
+              if(rutas[i]){
+                  id_list.push({ routeId : rutas[i]._id});
+                  rutas_map[rutas[i]._id] = rutas[i];
+              }
+          }
+          var query = Viaje.find();
+          query.or(id_list);
+          query.where('time').equals(currentDate);
+          query.exec(function viajesCercaQuery(err, docs){
+              console.log("err: "  + err);
+              console.log("docs: " + docs.length);
+              for(i = 0; i < docs.length; i++ ){
+                  var viaje = docs[i];
+                  viajes_map[viaje.routeId] = viaje;
+              }
+              for(i = 0; i < rutas.length; i++){
+                  var id = rutas[i];
+                  var trip = viajes_map[id._id];
+                  var route = rutas_map[id._id];
+                  if(trip){
+                      if(trip.pasajeros < trip.capacidad){
+                          console.log("trip existe");
+                          route.asientos = trip.capacidad - trip.pasajeros;
+                          resultado.push(route);
+                      }
+                  } else {
+                      console.log("trip no existe");
+                      var routeRes = route.toObject();
+                      routeRes.asientos = route.capacidad;
+                      module.exports.insertar_viaje(route._id, currentDate, route.capacidad);
+                      resultado.push(routeRes);
+                  }
+              }
+              callback(resultado);
+          });
+      },
 
-    getViajesCerca : function(rutas, callback){
-        var id_list = [];
-        var rutas_map = [];
-        var viajes_map = [];
-        var resultado = [];
-        var i;
-        var currentDate = moment(Date.now()).format('DD-MM-YYYY');
-        for(i=0 ; i < rutas.length; i++ ){
-            if(rutas[i]){
-                id_list.push({ routeId : rutas[i]._id});
-                rutas_map[rutas[i]._id] = rutas[i];
-            }
-        }
-        var query = Viaje.find();
-        query.or(id_list);
-        query.where('time').equals(currentDate);
-        query.exec(function viajesCercaQuery(err, docs){
-            console.log("err: "  + err);
-            console.log("docs: " + docs.length);
-            for(i = 0; i < docs.length; i++ ){
-                var viaje = docs[i];
-                viajes_map[viaje.routeId] = viaje;
-            }
-            for(i = 0; i < rutas.length; i++){
-                var id = rutas[i];
-                var trip = viajes_map[id._id];
-                var route = rutas_map[id._id];
-                if(trip){
-                    if(trip.pasajeros < trip.capacidad){
-                        console.log("trip existe");
-                        route.asientos = trip.capacidad - trip.pasajeros;
-                        resultado.push(route);
-                    }
-                } else {
-                    console.log("trip no existe");
-                    var routeRes = route.toObject();
-                    routeRes.asientos = route.capacidad;
-                    module.exports.insertar_viaje(route._id, currentDate, route.capacidad);
-                    resultado.push(routeRes);
-                }
-            }
-            callback(resultado);
-        });
-    },
  enviar_mensaje: function(mensajeria,callback){
        var queryStr = 'call rapidin.enviar_mensaje(:idUsuarioRemitente, :idUsuarioRemisor, :contenido, :fecha, :ubicacionActual, :tipo, :leido)';
-       var object = { 
+       var object = {
                idUsuarioRemitente : mensajeria.idUsuarioRemitente,
                idUsuarioRemisor   : mensajeria.idUsuarioRemisor,
                contenido          : mensajeria.contenido,
@@ -296,7 +289,7 @@ module.exports = {
 
  notificar_mensaje: function(mensajeria,callback){
        var queryStr = 'call rapidin.enviar_mensaje(:idUsuarioRemitente, :idUsuarioRemisor, :contenido, :fecha, :ubicacionActual, :tipo, :leido)';
-       var object = { 
+       var object = {
                idUsuarioRemitente : mensajeria.idUsuarioRemitente,
                idUsuarioRemisor   : mensajeria.idUsuarioRemisor,
                contenido          : mensajeria.contenido,
@@ -318,6 +311,3 @@ module.exports = {
     executeQuery(queryStr,object,callback);
   }
 };
-
-
-
