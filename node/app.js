@@ -125,14 +125,13 @@ app.get('/inicio', function (req, res) {
     res.redirect('/');
   }
   else{
-    console.log(req.carPoolSession.username);
     var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
     db_handler.obtener_usuario(user,function(queryRes){
-      //var obtener_ruta_usuarios = db_handler.user('', '', req.carPoolSession.username, '', '','');
-        db_handler.obtener_ruta_usuarios(user,function(queryResSeguidor){
-          res.render('perfil.jade',{listaPerfil : queryRes,usuario : req.carPoolSession.username,listaSeguidor : queryResSeguidor});
+      db_handler.obtener_lista_seguidores(user,function(querySeguidores){
+        db_handler.obtener_usuarios(function(queryUsuarios){
+          res.render('perfil.jade',{listaPerfil : queryRes,usuario : req.carPoolSession.username,listaSeguidor : querySeguidores,listaUsuarios : queryUsuarios});
         });
-         //res.render('perfil.jade',{listaPerfil : queryRes,usuario : req.carPoolSession.username});
+      });
     });
   }
 });

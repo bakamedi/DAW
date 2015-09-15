@@ -33,9 +33,9 @@ DELIMITER ;
 
 drop procedure if exists obtener_usuario;
 DELIMITER $$
-CREATE PROCEDURE obtener_usuario(usuername VARCHAR(20))
+CREATE PROCEDURE obtener_usuario(username VARCHAR(20))
 begin
-    select nombre,apellido,placa,capacidadCarro,bio from usuario where usuario=usuername;
+    select usuario,nombre,apellido,placa,capacidadCarro,bio from usuario where usuario=usuario and usuario = username;
 end;
 $$
 DELIMITER ;
@@ -81,4 +81,25 @@ begin
 END;
 $$
 DELIMITER ;
+/////////////////////////////
 
+drop procedure if exists obtener_lista_seguidores;
+DELIMITER $$
+create procedure obtener_lista_seguidores(username VARCHAR(20))
+begin
+	select DISTINCT seguidores_siguiendo.idUsuario2Seguidor
+	from usuario join seguidores_siguiendo
+	where usuario.usuario = seguidores_siguiendo.idUsuario1Siguiendo and usuario.usuario = username;
+END;
+$$
+DELIMITER ;
+
+drop procedure if exists obtener_usuarios;
+DELIMITER $$
+create procedure obtener_usuarios()
+begin
+	select usuario.usuario,usuario.nombre,usuario.apellido,usuario.placa,usuario.capacidadCarro,usuario.bio
+	from usuario;
+END;
+$$
+DELIMITER ;
