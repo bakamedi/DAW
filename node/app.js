@@ -137,15 +137,10 @@ app.get('/inicio', function (req, res) {
 });
 
 app.get('/editar',function (req,res){
-  if(!req.carPoolSession.username){
-    res.redirect('/');
-  }
-  else{
   var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
       db_handler.obtener_usuario(user,function(queryRes){
            res.render('editar_perfil.jade',{listaPerfil : queryRes,usuario : req.carPoolSession.username});
       });
-  }
 });
 
 app.get('/subirImagen',function (req,res){
@@ -353,4 +348,4 @@ app.get('/rutasCerca', function (req, res){
    
 http.listen(PORT, function() {
   console.log('el Servidor esta escuchando en el puerto %s',PORT);
-});
+  });
