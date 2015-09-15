@@ -162,21 +162,26 @@ module.exports = {
    },
 
   insertar_ruta: function(idusuario, nombre, dias, hora, puntos, callback){
-    var newRoute  = new Route({
-                userId : idusuario,
-                name   : nombre,
-                days   : dias,
-                hour   : hora,
-                points : puntos });
-   newRoute.save(function saveRouteMongo(err, newRoute){
-       if(err){
-           console.log("Error  al guardar con mongoose");
-           return console.error(err);
-       } else {
-           console.log("stored " + newRoute);
-       }
+      module.exports.obtener_usuario(idusuario, function getUserCapacity(queryRes){
+          var cap = queryRes[0].capacidadCarro;
+            var newRoute  = new Route({
+                        userId    : idusuario,
+                        name      : nombre,
+                        days      : dias,
+                        hour      : hora,
+                        capacidad : cap,
+                        points : puntos });
+           newRoute.save(function saveRouteMongo(err, newRoute){
+               if(err){
+                   console.log("Error  al guardar con mongoose");
+                   return console.error(err);
+               } else {
+                   console.log("stored " + newRoute);
+               }
+           });
    });
- },
+  },
+
   insertar_viaje: function(route, tiempo, cap){
     var newTrip  = new Viaje({
                 routeId     : route,
@@ -231,49 +236,49 @@ module.exports = {
   },
 
   getViajesCerca : function(rutas, callback){
-          var id_list = [];
-          var rutas_map = [];
-          var viajes_map = [];
-          var resultado = [];
-          var i;
-          var currentDate = moment(Date.now()).format('DD-MM-YYYY');
-          for(i=0 ; i < rutas.length; i++ ){
-              if(rutas[i]){
-                  id_list.push({ routeId : rutas[i]._id});
-                  rutas_map[rutas[i]._id] = rutas[i];
-              }
-          }
-          var query = Viaje.find();
-          query.or(id_list);
-          query.where('time').equals(currentDate);
-          query.exec(function viajesCercaQuery(err, docs){
-              console.log("err: "  + err);
-              console.log("docs: " + docs.length);
-              for(i = 0; i < docs.length; i++ ){
-                  var viaje = docs[i];
-                  viajes_map[viaje.routeId] = viaje;
-              }
-              for(i = 0; i < rutas.length; i++){
-                  var id = rutas[i];
-                  var trip = viajes_map[id._id];
-                  var route = rutas_map[id._id];
-                  if(trip){
-                      if(trip.pasajeros < trip.capacidad){
-                          console.log("trip existe");
-                          route.asientos = trip.capacidad - trip.pasajeros;
-                          resultado.push(route);
-                      }
-                  } else {
-                      console.log("trip no existe");
-                      var routeRes = route.toObject();
-                      routeRes.asientos = route.capacidad;
-                      module.exports.insertar_viaje(route._id, currentDate, route.capacidad);
-                      resultado.push(routeRes);
-                  }
-              }
-              callback(resultado);
-          });
-      },
+        var id_list = [];
+        var rutas_map = [];
+        var viajes_map = [];
+        var resultado = [];
+        var i;
+        var currentDate = moment(Date.now()).format('DD-MM-YYYY');
+        for(i=0 ; i < rutas.length; i++ ){
+            if(rutas[i]){
+                id_list.push({ routeId : rutas[i]._id});
+                rutas_map[rutas[i]._id] = rutas[i];
+            }
+        }
+        var query = Viaje.find();
+        query.or(id_list);
+        query.where('time').equals(currentDate);
+        query.exec(function viajesCercaQuery(err, docs){
+            console.log("err: "  + err);
+            console.log("docs: " + docs.length);
+            for(i = 0; i < docs.length; i++ ){
+                var viaje = docs[i];
+                viajes_map[viaje.routeId] = viaje;
+            }
+            for(i = 0; i < rutas.length; i++){
+                var id = rutas[i];
+                var trip = viajes_map[id._id];
+                var route = rutas_map[id._id];
+                if(trip){
+                    if(trip.pasajeros < trip.capacidad){
+                        console.log("trip existe");
+                        route.asientos = trip.capacidad - trip.pasajeros;
+                        resultado.push(route);
+                    }
+                } else {
+                    console.log("trip no existe");
+                    var routeRes = route.toObject();
+                    routeRes.asientos = route.capacidad;
+                    module.exports.insertar_viaje(route._id, currentDate, route.capacidad);
+                    resultado.push(routeRes);
+                }
+            }
+            callback(resultado);
+        });
+    },
 
  enviar_mensaje: function(mensajeria,callback){
        var queryStr = 'call rapidin.enviar_mensaje(:idUsuarioRemitente, :idUsuarioRemisor, :contenido, :fecha, :ubicacionActual, :tipo, :leido)';
