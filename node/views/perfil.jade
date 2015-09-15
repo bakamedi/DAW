@@ -77,18 +77,18 @@ block content
 													a(href="#")
 														div(class="profile-usertitle-name")
 															p
-																span(class="glyphicon glyphicon-user")=usuario.usuario
+																span(name="usuarioSeguidor" class="glyphicon glyphicon-user")=usuario.usuario
 												p ver ruta
 												div(class="profile-userbuttons")
 													div(class="btn-group btn-group-justified" role="group" aria-label="...")
 														div(class="btn-group" role="group")
-															a(href="#")
+															a(href="/enviar_notificacion_llevame")
 																i(class="glyphicon glyphicon-flag")
 																	label() llevame
 														div(class="btn-group" role="group")
 															a(href="#")
 																i(class="glyphicon glyphicon-plus")
-																	label() 3
+																	label()=usuario.capacidadCarro
 														div(class="btn-group" role="group")
 															a(href="#")
 																i(class="glyphicon glyphicon-time")
