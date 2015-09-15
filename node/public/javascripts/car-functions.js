@@ -34,19 +34,19 @@ function clearNewDataForm(){
 function constructDays(){
 	var out = "";
 	if(checkDay('Lunes'))
-            out += ",l"; 
+            out += ",1"; 
         if(checkDay('Martes'))
-            out += ",m"; 
+            out += ",2"; 
         if(checkDay('Miercoles'))
-            out += ",x"; 
+            out += ",3"; 
         if(checkDay('Jueves'))
-            out += ",j"; 
+            out += ",4"; 
         if(checkDay('Viernes'))
-            out += ",v"; 
+            out += ",5"; 
         if(checkDay('Sabado'))
-            out += ",s"; 
+            out += ",6"; 
         if(checkDay('Domingo'))
-            out += ",d"; 
+            out += ",7"; 
         if(out.length > 0)
             return out.substring(1);
         else return "";

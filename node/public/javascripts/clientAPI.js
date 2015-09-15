@@ -1,5 +1,6 @@
 var myRoutes = [];
-var myDest = []
+var myDest = [];
+moment().locale('es');
 function handleJSON(url, callback){
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -10,7 +11,7 @@ function handleJSON(url, callback){
 //			console.log("200");
     	callback(myArr);
   	}
-	}
+	};
   xmlhttp.overrideMimeType("application/json");
 	xmlhttp.open("GET", url, true);
 	xmlhttp.send(null);
@@ -31,37 +32,39 @@ function processFollowersNotifications(jArray){
 
 function processFollowingsNotifications(jArray){
 	var i;
-	var start = '<div class="near-container"><span class="time-text">en ';
-	var mid1 = '</span><dt>';
-        var preDist = '</dt><dd>';
-	var end = '</dd><div><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent notif-button ">Llevame</button><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent notif-button">Ver Ruta</button></div><hr></div>';
+	var start = '<div class="near-container"><span class="time-text">' ;
+        var mid1 = '</span><dt>';
+        var preCap = '</dt><dd>';
+	var preRuta = 'disponibles</dd><div><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent notif-button ">Llevame</button><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent notif-button" data-ruta=\'';
+        var end = '>Ver Ruta</button></div><hr></div>';
 	var out = "";
 	for (i=0; i<jArray.length; i++){
-	    out += start + jArray[i].time + mid1 + jArray[i].name + preDist  + 'A ' + jArray[i].dist + 'm del destino' + end;
+            var asientos = jArray[i].asientos !== 1 ? 'asientos' : 'asiento';
+	    out += start + moment().startOf('day').add(jArray[i].time, 'minutes').fromNow() + mid1 + jArray[i].name + preCap  + jArray[i].asientos  + asientos + preRuta + jArray[i].points + end;
 	}
 	console.log(out);
 	document.getElementById('active-follower-list').innerHTML = out;
 }
 function getDias(binary){
 	var out = "";
-        if(binary === "l,m,x,j,v,s,d")
+        if(binary === "1,2,3,4,5,6,7")
 		return "Todos";
-	else if(binary === "l,m,x,j,v")
+	else if(binary === "1,2,3,4,5")
 		return "Lunes a Viernes";
 	else{
-		if(binary.contains('l'))
+		if(binary.contains('1'))
 			out += "Lunes, ";
-		if(binary.contains('m'))
+		if(binary.contains('2'))
 			out += "Martes, ";		
-		if(binary.contains('x'))
+		if(binary.contains('3'))
 			out += "Miercoles, ";
-		if(binary.contains('j'))
+		if(binary.contains('4'))
 			out += "Jueves, ";
-		if(binary.contains('v'))
+		if(binary.contains('5'))
 			out += "Viernes, ";
-		if(binary.contains('s'))
+		if(binary.contains('6'))
 			out += "Sabado, ";
-		if(binary.contains('d'))
+		if(binary.contains('7'))
 			out += "Domingo, ";
 		var result =  out.substring(0, out.length-2);
                 var index = result.lastIndexOf(',');
@@ -171,8 +174,9 @@ function getFollowersNotifications(){
 	handleJSON('json/followersNotifications.json', processFollowersNotifications);
 }
 
-function getFollowingsNotifications(){
-	handleJSON('json/followingsNotifications.json', processFollowingsNotifications);
+function getFollowingsNotifications(startX, startY, endX, endY){
+        var time = moment().minute() - moment().startOf('day').minute(); 
+	handleJSON('/rutasCerca?day=' + moment().format('E') + '&time=' + time + '&startX=' + startX + '&startY=' + startY + '&endX=' + endX + '&endY=' + endY, processFollowingsNotifications);
 }
 function getMyFollowers(){
 	handleJSON('json/followers.json', processMyFollowers);

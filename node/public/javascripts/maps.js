@@ -26,7 +26,7 @@ function initializeMap(){
 				var mapOptions = {
 	    			zoom: 17,
 	    			center: currentPosition
-				}
+				};
 
         //Muestra el mapa
 				map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
@@ -58,7 +58,7 @@ function isValidAlphaNumericName(str) {
 
 function finishNewRoute(){
 	//google.maps.event.clearListeners(map, 'click');
-        if(blinkHandler != null){
+        if(blinkHandler){
             console.log("finish");
             window.clearInterval(blinkHandler);
         }
@@ -124,14 +124,14 @@ function addLatLng(event){
 				map: map
     });
 
-    if(start == null){
+    if(start === null){
         start = marker;
         locations = [];
         pickRoute.innerHTML = "Selecciona el destino de la nueva ruta";
         addLocation(x,y);
 				return;
     }
-    else if (end == null){
+    else if (end === null){
         end = marker;
         pickRoute.innerHTML = "Agrega puntos intermedios donde puedas recoger/dejar pasajeros";
         addLocation(x,y);
@@ -166,14 +166,14 @@ function addLatLng(event){
 }
 
 function clearRuta(){
-    if(start != null)
+    if(start)
         start.setMap(null);
-    if(end != null)
+    if(end)
         end.setMap(null);
     console.log("routes cleared");
     start = null;
     end = null;
-    waypts = []
+    waypts = [];
 }
 
 function addRouteMarkers(points){
@@ -187,7 +187,7 @@ function addRouteMarkers(points){
 	        draggable:true,
 	        map: map
     });
-        if(i == 0){
+        if(i === 0){
             start = myMarker;
             waypts = [];
         }else if( i == points.length - 1)
@@ -256,7 +256,7 @@ function showRuta(points){
 
 function showDestino(name){
     var pos = myDest[name];
-    if(pos != null)
+    if(pos !== null)
         addRouteMarkers(currentPosition, pos);
 }
 
@@ -286,7 +286,7 @@ $(document).ready( function(){
                     getFollowersNotifications();
                 }else{
 		    showDestino(replaceWhitespace($(this).attr('data-name')));
-                    getFollowingsNotifications();
+                    getFollowingsNotifications(start.position.G, start.position.K, end.position.G, end.position.K);
 		}$('li.misRutas').removeClass("active");
 		$(this).toggleClass("active");
 	});
@@ -306,8 +306,4 @@ $(document).ready( function(){
 
 google.maps.event.addDomListener(window, 'load', initializeMap);
 loadData();
-if(getPageType() == "car"){
-    getFollowersNotifications();
-}else{
-    getFollowingsNotifications();
-		}
+
