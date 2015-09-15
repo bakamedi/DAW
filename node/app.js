@@ -137,10 +137,15 @@ app.get('/inicio', function (req, res) {
 });
 
 app.get('/editar',function (req,res){
+  if(!req.carPoolSession.username){
+    res.redirect('/');
+  }
+  else{
   var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
       db_handler.obtener_usuario(user,function(queryRes){
            res.render('editar_perfil.jade',{listaPerfil : queryRes,usuario : req.carPoolSession.username});
       });
+  }
 });
 
 app.get('/subirImagen',function (req,res){
@@ -174,6 +179,19 @@ app.post('/actualiza',function (req,res){
           });
       });
     }
+});
+
+app.post('/enviar_notificacion_llevame/:id',function (req,res){
+  var llevameON = new db_handler.mensajeria(req.carPoolSession.username,
+                                            req.body.usuarioSeguidor,
+                                            'llevame',
+                                            '',
+                                            '',
+                                            1,
+                                            0);
+  db_handler.enviar_mensaje(llevameON,function (req,res){
+    res.redirect('/inicio');
+  });
 });
 
 app.get('/llevame',function (req, res){
@@ -348,4 +366,4 @@ app.get('/rutasCerca', function (req, res){
    
 http.listen(PORT, function() {
   console.log('el Servidor esta escuchando en el puerto %s',PORT);
-  });
+});
