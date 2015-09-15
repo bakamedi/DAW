@@ -144,7 +144,7 @@ module.exports = {
 
   obtener_usuario: function (usuario,callback){
       var queryStr = 'call rapidin.obtener_usuario(:username)';
-      var object = {username : usuario.username};
+      var object = {username : usuario};
       executeQuery(queryStr,object,callback);
    },
 
