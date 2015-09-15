@@ -46,6 +46,7 @@ block content
 										a(href="#")
 											i(class="glyphicon glyphicon-star text-center")
 											label(class="text-center")=perfil.bio
+				//carga un div con la imagen para poder ponerla en /upload
 				div(id="formularioImagen" style="display:none" class="profile-sidebar")
 					div(class="form-group")
 						form(role="form" action="/subir" method="post" enctype="multipart/form-data")
@@ -64,31 +65,34 @@ block content
 				div(class="profile-content")
 					div(class="row")
 						//Seguidores
-						div(class="col-md-4 col-sm-6")
-							div(class="thumbnail")
-								div(class="profile-userpic")
-									img(src="/uploads/user.jpg" class="img-responsive" alt="...")
-								div(class="caption")
-									div(class="profile-usertitle")
-										a(href="#")
-											div(class="profile-usertitle-name")
-												p
-													span(class="glyphicon glyphicon-user") Usuario
-									p ver ruta
-									div(class="profile-userbuttons")
-										div(class="btn-group btn-group-justified" role="group" aria-label="...")
-											div(class="btn-group" role="group")
-												a(href="#")
-													i(class="glyphicon glyphicon-flag")
-														label() llevame
-											div(class="btn-group" role="group")
-												a(href="#")
-													i(class="glyphicon glyphicon-plus")
-														label() 3
-											div(class="btn-group" role="group")
-												a(href="#")
-													i(class="glyphicon glyphicon-time")
-														label() hora
+						each usuario in listaUsuarios
+							each seguidor in listaSeguidor
+								if usuario.usuario == seguidor.idUsuario2Seguidor
+									div(class="col-md-4 col-sm-6")
+										div(class="thumbnail")
+											div(class="profile-userpic")
+												img(src="/uploads/user.jpg" class="img-responsive" alt="...")
+											div(class="caption")
+												div(class="profile-usertitle")
+													a(href="#")
+														div(class="profile-usertitle-name")
+															p
+																span(class="glyphicon glyphicon-user")=usuario.usuario
+												p ver ruta
+												div(class="profile-userbuttons")
+													div(class="btn-group btn-group-justified" role="group" aria-label="...")
+														div(class="btn-group" role="group")
+															a(href="#")
+																i(class="glyphicon glyphicon-flag")
+																	label() llevame
+														div(class="btn-group" role="group")
+															a(href="#")
+																i(class="glyphicon glyphicon-plus")
+																	label() 3
+														div(class="btn-group" role="group")
+															a(href="#")
+																i(class="glyphicon glyphicon-time")
+																	label() hora
 	script(src='/javascripts/perfil_val.js')
 	script(src='https://code.jquery.com/jquery-latest.js')
 	link(rel="stylesheet", href="/stylesheets/perfil_style.css")
