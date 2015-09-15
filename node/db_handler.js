@@ -8,6 +8,7 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
   console.log('MongoDB connected');
+  mongoose.set("debug", true);
 });
 
 var RouteSchema = new mongoose.Schema({
@@ -15,6 +16,7 @@ var RouteSchema = new mongoose.Schema({
     name : String,
     days : String,
     hour : Number,
+    capacidad : Number,
     points : [{x : Number, y : Number}]
 });
 
@@ -227,7 +229,7 @@ module.exports = {
 
     });
   },
-  
+
   getViajesCerca : function(rutas, callback){
           var id_list = [];
           var rutas_map = [];
