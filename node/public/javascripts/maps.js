@@ -1,6 +1,7 @@
 var map;
 var waypts = [];
 var locations = [];
+var markers = [];
 var whitespace = "NbSp1";
 var start;
 var end;
@@ -135,7 +136,7 @@ function addLatLng(event){
     else if (end === null){
         end = marker;
         pickRoute.innerHTML = "Agrega puntos intermedios donde puedas recoger/dejar pasajeros";
-        addLocation(x,y);
+        //addLocation(x,y);
         finishNewRoute();
     }
     else {//Add waypoints
@@ -167,6 +168,7 @@ function addLatLng(event){
 }
 
 function clickToGo(event){
+    clearRuta();
     //Agrega un nuevo marcador en el mapa
 		//
    var x = event.latLng.lat();
@@ -210,10 +212,15 @@ function clearRuta(){
         start.setMap(null);
     if(end)
         end.setMap(null);
+    for(var i = 0; i < markers.length; i++){
+        if(markers[i])
+            markers[i].setMap(null);
+    }
     console.log("routes cleared");
     start = null;
     end = null;
     waypts = [];
+    markers = [];
 }
 
 function addRouteMarkers(points){
@@ -237,6 +244,7 @@ function addRouteMarkers(points){
                 location : pos,
                 stopover : false
             };
+            markers.push(myMarker);
             waypts.push(point);
         }
     }
@@ -334,7 +342,6 @@ $(document).ready( function(){
         $("body").on('click', '.followingRoute', function(){                
             abortNewRoute();
             clearRuta();
-            clearFollowersNotification();
 	    showRuta($(this).attr('data-pts'));
 	});
         //Mostrar el popup de followers cuando das click en el boton

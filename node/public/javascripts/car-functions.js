@@ -78,6 +78,7 @@ function submitContent(){
         console.log("wrong days");
         return;
     }
+    addLocation(end.position.lat(), end.position.lng());
     console.log(JSON.stringify(locations));
 
     myNewData.hora = getTimeInteger();
@@ -92,6 +93,13 @@ function submitContent(){
                 array  : str
             },
             function( data ) {
+
+                res = JSON.parse(data);
+                    if(res.status == 200){
+                        location.reload();
+                    }else
+                        console.log(data);
+                /**
                 myRoutes[replaceWhitespace(myNewData.name)] = [start.position, end.position];
                 clearRutasColumn();
                 addRoute(myNewData);
@@ -105,6 +113,7 @@ function submitContent(){
                         $("body").load('/driver?error=0');
                     }else
                         console.log(data);
+                        */
 
             });
     }
