@@ -145,7 +145,7 @@ app.get('/editar',function (req,res){
   }
   else{
   var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
-      db_handler.obtener_usuario(user,function(queryRes){
+      db_handler.obtener_usuario(req.carPoolSession.username,function(queryRes){
            res.render('editar_perfil.jade',{listaPerfil : queryRes,usuario : req.carPoolSession.username});
       });
   }

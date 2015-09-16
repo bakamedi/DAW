@@ -1,35 +1,12 @@
 extends layout
 
-block popupsMensaje
-	div(class="modal fade" id="myModal" role="dialog")
-		div(class="modal-dialog modal-sm" style="width:50%")
-			div(class="modal-content")
-				div(class="modal-header")
-					button(type="button" class="close" data-dismiss="modal")&times;
-					h4(class="modal-title") Mensajeria
-				div(class="modal-body")
-					div(class="container")
-						div(class="row")
-							div(class="col-md-2")
-								select(id="seguidores_select" class="selectpicker" style="height: 10%;width: 80%;" onchange="ponerPalabraSeguidor();")
-									each usuario in listaUsuarios
-										each seguidor in listaSeguidor
-											if usuario.usuario == seguidor.idUsuario2Seguidor
-												- var nombreCompleto = usuario.nombre+" "+usuario.apellido;
-												option(id="#{usuario.usuario}" name="usuario")=nombreCompleto
-							div(class="col-md-1")
-								button(class="mdl-button mdl-js-button mdl-js-ripple-effect")
-									span(class="glyphicon glyphicon-arrow-right")
-							div(class="col-md-3")
-									label(id="paraMensaje") Para:
-									div(class="mdl-textfield mdl-js-textfield")
-										textarea(class="mdl-textfield__input" name="txtMensaje" type="text" rows= "2" id="sample5")
-										label(class="mdl-textfield__label" for="sample5") Escribe tu mensaje aqui ...
-				div(class="modal-footer")
-					button(type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect envioMensaje")
-						span(class="glyphicon glyphicon-send")
-					button(class="mdl-button mdl-js-button mdl-js-ripple-effect" data-dismiss="modal")
-						span(class="glyphicon glyphicon-remove-circle")
+block menuIcons
+	div(id="notifica" class="icon material-icons mdl-badge") announcement
+	div(class="mdl-tooltip" for="notifica") Notificaciones
+	div(id="followers-btn" class="icon material-icons") people
+	div(class="mdl-tooltip" for="followers-btn") Siguiendo
+	div(id="walking" class="icon material-icons") directions_run
+	div(class="mdl-tooltip" for="walking") No tengo carro...
 
 block content
 	div(class="container")
@@ -55,17 +32,15 @@ block content
 							div(class="profile-usermenu")
 								ul(class="nav")
 									li()
-										a(href="/editar")
-											i(class="glyphicon glyphicon-pencil")
-											label(class="text-center") Editar
+										if perfil.usuario == usuario
+											a(href="/editar")
+												i(class="glyphicon glyphicon-pencil")
+												label(class="text-center") Editar
 									li()
-										a(href="#" target="_blank" data-toggle="modal" data-target="#myModal")
-											i(class="glyphicon glyphicon-envelope")
-											label(class="text-center") Mensajeria
-									li()
-										a(href="#" onclick="habilitaImagenDiv();")
-											i(class="glyphicon glyphicon-picture text-center")
-											label(class="text-center") Editar Imagen
+										if perfil.usuario == usuario
+											a(href="#" onclick="habilitaImagenDiv();")
+												i(class="glyphicon glyphicon-picture text-center")
+												label(class="text-center") Editar Imagen
 									if perfil.placa != "XXX0000"
 										li()
 											a(href="#")
@@ -100,7 +75,6 @@ block content
 				div(class="profile-content")
 					div(class="row")
 						//Seguidores
-
 						div(class="col-md-1")
 							label Seguidores/Siguiendo
 						hr
@@ -120,14 +94,16 @@ block content
 													a(href="#")
 														div(class="profile-usertitle-name")
 															p
-
 																- var nombreCompleto = usuario.nombre+" "+usuario.apellido;
 																span(name="usuarioSeguidor" class="glyphicon glyphicon-user")=nombreCompleto
 												div(class="profile-userbuttons")
 													div(class="btn-group btn-group-justified" role="group" aria-label="...")
+														div(class="btn-group" role="group")
+																a(href="" id="#{usuario.usuario}" class="divSeguidor")
+																	i(class="icon material-icons") question_answer
 														if usuario.placa != "XXX0000"
 															div(class="btn-group" role="group")
-																a(href="/enviar_notificacion_llevame")
+																a(href="")
 																	i(class="glyphicon glyphicon-flag")
 																		label()=usuario.placa
 															div(class="btn-group" role="group")
