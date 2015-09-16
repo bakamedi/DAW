@@ -106,7 +106,7 @@ begin
 	FROM   rapidin.usuario
     LEFT OUTER JOIN rapidin.seguidores_siguiendo
     ON usuario.usuario = seguidores_siguiendo.idUsuario1Siguiendo
-    WHERE usuario.usuario != (
+    WHERE usuario.usuario not in (
 	select idUsuario1Siguiendo from seguidores_siguiendo
     where idUsuario2Seguidor=usu);
 END;
