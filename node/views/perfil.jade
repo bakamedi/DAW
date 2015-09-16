@@ -1,5 +1,36 @@
 extends layout
 
+block popupsMensaje
+	div(class="modal fade" id="myModal" role="dialog")
+		div(class="modal-dialog modal-sm" style="width:50%")
+			div(class="modal-content")
+				div(class="modal-header")
+					button(type="button" class="close" data-dismiss="modal")&times;
+					h4(class="modal-title") Mensajeria
+				div(class="modal-body")
+					div(class="container")
+						div(class="row")
+							div(class="col-md-2")
+								select(id="seguidores_select" class="selectpicker" style="height: 10%;width: 80%;" onchange="ponerPalabraSeguidor();")
+									each usuario in listaUsuarios
+										each seguidor in listaSeguidor
+											if usuario.usuario == seguidor.idUsuario2Seguidor
+												- var nombreCompleto = usuario.nombre+" "+usuario.apellido;
+												option(id="#{usuario.usuario}" name="usuario")=nombreCompleto
+							div(class="col-md-1")
+								button(class="mdl-button mdl-js-button mdl-js-ripple-effect")
+									span(class="glyphicon glyphicon-arrow-right")
+							div(class="col-md-3")
+									label(id="paraMensaje") Para:
+									div(class="mdl-textfield mdl-js-textfield")
+										textarea(class="mdl-textfield__input" name="txtMensaje" type="text" rows= "2" id="sample5")
+										label(class="mdl-textfield__label" for="sample5") Escribe tu mensaje aqui ...
+				div(class="modal-footer")
+					button(type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect envioMensaje")
+						span(class="glyphicon glyphicon-send")
+					button(class="mdl-button mdl-js-button mdl-js-ripple-effect" data-dismiss="modal")
+						span(class="glyphicon glyphicon-remove-circle")
+
 block content
 	div(class="container")
 		div(class="row profile")
@@ -7,7 +38,10 @@ block content
 				div(class="profile-sidebar")
 					each perfil in listaPerfil
 						if perfil.usuario == usuario
-							- var ruta = "/uploads/"+perfil.usuario+".png";
+							if perfil.imagenRuta == "/uploads/user.jpg" & perfil.imagenRuta != "/uploads/"+perfil.usuario+".png"
+								- var ruta = perfil.imagenRuta;
+							else
+								- var ruta = "/uploads/"+perfil.usuario+".png";
 							div(class="profile-userpic")
 								img(src=ruta class="img-responsive" alt="")
 							div(class="profile-usertitle")
@@ -15,8 +49,9 @@ block content
 								div(class="profile-usertitle-name")=nombrePerfil
 								div(class="profile-usertitle-job")=perfil.usuario
 							div(class="profile-userbuttons")
-								button(type="button" class="btn btn-success btn-sm") Seguidores
-								button(type="button" class="btn btn-danger btn-sm") Siguiendo
+								button(class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent") Seguidores
+								&nbsp;
+								button(class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent") Siguiendo
 							div(class="profile-usermenu")
 								ul(class="nav")
 									li()
@@ -24,7 +59,7 @@ block content
 											i(class="glyphicon glyphicon-pencil")
 											label(class="text-center") Editar
 									li()
-										a(href="/chat" target="_blank")
+										a(href="#" target="_blank" data-toggle="modal" data-target="#myModal")
 											i(class="glyphicon glyphicon-envelope")
 											label(class="text-center") Mensajeria
 									li()
@@ -58,41 +93,50 @@ block content
 								div()
 									button(type="submit" class="btn btn-default" onclick="habilitaImagenDiv();")
 										span(class="glyphicon glyphicon-ok-circle")
-									&nbsp; &nbsp; 
+									&nbsp; &nbsp;
 									button(type="submit" class="btn btn-default" onclick="desabilitaImagenDiv();")
 										span(class="glyphicon glyphicon-remove-circle")
 			div(class="col-md-9")
 				div(class="profile-content")
 					div(class="row")
 						//Seguidores
+						div(class="col-md-1")
+							label Seguidores/Siguiendo
+						hr
 						each usuario in listaUsuarios
 							each seguidor in listaSeguidor
 								if usuario.usuario == seguidor.idUsuario2Seguidor
 									div(class="col-md-4 col-sm-6")
 										div(class="thumbnail")
 											div(class="profile-userpic")
-												img(src="/uploads/user.jpg" class="img-responsive" alt="...")
+												if usuario.imagenRuta == "/uploads/user.jpg"
+													- var ruta = usuario.imagenRuta;
+												else
+													- var ruta = "/uploads/"+usuario.usuario+".png";
+												img(src=ruta class="img-responsive" alt="...")
 											div(class="caption")
 												div(class="profile-usertitle")
 													a(href="#")
 														div(class="profile-usertitle-name")
 															p
-																span(name="usuarioSeguidor" class="glyphicon glyphicon-user")=usuario.usuario
-												p ver ruta
+																- var nombreCompleto = usuario.nombre+" "+usuario.apellido;
+																span(name="usuarioSeguidor" class="glyphicon glyphicon-user")=nombreCompleto
 												div(class="profile-userbuttons")
 													div(class="btn-group btn-group-justified" role="group" aria-label="...")
-														div(class="btn-group" role="group")
-															a(href="/enviar_notificacion_llevame")
-																i(class="glyphicon glyphicon-flag")
-																	label() llevame
-														div(class="btn-group" role="group")
-															a(href="#")
-																i(class="glyphicon glyphicon-plus")
-																	label()=usuario.capacidadCarro
-														div(class="btn-group" role="group")
-															a(href="#")
-																i(class="glyphicon glyphicon-time")
-																	label() hora
+														if usuario.placa != "XXX0000"
+															div(class="btn-group" role="group")
+																a(href="/enviar_notificacion_llevame")
+																	i(class="glyphicon glyphicon-flag")
+																		label()=usuario.placa
+															div(class="btn-group" role="group")
+																a(href="#")
+																	i(class="glyphicon glyphicon-plus")
+																		label()=usuario.capacidadCarro
+														else
+															div(class="btn-group" role="group")
+																a(href="/enviar_notificacion_llevame")
+																	i(class="glyphicon glyphicon-flag")
+																		label() No tiene Carro
 	script(src='/javascripts/perfil_val.js')
 	script(src='https://code.jquery.com/jquery-latest.js')
 	link(rel="stylesheet", href="/stylesheets/perfil_style.css")

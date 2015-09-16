@@ -8,6 +8,7 @@ usuario varchar(20) ,
 placa varchar(8),
 capacidadCarro int,
 bio varchar(140),
+imagenRuta varchar(100),
 PRIMARY KEY (usuario)
 );
 
@@ -45,7 +46,7 @@ idViaje INT not null AUTO_INCREMENT,
 idUsuario varchar(20),
 idRuta INT not null,
 fecha varchar(10),
-PRIMARY KEY(idViaje), 
+PRIMARY KEY(idViaje),
 foreign key(idUsuario) references usuario(usuario)
 );
 

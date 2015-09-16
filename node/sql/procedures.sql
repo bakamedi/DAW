@@ -1,7 +1,7 @@
 use rapidin ;
 
 drop procedure if exists crear_usuario;
-DELIMITER $$ 
+DELIMITER $$
 create procedure crear_usuario(nombre VARCHAR(45), apellido VARCHAR(45), usuario VARCHAR(20), placa VARCHAR(7), capacidad INT, bio VARCHAR(140))
 begin
     insert into usuario (nombre,apellido,usuario,placa,capacidadCarro,bio) values(nombre, apellido, usuario, placa, capacidad,bio);
@@ -19,7 +19,7 @@ $$
 DELIMITER ;
 
 drop procedure if exists verificar_usuario;
-DELIMITER $$ 
+DELIMITER $$
 CREATE PROCEDURE verificar_usuario(username VARCHAR(20))
 begin
 	if ((select count(*) from usuario where usuario = username)>0) then
@@ -74,3 +74,11 @@ END;
 $$
 DELIMITER ;
 
+drop procedure if exists guardar_imagen_ruta;
+DELIMITER $$
+create procedure guardar_imagen_ruta(username VARCHAR(20))
+begin
+	update usuario set usuario.imagenRuta='null' where usuario=username;
+END;
+$$
+DELIMITER ;

@@ -316,5 +316,11 @@ module.exports = {
     queryStr = 'call rapidin.obtener_usuarios()';
     var object = null;
     executeQuery(queryStr,object,callback);
+  },
+  ///nuevo
+  guardar_imagen_ruta: function (usuario, callback){
+    var queryStr = 'call rapidin.guardar_imagen_ruta(:username)';
+    var object = {username: usuario.username};
+    executeQuery(queryStr,object,callback);
   }
 };
