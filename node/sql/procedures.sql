@@ -2,7 +2,7 @@ use rapidin ;
 
 drop procedure if exists crear_usuario;
 DELIMITER $$
-create procedure crear_usuario(nombre VARCHAR(45), apellido VARCHAR(45), usuario VARCHAR(20), placa VARCHAR(7), capacidad INT, bio VARCHAR(140),imagenRuta VARCHAR(100))
+create procedure crear_usuario(nombre VARCHAR(45), apellido VARCHAR(45), usuario VARCHAR(20), placa VARCHAR(8), capacidad INT, bio VARCHAR(140),imagenRuta VARCHAR(100))
 begin
     insert into usuario (nombre,apellido,usuario,placa,capacidadCarro,bio,imagenRuta) values(nombre, apellido, usuario, placa, capacidad,bio,imagenRuta);
 END;
@@ -13,7 +13,7 @@ drop procedure if exists obtener_usuario;
 DELIMITER $$
 CREATE PROCEDURE obtener_usuario(username VARCHAR(20))
 begin
-    select usuario,nombre,apellido,placa,capacidadCarro,bio from usuario where usuario=usuario and usuario = username;
+    select usuario,nombre,apellido,placa,capacidadCarro,bio,imagenRuta from usuario where usuario=usuario and usuario = username;
 end;
 $$
 DELIMITER ;
@@ -111,7 +111,7 @@ begin
     where idUsuario2Seguidor=usu);
 END;
 $$
-DELIMITER;
+DELIMITER ;
 
 drop procedure if exists obtener_siguiendo;
 DELIMITER $$
@@ -122,4 +122,25 @@ BEGIN
 	where usuario.usuario=seguidores_siguiendo.idUsuario1Siguiendo and idUsuario2Seguidor=usu;
 END;
 $$
-DELIMITER;
+DELIMITER ;
+
+drop procedure if exists obtener_lista_seguidores;
+DELIMITER $$
+create procedure obtener_lista_seguidores(username VARCHAR(20))
+begin
+        select DISTINCT seguidores_siguiendo.idUsuario2Seguidor
+        from usuario join seguidores_siguiendo
+        where usuario.usuario = seguidores_siguiendo.idUsuario1Siguiendo and usuario.usuario = username;
+END;
+$$
+DELIMITER ;
+
+drop procedure if exists obtener_usuarios;
+DELIMITER $$
+create procedure obtener_usuarios()
+begin
+        select usuario.usuario,usuario.nombre,usuario.apellido,usuario.placa,usuario.capacidadCarro,usuario.bio
+        from usuario;
+END;
+$$
+DELIMITER ;
