@@ -114,9 +114,9 @@ function addLocation(lat, lng){
 function addLatLng(event){
     //Agrega un nuevo marcador en el mapa
 		//
-   var x = event.latLng.G;
-   var y = event.latLng.K;
-    console.log("clicked :" + event.latLng.G + " " +  event.latLng.K);
+   var x = event.latLng.lat();
+   var y = event.latLng.lng();
+    console.log("clicked :" + event.latLng.lat()+ " " +  event.latLng.lng());
     var marker = new google.maps.Marker({
     		position: event.latLng,
 				title: '#',
@@ -286,7 +286,7 @@ $(document).ready( function(){
                     getFollowersNotifications();
                 }else{
 		    showDestino(replaceWhitespace($(this).attr('data-name')));
-                    getFollowingsNotifications(start.position.G, start.position.K, end.position.G, end.position.K);
+                    getFollowingsNotifications(start.position.lat(), start.position.lng(), end.position.lat(), end.position.lng());
 		}$('li.misRutas').removeClass("active");
 		$(this).toggleClass("active");
 	});
