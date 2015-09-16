@@ -49,6 +49,8 @@ function processFollowingsNotifications(jArray){
         //console.log("notification: " + out);
         if(out.length > 0)
 	    document.getElementById('active-follower-list').innerHTML = out;
+        else
+	    document.getElementById('active-follower-list').innerHTML = '<p id="emptyNotif">No hay datos.<br>Selecciona un destino.</p>';
 }
 function getDias(binary){
 	var out = "";
