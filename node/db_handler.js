@@ -78,14 +78,17 @@ function executeQuery(queryString, object, callback){
 function isRouteClose(array, startX, startY, endX, endY){
     var tolerance = 0.02;
     var pointsMatched = 0;
+    //console.log("new test");
     for(var i = 0; i < array.length; i++){
        if(pointsMatched === 0){
            if(Math.abs(startX - array[i].x) < tolerance && Math.abs(startY - array[i].y) < tolerance){
                pointsMatched = 1;
+               //console.log("1");
            }
         } else if(pointsMatched == 1){
            if(Math.abs(endX - array[i].x) < tolerance && Math.abs(endY - array[i].y) < tolerance){
                pointsMatched = 2;
+               //console.log("2");
            }
         }
     }
@@ -218,7 +221,6 @@ module.exports = {
     var upperLimit = time + 120;
     var query = Route.find({ "days" : {  "$regex" : day, "$options" : "i"  },
                              "hour" : {  "$gt" : time, "$lt" : upperLimit} });
-    query.select('userId name days hour points');
     query.exec(function mongoDBExec(err, todaysRoutes){
         if(err)
             console.error(err);
