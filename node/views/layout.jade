@@ -13,7 +13,6 @@ html
     script(src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
     block lowPriorityScripts
   body
-    block popupsMensaje
     block popups
     div(class="mdl-layout mdl-js-layout mdl-layout--fixed-header")
       header(class="mdl-layout__header")
@@ -30,8 +29,8 @@ html
         nav(class="mdl-navigation")
           a(class="mdl-navigation__link") Perfil
           a(class="mdl-navigation__link") No tengo carro
-          a(class="mdl-navigation__link") Seguidores
-          a(class="mdl-navigation__link") Siguiendo
+          a(class="mdl-navigation__link" href="/seguir") Seguidores
+          a(class="mdl-navigation__link" href="/siguiendo") Siguiendo
           a(class="mdl-navigation__link") Cerrar Sesi&oacuten
       main(class="mdl-layout__content")
         div(class="page-content")

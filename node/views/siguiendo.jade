@@ -1,0 +1,18 @@
+extends layout
+
+block content
+	div(class="container-fluit")
+	each siguiendo in listaSiguiendo	
+		ul(class="bloques col-md-4 col-sm-12 col-lg-3")
+			li(class="cara")
+				div(class="box")
+					div(class="poster")
+						img(alt="Imagen Perfil" src="/images/user.jpg"  class="img-responsive center-block img-circle text-center UsuImage")
+					div(class="info")
+						header
+							h1=siguiendo.apellido
+							span(class="subtitulo")=siguiendo.nombre
+							p=siguiendo.bio
+	
+
+	link(rel="stylesheet", href="/stylesheets/seguidores_siguiendo.css")

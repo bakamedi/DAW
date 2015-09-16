@@ -368,6 +368,45 @@ app.get('/rutasCerca', function (req, res){
         });
 });
 
+app.get('/seguir', function (req, res) {
+  if(req.carPoolSession.username == null){
+    res.redirect('/');
+  }
+  else{
+    //var user = new db_handler.user('req.carPoolSession.Nombre','req.carPoolSession.apellido','','','','req.carPoolSession.bio');
+    db_handler.obtener_seguidor(req.carPoolSession.username,function(queryResult){
+      res.render('seguir.jade', {listaSeguidor : queryResult,usuario: req.carPoolSession.username})
+      
+    })
+  }
+})
+
+
+app.get('/guardar/:id', function (req, res){
+     if(req.carPoolSession.username == null)
+        res.redirect('/');
+    else{
+        
+        db_handler.agregar_seguidor(req.params.id,req.carPoolSession.username,function(queryRes){
+        });
+        res.redirect('/seguir');
+        console.log(req.params.id);
+        console.log(req.carPoolSession.username);
+    }
+})
+
+app.get('/siguiendo', function (req, res) {
+  if(req.carPoolSession.username == null){
+    res.redirect('/');
+  }
+  else{
+    //var user = new db_handler.user('req.carPoolSession.Nombre','req.carPoolSession.apellido','','','','req.carPoolSession.bio');
+    db_handler.obtener_siguiendo(req.carPoolSession.username,function(queryResult){
+      res.render('siguiendo.jade', {listaSiguiendo : queryResult})
+      
+    })
+  }
+})
 
 http.listen(PORT, function() {
   console.log('el Servidor esta escuchando en el puerto %s',PORT);

@@ -39,13 +39,13 @@
 *, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
 body {
-  background: #2361a1;
+  /*background: #2361a1;*/
   font-family: ‘Rationale’, sans-serif;
   color: #fff;
 }
 .cabecera, footer{
   width:100%;
-  background-color:#555;
+  /*background-color:#555;*/
   color:#fff;
   text-align:center;
 }
@@ -57,8 +57,9 @@ footer{
 /*Bloques y efecto 3D*/
 
 .bloques {
+  float: left;
   list-style: none;
-  width: 960px;
+  /*width: 960px;*/
   margin:auto;
   text-align:center;
 }

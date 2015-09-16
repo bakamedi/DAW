@@ -316,6 +316,32 @@ module.exports = {
                };
        executeQuery(queryStr, object, callback);
      },
+
+  obtener_seguidor: function (username, callback) {
+    var queryStr = 'call rapidin.obtener_seguidor(:username)';
+    var object={
+      username: username
+    };
+    executeQuery(queryStr,object, callback);
+  },
+
+  obtener_siguiendo: function (username, callback) {
+    var queryStr = 'call rapidin.obtener_siguiendo(:username)';
+    var object={
+      username: username
+    };
+    executeQuery(queryStr,object, callback);
+  },
+
+  agregar_seguidor: function (username,nombre, callback) {
+    var queryStr = 'call rapidin.agregar_seguidor(:siguiendo, :seguidor)';
+    var object={
+      siguiendo: nombre,
+      seguidor: username
+    };
+    executeQuery(queryStr, object, callback);
+  },
+  
   obtener_lista_seguidores: function(usuario,callback){
     queryStr = 'call rapidin.obtener_lista_seguidores(:username)';
     var object = {username : usuario.username};
