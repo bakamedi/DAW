@@ -211,7 +211,7 @@ app.get('/llevame',function (req, res){
 * logout
 * Esto deberia de ser un post, pero por ahora por conveniencia es un get.
 **/
-app.get('/logout', function (req, res) {
+app.post('/logout', function (req, res) {
   if(req.carPoolSession.username){
         req.carPoolSession.reset();
   }
@@ -369,21 +369,21 @@ app.get('/rutasCerca', function (req, res){
 });
 
 app.get('/seguir', function (req, res) {
-  if(req.carPoolSession.username == null){
+  if(!req.carPoolSession.username){
     res.redirect('/');
   }
   else{
     //var user = new db_handler.user('req.carPoolSession.Nombre','req.carPoolSession.apellido','','','','req.carPoolSession.bio');
     db_handler.obtener_seguidor(req.carPoolSession.username,function(queryResult){
-      res.render('seguir.jade', {listaSeguidor : queryResult,usuario: req.carPoolSession.username})
+      res.render('seguir.jade', {listaSeguidor : queryResult,usuario: req.carPoolSession.username});
       
-    })
+    });
   }
-})
+});
 
 
 app.get('/guardar/:id', function (req, res){
-     if(req.carPoolSession.username == null)
+     if(!req.carPoolSession.username)
         res.redirect('/');
     else{
         
@@ -393,20 +393,20 @@ app.get('/guardar/:id', function (req, res){
         console.log(req.params.id);
         console.log(req.carPoolSession.username);
     }
-})
+});
 
 app.get('/siguiendo', function (req, res) {
-  if(req.carPoolSession.username == null){
+  if(!req.carPoolSession.username){
     res.redirect('/');
   }
   else{
     //var user = new db_handler.user('req.carPoolSession.Nombre','req.carPoolSession.apellido','','','','req.carPoolSession.bio');
     db_handler.obtener_siguiendo(req.carPoolSession.username,function(queryResult){
-      res.render('siguiendo.jade', {listaSiguiendo : queryResult})
+      res.render('siguiendo.jade', {listaSiguiendo : queryResult});
       
-    })
+    });
   }
-})
+});
 
 http.listen(PORT, function() {
   console.log('el Servidor esta escuchando en el puerto %s',PORT);
