@@ -125,13 +125,14 @@ module.exports = {
       this.leido              = leido;
   },
   crear_usuario: function (usuario, callback) {
-    var queryStr = 'call rapidin.crear_usuario(:nombre, :apellido, :username, :placa, :capacidad, :bio)';
+    var queryStr = 'call rapidin.crear_usuario(:nombre, :apellido, :username, :placa, :capacidad, :bio, :imagenRuta)';
     var object = { nombre : usuario.nombre,
                 apellido : usuario.apellido,
                 username : usuario.username,
                 placa : usuario.placa,
                 capacidad : usuario.capacidad,
-                bio : usuario.bio
+                bio : usuario.bio,
+                imagenRuta : usuario.imagenRuta
     };
     executeQuery(queryStr, object, callback);
   },
@@ -317,7 +318,6 @@ module.exports = {
     var object = null;
     executeQuery(queryStr,object,callback);
   },
-  ///nuevo
   guardar_imagen_ruta: function (usuario, callback){
     var queryStr = 'call rapidin.guardar_imagen_ruta(:username)';
     var object = {username: usuario.username};

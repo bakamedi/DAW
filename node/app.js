@@ -126,19 +126,16 @@ app.get('/inicio', function (req, res) {
   }
   else{
     var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
-    db_handler.obtener_usuario(user,function(queryRes){
+    db_handler.obtener_usuario(req.carPoolSession.username,function(queryRes){
       db_handler.obtener_lista_seguidores(user,function(querySeguidores){
         db_handler.obtener_usuarios(function(queryUsuarios){
-          db_handler.obtener_lista_siguiendo(user,function(querySeguiendo){
             res.render('perfil.jade',{listaPerfil : queryRes,
                                       usuario : req.carPoolSession.username,
                                       listaSeguidor : querySeguidores,
-                                      listaUsuarios : queryUsuarios,
-                                      listaSeguiendo : querySeguiendo});
+                                      listaUsuarios : queryUsuarios});
           });
         });
       });
-    });
   }
 });
 
@@ -161,12 +158,8 @@ app.get('/subirImagen',function (req,res){
 
 app.post('/subir', upload.single('file'), function (req, res, next) {
     //res.send({message:'Archivo guardado', file:req.file});
-    var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
-      db_handler.guardar_imagen_ruta(user,function(queryRes){
-    });
     res.redirect('/inicio');
 });
-
 
 app.get('/registro', function (req, res) {
   res.render('registro.jade');
@@ -183,8 +176,7 @@ app.post('/actualiza',function (req,res){
                                       req.body.capacidadCarro,
                                       req.body.bio);
       db_handler.update_usuario(user,function(queryRes){
-          var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
-          db_handler.obtener_usuario(user,function(queryRes){
+          db_handler.obtener_usuario(req.carPoolSession.username,function(queryRes){
               res.redirect('/inicio');
           });
       });
@@ -220,7 +212,7 @@ app.get('/llevame',function (req, res){
 * Esto deberia de ser un post, pero por ahora por conveniencia es un get.
 **/
 app.get('/logout', function (req, res) {
-  if(!req.carPoolSession.username){
+  if(req.carPoolSession.username){
         req.carPoolSession.reset();
   }
   res.redirect('/');
@@ -236,14 +228,15 @@ app.post('/crear', function (req, res){
                if(re){
                     db_handler.verificar_usuario(mariaClient,req.body.inUsuario,function(queryRes){
                       if(queryRes[0].FALSE){*/
-                        var argsCrear = {usuario: req.body.inUsuario};
+                        var usrname = req.body.inUsuario.toLowerCase();
+                        var argsCrear = {usuario: usrname};
                         soap.createClient(url, function(err , client){
                           client.wsInfoUsuario(argsCrear, function(err, result){
                             var Nombres = "";
                             var Apellidos = "";
                             var user;
                             if(result.wsInfoUsuarioResult === undefined){
-                              user = new db_handler.user(Nombres, Apellidos, req.body.inUsuario, req.body.inPlaca, req.body.inCapacidad,req.body.inBiografia);
+                              user = new db_handler.user(Nombres, Apellidos, usrname, req.body.inPlaca, req.body.inCapacidad,req.body.inBiografia);
                               db_handler.crear_usuario(user,function(queryRes){
                                    res.redirect('/');
                               });
@@ -252,7 +245,8 @@ app.post('/crear', function (req, res){
                               Nombres = result.wsInfoUsuarioResult.diffgram.NewDataSet.INFORMACIONUSUARIO.NOMBRES;
                               Apellidos = result.wsInfoUsuarioResult.diffgram.NewDataSet.INFORMACIONUSUARIO.APELLIDOS;
                               //var bio = "--";
-                              user = new db_handler.user(Nombres, Apellidos, req.body.inUsuario, req.body.inPlaca, req.body.inCapacidad,req.body.inBiografia);
+                              var imagenRuta = "/uploads/user.jpg";
+                              user = new db_handler.user(Nombres, Apellidos, usrname, req.body.inPlaca, req.body.inCapacidad,req.body.inBiografia,imagenRuta);
                               db_handler.crear_usuario(user,function(queryRes){
                                    res.redirect('/');
                               });
@@ -297,17 +291,18 @@ app.post('/inicio', function (req, res){
 */
 
 app.post('/inicio', function (req, res){
-     var args = {authUser: req.body.Email, authContrasenia: req.body.Password};
+    var usrname = req.body.Email.toLowerCase();
+     var args = {authUser: usrname, authContrasenia: req.body.Password};
      soap.createClient(url, function(err, client) {
             client.autenticacion(args, function(err, result) {
                 re = result.autenticacionResult;
                 if(re){
-                      db_handler.verificar_usuario(req.body.Email,function(queryRes){
+                      db_handler.verificar_usuario(usrname,function(queryRes){
                           if(queryRes[0].FALSE){
-                              res.render('registro.jade',{usu: req.body.Email,con:req.body.Password});
+                              res.render('registro.jade',{usu: usrname,con:req.body.Password});
                           }
                           else{
-                              req.carPoolSession.username = req.body.Email;
+                              req.carPoolSession.username = usrname;
                               res.redirect('/inicio/?');
                           }
                       });
