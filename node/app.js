@@ -52,7 +52,7 @@ io.on('connection', function(socket){
     //cuando el usuario cierra o actualiza el navegador
     socket.on("disconnect", function(){
       //si el usuario, por ejemplo, sin estar logueado refresca la
-      //página, el typeof del socket username es undefined, y el mensaje sería 
+      //página, el typeof del socket username es undefined, y el mensaje sería
       //El usuario undefined se ha desconectado del chat, con ésto lo evitamos
       if(typeof(socket.username) == "undefined")
       {
@@ -129,10 +129,13 @@ app.get('/inicio', function (req, res) {
     db_handler.obtener_usuario(req.carPoolSession.username,function(queryRes){
       db_handler.obtener_lista_seguidores(user,function(querySeguidores){
         db_handler.obtener_usuarios(function(queryUsuarios){
-          res.render('perfil.jade',{listaPerfil : queryRes,usuario : req.carPoolSession.username,listaSeguidor : querySeguidores,listaUsuarios : queryUsuarios});
+            res.render('perfil.jade',{listaPerfil : queryRes,
+                                      usuario : req.carPoolSession.username,
+                                      listaSeguidor : querySeguidores,
+                                      listaUsuarios : queryUsuarios});
+          });
         });
       });
-    });
   }
 });
 
@@ -217,10 +220,10 @@ app.get('/logout', function (req, res) {
 
 var url = 'http://ws.espol.edu.ec/saac/wsandroid.asmx?WSDL';
 app.post('/crear', function (req, res){
-     /*var args = {authUser: req.body.inUsuario, authContrasenia: req.body.inContraseña}; 
+     /*var args = {authUser: req.body.inUsuario, authContrasenia: req.body.inContraseña};
      var argsCrear = {usuario: req.body.inUsuario};
      soap.createClient(url, function(err, client) {
-          client.autenticacion(args, function(err, result) { 
+          client.autenticacion(args, function(err, result) {
                re = result.autenticacionResult;
                if(re){
                     db_handler.verificar_usuario(mariaClient,req.body.inUsuario,function(queryRes){
@@ -242,7 +245,8 @@ app.post('/crear', function (req, res){
                               Nombres = result.wsInfoUsuarioResult.diffgram.NewDataSet.INFORMACIONUSUARIO.NOMBRES;
                               Apellidos = result.wsInfoUsuarioResult.diffgram.NewDataSet.INFORMACIONUSUARIO.APELLIDOS;
                               //var bio = "--";
-                              user = new db_handler.user(Nombres, Apellidos, usrname, req.body.inPlaca, req.body.inCapacidad,req.body.inBiografia);
+                             var imagenRuta = "/uploads/user.jpg";
+                              user = new db_handler.user(Nombres, Apellidos, usrname, req.body.inPlaca, req.body.inCapacidad,req.body.inBiografia,imagenRuta);
                               db_handler.crear_usuario(user,function(queryRes){
                                    res.redirect('/');
                               });
@@ -258,15 +262,15 @@ app.post('/crear', function (req, res){
                else{
                     res.redirect('/registro?error=' + 1);
                }
-                    
+
           });
      });*/
 });
 /*
 app.post('/inicio', function (req, res){
-  var args = {authUser: req.body.Email, authContrasenia: req.body.Password};  
+  var args = {authUser: req.body.Email, authContrasenia: req.body.Password};
   soap.createClient(url, function(err, client) {
-      client.autenticacion(args, function(err, result) { 
+      client.autenticacion(args, function(err, result) {
         re = result.autenticacionResult;
         if(re){
                     //req.carPoolSession.username = req.body.Email; //Coloco el username en el session
@@ -275,12 +279,12 @@ app.post('/inicio', function (req, res){
                               console.log("asdsadsa");
                          })
           //res.render('perfil.jade',req.body.Email);
-                               // });                         
+                               // });
         }
         else{
           res.redirect('/?error=' + 1);
         }
-          
+
       });
   });
 })
@@ -288,7 +292,7 @@ app.post('/inicio', function (req, res){
 
 app.post('/inicio', function (req, res){
     var usrname = req.body.Email.toLowerCase();
-     var args = {authUser: usrname, authContrasenia: req.body.Password}; 
+     var args = {authUser: usrname, authContrasenia: req.body.Password};
      soap.createClient(url, function(err, client) {
             client.autenticacion(args, function(err, result) {
                 re = result.autenticacionResult;
@@ -344,7 +348,7 @@ app.get('/seguir/?', function (req, res) {
     var user = new db_handler.user('req.carPoolSession.Nombre','req.carPoolSession.apellido','','','','req.carPoolSession.bio');
     db_handler.obtener_seguidor(user,function(queryResult){
       res.render('seguir.jade', {listaSeguidor : queryResult,usuario: req.carPoolSession.username});
-      
+
     });
   }
 });
@@ -354,17 +358,17 @@ app.get('/misRutas', function (req, res){
         res.redirect('/');
      else{
         db_handler.getMisRutas(req.carPoolSession.username, function misRutasCallback(queryRes){
-            res.end('{"status" : 200, "array" : ' + JSON.stringify(queryRes) +  '}'); 
+            res.end('{"status" : 200, "array" : ' + JSON.stringify(queryRes) +  '}');
         });
      }
 });
 app.get('/rutasCerca', function (req, res){
         db_handler.getRutasCerca(req.query.day, req.query.time, req.query.startX, req.query.startY, req.query.endX, req.query.endY, function misRutasCallback(queryRes){
-            res.end('{"status" : 200, "array" : ' + JSON.stringify(queryRes) +  '}'); 
+            res.end('{"status" : 200, "array" : ' + JSON.stringify(queryRes) +  '}');
         });
 });
-  
-   
+
+
 http.listen(PORT, function() {
   console.log('el Servidor esta escuchando en el puerto %s',PORT);
 });

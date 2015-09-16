@@ -326,7 +326,7 @@ $(document).ready( function(){
                     getFollowersNotifications();
                 }else{
 		    showDestino(replaceWhitespace($(this).attr('data-name')));
-                    //getFollowingsNotifications(start.position.lat(), start.position.lng(), end.position.lat(), end.position.lng());
+                    getFollowingsNotifications(start.position.lat(), start.position.lng(), end.position.lat(), end.position.lng());
 		}$('li.misRutas').removeClass("active");
 		$(this).toggleClass("active");
 	});

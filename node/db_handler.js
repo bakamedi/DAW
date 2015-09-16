@@ -125,13 +125,14 @@ module.exports = {
       this.leido              = leido;
   },
   crear_usuario: function (usuario, callback) {
-    var queryStr = 'call rapidin.crear_usuario(:nombre, :apellido, :username, :placa, :capacidad, :bio)';
+    var queryStr = 'call rapidin.crear_usuario(:nombre, :apellido, :username, :placa, :capacidad, :bio, :imagenRuta)';
     var object = { nombre : usuario.nombre,
                 apellido : usuario.apellido,
                 username : usuario.username,
                 placa : usuario.placa,
                 capacidad : usuario.capacidad,
-                bio : usuario.bio
+                bio : usuario.bio,
+                imagenRuta : usuario.imagenRuta
     };
     executeQuery(queryStr, object, callback);
   },
@@ -217,6 +218,7 @@ module.exports = {
     var upperLimit = time + 120;
     var query = Route.find({ "days" : {  "$regex" : day, "$options" : "i"  },
                              "hour" : {  "$gt" : time, "$lt" : upperLimit} });
+    query.select('userId name days hour points');
     query.exec(function mongoDBExec(err, todaysRoutes){
         if(err)
             console.error(err);
@@ -320,6 +322,11 @@ module.exports = {
   obtener_usuarios: function(callback){
     queryStr = 'call rapidin.obtener_usuarios()';
     var object = null;
+    executeQuery(queryStr,object,callback);
+  },
+  guardar_imagen_ruta: function (usuario, callback){
+    var queryStr = 'call rapidin.guardar_imagen_ruta(:username)';
+    var object = {username: usuario.username};
     executeQuery(queryStr,object,callback);
   }
 };
