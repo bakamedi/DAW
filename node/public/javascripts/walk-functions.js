@@ -1,5 +1,6 @@
 function loadData(){
-    getMyDestinations();
+    //getMyDestinations();
+    google.maps.event.addListener(map, 'click', clickToGo);
 }
 
 function getPageType(){
@@ -29,6 +30,7 @@ function nuevaMapData(){
     });
     google.maps.event.addListener(map, 'click', addLatLng);
     }
+
 }
 
 

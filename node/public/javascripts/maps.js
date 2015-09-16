@@ -34,6 +34,7 @@ function initializeMap(){
  				//Agrega un manejador del evento click sobre el mapa
 				//google.maps.event.addListener(map, 'click', addLatLng);
 				//navigator.geolocation.getCurrentPosition(marksFromCurrentPos);
+                                loadData();
 	});	   
 }
 
@@ -165,6 +166,45 @@ function addLatLng(event){
     
 }
 
+function clickToGo(event){
+    //Agrega un nuevo marcador en el mapa
+		//
+   var x = event.latLng.lat();
+   var y = event.latLng.lng();
+    console.log("clicked :" + event.latLng.lat()+ " " +  event.latLng.lng());
+    var marker = new google.maps.Marker({
+    		position: event.latLng,
+				title: '#',
+				draggable:true,
+				map: map
+    });
+
+    start = new google.maps.Marker({
+        position: currentPosition,
+        title: '#',
+        draggable:true,
+        map: map
+    });
+
+    end = marker;
+    var request = {
+	origin: start.position,
+	destination: end.position,
+	waypoints: waypts,
+	optimizeWaypoints: true,
+	travelMode: google.maps.TravelMode.DRIVING
+    };
+
+    directionsService.route(request, function (response, status) {
+        if(status == google.maps.DirectionsStatus.OK){
+            directionsDisplay.setDirections(response);
+				}
+		});
+    getFollowingsNotifications(start.position.lat(), start.position.lng(),
+                end.position.lat(), end.position.lng());
+
+}
+
 function clearRuta(){
     if(start)
         start.setMap(null);
@@ -286,11 +326,17 @@ $(document).ready( function(){
                     getFollowersNotifications();
                 }else{
 		    showDestino(replaceWhitespace($(this).attr('data-name')));
-                    getFollowingsNotifications(start.position.lat(), start.position.lng(), end.position.lat(), end.position.lng());
+                    //getFollowingsNotifications(start.position.lat(), start.position.lng(), end.position.lat(), end.position.lng());
 		}$('li.misRutas').removeClass("active");
 		$(this).toggleClass("active");
 	});
 
+        $("body").on('click', '.followingRoute', function(){                
+            abortNewRoute();
+            clearRuta();
+            clearFollowersNotification();
+	    showRuta($(this).attr('data-pts'));
+	});
         //Mostrar el popup de followers cuando das click en el boton
         /**
 	$('#followers-btn').click(function(){
@@ -305,5 +351,4 @@ $(document).ready( function(){
 
 
 google.maps.event.addDomListener(window, 'load', initializeMap);
-loadData();
 

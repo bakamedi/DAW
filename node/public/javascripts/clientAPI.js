@@ -31,19 +31,24 @@ function processFollowersNotifications(jArray){
 }
 
 function processFollowingsNotifications(jArray){
+        jArray = jArray.array;
+        console.log(JSON.stringify(jArray));
 	var i;
 	var start = '<div class="near-container"><span class="time-text">' ;
         var mid1 = '</span><dt>';
         var preCap = '</dt><dd>';
-	var preRuta = 'disponibles</dd><div><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent notif-button ">Llevame</button><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent notif-button" data-ruta=\'';
-        var end = '>Ver Ruta</button></div><hr></div>';
+	var preUser = 'disponibles</dd><div><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent notif-button data-user="';
+        var preRuta = '">Llevame</button><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent notif-button followingRoute" data-pts=\'';
+
+        var end = '\'>Ver Ruta</button></div><hr></div>';
 	var out = "";
 	for (i=0; i<jArray.length; i++){
-            var asientos = jArray[i].asientos !== 1 ? 'asientos' : 'asiento';
-	    out += start + moment().startOf('day').add(jArray[i].time, 'minutes').fromNow() + mid1 + jArray[i].name + preCap  + jArray[i].asientos  + asientos + preRuta + jArray[i].points + end;
+            var asientos = jArray[i].asientos !== 1 ? '&nbspasientos&nbsp' : '&nbspasiento&nbsp';
+	    out += start + moment().startOf('day').add(jArray[i].hour, 'minutes').fromNow() + mid1 + jArray[i].name + preCap  + jArray[i].asientos  + asientos + preUser + jArray[i].userId + preRuta + JSON.stringify(jArray[i].points) + end;
 	}
-	console.log(out);
-	document.getElementById('active-follower-list').innerHTML = out;
+        //console.log("notification: " + out);
+        if(out.length > 0)
+	    document.getElementById('active-follower-list').innerHTML = out;
 }
 function getDias(binary){
 	var out = "";
@@ -74,13 +79,7 @@ function getDias(binary){
 }
 
 function getHourString(num){
-    var horas = num/60;
-    if(horas < 10)
-        horas = "0" + horas;
-    var min = num % 60;
-    if(min < 10)
-        min = "0" + min;
-    return "" + horas + ":" + min;
+    return moment().startOf('day').add(num, 'minutes').format("hh:mm");
 }
 
 function processMyDestinations(jArray){
@@ -175,7 +174,8 @@ function getFollowersNotifications(){
 }
 
 function getFollowingsNotifications(startX, startY, endX, endY){
-        var time = moment().minute() - moment().startOf('day').minute(); 
+        console.log("followingsNotifications");
+        var time = moment().hour() * 60 + moment().minute() - moment().startOf('day').minute(); 
 	handleJSON('/rutasCerca?day=' + moment().format('E') + '&time=' + time + '&startX=' + startX + '&startY=' + startY + '&endX=' + endX + '&endY=' + endY, processFollowingsNotifications);
 }
 function getMyFollowers(){

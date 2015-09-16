@@ -76,7 +76,7 @@ function executeQuery(queryString, object, callback){
     }
 
 function isRouteClose(array, startX, startY, endX, endY){
-    var tolerance = 0.003;
+    var tolerance = 0.02;
     var pointsMatched = 0;
     for(var i = 0; i < array.length; i++){
        if(pointsMatched === 0){
@@ -217,7 +217,6 @@ module.exports = {
     var upperLimit = time + 120;
     var query = Route.find({ "days" : {  "$regex" : day, "$options" : "i"  },
                              "hour" : {  "$gt" : time, "$lt" : upperLimit} });
-    query.select('userId name days hour points');
     query.exec(function mongoDBExec(err, todaysRoutes){
         if(err)
             console.error(err);
@@ -228,7 +227,10 @@ module.exports = {
                if(isRouteClose(todaysRoutes[i].points, startX, startY, endX, endY))
                    closeRoutes.push(todaysRoutes[i]);
             }
-            callback(closeRoutes);
+            if(closeRoutes.length > 0)
+                module.exports.getViajesCerca(closeRoutes, callback);
+            else
+                callback([]); 
         }
 
 
@@ -242,6 +244,7 @@ module.exports = {
         var resultado = [];
         var i;
         var currentDate = moment(Date.now()).format('DD-MM-YYYY');
+        console.log("getRutasCerca: " + rutas.length);
         for(i=0 ; i < rutas.length; i++ ){
             if(rutas[i]){
                 id_list.push({ routeId : rutas[i]._id});
@@ -262,15 +265,17 @@ module.exports = {
                 var id = rutas[i];
                 var trip = viajes_map[id._id];
                 var route = rutas_map[id._id];
+                var routeRes;
                 if(trip){
                     if(trip.pasajeros < trip.capacidad){
                         console.log("trip existe");
-                        route.asientos = trip.capacidad - trip.pasajeros;
-                        resultado.push(route);
+                        routeRes = route.toObject();
+                        routeRes.asientos = trip.capacidad - trip.pasajeros;
+                        resultado.push(routeRes);
                     }
                 } else {
                     console.log("trip no existe");
-                    var routeRes = route.toObject();
+                    routeRes = route.toObject();
                     routeRes.asientos = route.capacidad;
                     module.exports.insertar_viaje(route._id, currentDate, route.capacidad);
                     resultado.push(routeRes);
