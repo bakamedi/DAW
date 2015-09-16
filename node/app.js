@@ -126,7 +126,7 @@ app.get('/inicio', function (req, res) {
   }
   else{
     var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
-    db_handler.obtener_usuario(user,function(queryRes){
+    db_handler.obtener_usuario(req.carPoolSession.username,function(queryRes){
       db_handler.obtener_lista_seguidores(user,function(querySeguidores){
         db_handler.obtener_usuarios(function(queryUsuarios){
           res.render('perfil.jade',{listaPerfil : queryRes,usuario : req.carPoolSession.username,listaSeguidor : querySeguidores,listaUsuarios : queryUsuarios});
