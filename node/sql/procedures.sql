@@ -83,46 +83,43 @@ END;
 $$
 DELIMITER ;
 
-drop procedure if agregar_seguidor;
+drop procedure if exists agregar_seguidor;
 DELIMITER $$
-CREATE DEFINER=`root`@`localhost` 
-PROCEDURE `agregar_seguidor`(seguidor VARCHAR(20), siguiendo VARCHAR(20))
+CREATE PROCEDURE agregar_seguidor(seguidor VARCHAR(20), siguiendo VARCHAR(20))
 begin                            
  if((select count(*) from usuario where usuario  = seguidor)>0 AND 
  (select count(*) from usuario where usuario  = siguiendo)>0)then
-    INSERT INTO `rapidin`.`seguidores_siguiendo`
-(`idSeguidorSiguiente`,
-`idUsuario1Siguiendo`,
-`idUsuario2Seguidor`)
-VALUES
-(null,
-siguiendo,
-seguidor);
-
+    INSERT INTO rapidin.seguidores_siguiendo(idSeguidorSiguiente,idUsuario1Siguiendo,idUsuario2Seguidor)
+	VALUES(null,siguiendo,seguidor);
  else 
 	select false; 
  end if; 
- end$$
+ end;
+ $$
 DELIMITER ;
 
-drop procedure if obtener_seguidor;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `obtener_seguidor`(usu varchar(20))
+drop procedure if exists obtener_seguidor;
+DELIMITER $$
+CREATE PROCEDURE obtener_seguidor(usu varchar(20))
 begin
     SELECT nombre,apellido,usuario,placa,capacidadCarro,bio
-	FROM   usuario
-       LEFT OUTER JOIN seguidores_siguiendo
-          ON usuario.usuario = seguidores_siguiendo.idUsuario1Siguiendo
-          WHERE usuario.usuario != (
-			select idUsuario1Siguiendo
-            from seguidores_siguiendo
-            where idUsuario2Seguidor=usu);
-END
+	FROM   rapidin.usuario
+    LEFT OUTER JOIN rapidin.seguidores_siguiendo
+    ON usuario.usuario = seguidores_siguiendo.idUsuario1Siguiendo
+    WHERE usuario.usuario != (
+	select idUsuario1Siguiendo from seguidores_siguiendo
+    where idUsuario2Seguidor=usu);
+END;
+$$
+DELIMITER;
 
-drop procedure if obtener_siguiendo;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `obtener_siguiendo`(usu varchar(20))
+drop procedure if exists obtener_siguiendo;
+DELIMITER $$
+CREATE PROCEDURE obtener_siguiendo(usu varchar(20))
 BEGIN
 	select nombre,apellido,usuario,placa,capacidadCarro,bio
-	from usuario u,seguidores_siguiendo ss
-	where u.usuario=ss.idUsuario1Siguiendo and idUsuario2Seguidor=usu;
-
-END
+	from usuario ,seguidores_siguiendo 
+	where usuario.usuario=seguidores_siguiendo.idUsuario1Siguiendo and idUsuario2Seguidor=usu;
+END;
+$$
+DELIMITER;
