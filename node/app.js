@@ -144,7 +144,6 @@ app.get('/editar',function (req,res){
     res.redirect('/');
   }
   else{
-  var user = new db_handler.user('', '', req.carPoolSession.username, '', '','');
       db_handler.obtener_usuario(req.carPoolSession.username,function(queryRes){
            res.render('editar_perfil.jade',{listaPerfil : queryRes,usuario : req.carPoolSession.username});
       });
@@ -338,19 +337,6 @@ app.post('/nuevaRuta', function (req, res){
         });
         res.end('{"success" : "Updated Successfully", "status" : 200}');
     }
-});
-
-app.get('/seguir/?', function (req, res) {
-  if(!req.carPoolSession.username){
-    res.redirect('/');
-  }
-  else{
-    var user = new db_handler.user('req.carPoolSession.Nombre','req.carPoolSession.apellido','','','','req.carPoolSession.bio');
-    db_handler.obtener_seguidor(user,function(queryResult){
-      res.render('seguir.jade', {listaSeguidor : queryResult,usuario: req.carPoolSession.username});
-
-    });
-  }
 });
 
 app.get('/misRutas', function (req, res){
