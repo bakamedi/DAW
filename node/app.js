@@ -130,7 +130,27 @@ app.get('/inicio', function (req, res) {
       db_handler.obtener_lista_seguidores(user,function(querySeguidores){
         db_handler.obtener_usuarios(function(queryUsuarios){
             res.render('perfil.jade',{listaPerfil : queryRes,
-                                      usuario : req.carPoolSession.username,
+                                      usuarioGlobal : req.carPoolSession.username,
+                                      listaSeguidor : querySeguidores,
+                                      listaUsuarios : queryUsuarios});
+          });
+        });
+      });
+  }
+});
+
+app.get('/inicio/:id',function (req,res){
+  if(!req.carPoolSession.username){
+    res.redirect('/');
+  }
+  else{
+    var user = new db_handler.user('', '', req.params.id, '', '','');
+    db_handler.obtener_usuario(req.params.id,function (queryRes){
+      db_handler.obtener_lista_seguidores(req.params.id,function (querySeguidores){
+        db_handler.obtener_usuarios(function (queryUsuarios){
+            res.render('perfil.jade',{listaPerfil : queryRes,
+                                      usuario : req.params.id,
+                                      usuarioGlobal : req.carPoolSession.username, 
                                       listaSeguidor : querySeguidores,
                                       listaUsuarios : queryUsuarios});
           });
