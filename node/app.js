@@ -26,7 +26,7 @@ var io              = require('socket.io')(http);
 var PORT            = 8080;
 var usuariosOnline  = {};
 
-var usuariosOnline = {};
+var usuariosOnlineMensaje = [];
 
 io.on('connection', function(socket){
 	
