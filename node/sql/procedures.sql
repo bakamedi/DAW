@@ -55,12 +55,13 @@ DELIMITER $$
 create procedure enviar_mensaje(idUsuarioRemitente VARCHAR(20),
 							    idUsuarioRemisor VARCHAR(20),
 							    contenido VARCHAR(280),
-							    fecha VARCHAR(10),
+							    fecha date,
+							    hora time,
 							    ubicacionActual VARCHAR(45),
 							    tipo INT,
 							    leido INT)
 begin
-	insert into mensaje(idUsuarioRemitente,idUsuarioRemisor,contenido,fecha,ubicacionActual,tipo,leido) values(idUsuarioRemitente,idUsuarioRemisor,contenido,fecha,ubicacionActual,tipo,leido);
+	insert into mensaje(idUsuarioRemitente,idUsuarioRemisor,contenido,fecha,hora,ubicacionActual,tipo,leido) values(idUsuarioRemitente,idUsuarioRemisor,contenido,fecha,hora,ubicacionActual,tipo,leido);
 END;
 $$
 DELIMITER ;

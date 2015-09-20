@@ -29,6 +29,31 @@ var usuariosOnline  = {};
 var usuariosOnline = {};
 
 io.on('connection', function(socket){
+	
+	socket.on("inicioSesion",function(username){
+        var gr = {nick: username, id: socket.id};
+          if(usuariosOnlineMensaje.length==0){
+            usuariosOnlineMensaje.push(gr);
+          }
+          else{
+            var i = 0,bandera=0;
+            for(i=0;i<usuariosOnlineMensaje.length;i++){
+              var name = usuariosOnlineMensaje[i].nick;
+              if(name==username){
+                //usuariosOnline.push(gr);
+                bandera=1;
+                console.log("nuevo usuario");
+              }
+              else{
+                console.log("el usuario ya esta");
+              }
+            }
+            if(bandera!=1){
+              usuariosOnlineMensaje.push(gr);
+            }
+          }
+          console.log(usuariosOnlineMensaje)
+      });
 
      socket.on("loginUser",function(username){
 
@@ -66,8 +91,46 @@ io.on('connection', function(socket){
       socket.broadcast.emit("refreshChat", "desconectado", "El usuario " + socket.username + " se ha desconectado del chat.");
     });
 
-    socket.on('notificacion',function (){
-      //notificacion
+    socket.on('notificacion',function (de,para,mensaje,tipo){
+      console.log(de);
+      console.log(para);
+      console.log(mensaje);
+      console.log("-----------------------------");
+          var i = 0;
+          for(i=0;i<usuariosOnlineMensaje.length;i++){
+                  console.log("++++++++++++++++++++++++++++++");
+                  console.log(usuariosOnlineMensaje[i].nick);
+                  console.log(usuariosOnlineMensaje[i].id);
+                  var nom = usuariosOnlineMensaje[i].nick;
+                  if(nom==para){
+                      console.log("*********************");
+                      var usu = usuariosOnlineMensaje[i].id;
+
+                      var fecha = new Date();
+                      var hora = new Date();
+                      var dd = fecha.getDate();
+                      var mm = fecha.getMonth()+1; //hoy es 0!
+                      var yyyy = fecha.getFullYear();
+
+                      hora = hora.getHours() + ":" + hora.getMinutes() + ":" + hora.getSeconds();
+                      fecha = yyyy+"-"+ mm+'-'+dd;
+                      var ubicacion = "";
+                      var leido = 0;
+                      
+                      console.log(usu);
+                      //guardar en la base el mensaje
+                      //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                      var mensajeTotal = new db_handler.mensajeria(de,para,mensaje,fecha,hora,ubicacion,tipo,leido);
+                      console.log(mensajeTotal);
+                      db_handler.enviar_mensaje(mensajeTotal,function(queryRes){
+                        console.log(queryRes);
+                      });
+                      //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                      socket.broadcast.to(usu).emit("notificarMensajePrivado",mensaje,tipo,de);
+                      console.log("*********************");
+                  }
+                console.log("++++++++++++++++++++++++++++++");
+          }
     });
 
 });

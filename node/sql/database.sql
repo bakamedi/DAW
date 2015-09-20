@@ -36,8 +36,11 @@ idMensaje INT not null AUTO_INCREMENT,
 idUsuarioRemitente INT not null,
 idUsuarioRemisor INT not null,
 contenido varchar(280),
-fecha varchar(10),
+fecha date,
+hora time,
 ubicacionActual varchar(45),
+tipo int,
+leido int,
 PRIMARY KEY(idMensaje)
 );
 
