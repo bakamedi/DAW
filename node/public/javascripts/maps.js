@@ -319,6 +319,10 @@ function logout(){
         location.reload(true);
     });
 }
+
+function miPerfil(){
+    window.location.href = "/inicio";
+}
 //JQuery Events
 $(document).ready( function(){
         //Guardar la nueva ruta

@@ -2,8 +2,8 @@ extends layout
 
 block menuIcons
 	div(id="followers-btn" class="icon material-icons") people
-	div(class="mdl-tooltip" for="followers-btn") Siguiendo
-	div(id="walking" class="icon material-icons") directions_run
+	div(class="mdl-tooltip" for="followers-btn" onclick="siguiendo();") Siguiendo
+	div(id="walking" class="icon material-icons" onclick="driver();") directions_run
 	div(class="mdl-tooltip" for="walking") No tengo carro...
 
 block content
@@ -12,7 +12,7 @@ block content
 			div(class="col-md-3")
 				div(class="profile-sidebar")
 					each perfil in listaPerfil
-						if perfil.usuario == usuario
+						if perfil.usuario == usuarioGlobal
 							if perfil.imagenRuta == "/uploads/user.jpg" & perfil.imagenRuta != "/uploads/"+perfil.usuario+".png"
 								- var ruta = perfil.imagenRuta;
 							else
@@ -54,6 +54,41 @@ block content
 										a(href="#")
 											i(class="glyphicon glyphicon-star text-center")
 											label(class="text-center")=perfil.bio
+						else if perfil.usuario != usuarioGlobal
+							//perfil seguidor
+							each perfil in listaPerfil
+								if perfil.usuario == usuario
+									if perfil.imagenRuta == "/uploads/user.jpg" & perfil.imagenRuta != "/uploads/"+perfil.usuario+".png"
+										- var ruta = perfil.imagenRuta;
+									else
+										- var ruta = "/uploads/"+perfil.usuario+".png";
+									div(class="profile-userpic")
+										img(src=ruta class="img-responsive" alt="")
+									div(class="profile-usertitle")
+										- var nombrePerfil = perfil.nombre+" "+perfil.apellido
+										div(class="profile-usertitle-name")=nombrePerfil
+										div(class="profile-usertitle-job")=perfil.usuario
+									div(class="profile-userbuttons")
+										button(class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent") Seguidores
+										&nbsp;
+										button(class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent") Siguiendo
+									div(class="profile-usermenu")
+										ul(class="nav")
+											if perfil.placa != "XXX0000"
+												li()
+													a(href="#")
+														- var placaCarro = "Placa : "+perfil.placa;
+														i(class="glyphicon glyphicon-flag text-center")
+														label(class="text-center")=placaCarro
+												li()
+													a(href="#")
+														- var capacidad= "Capacidad del Carro: "+perfil.capacidadCarro;
+														i(class="glyphicon glyphicon-scale text-center")
+														label(class="text-center")=capacidad
+											li()
+												a(href="#")
+													i(class="glyphicon glyphicon-star text-center")
+													label(class="text-center")=perfil.bio
 				//carga un div con la imagen para poder ponerla en /upload
 				div(id="formularioImagen" style="display:none" class="profile-sidebar")
 					div(class="form-group")
@@ -93,11 +128,12 @@ block content
 														div(class="profile-usertitle-name")
 															p
 																- var nombreCompleto = usuario.nombre+" "+usuario.apellido;
-																span(name="usuarioSeguidor" class="glyphicon glyphicon-user")=nombreCompleto
+																a(id="#{usuario.usuario}" class="divSeguidor" name="usuarioSeguidor" href="/inicio/#{usuario.usuario}")
+																	span(class="glyphicon glyphicon-user")=nombreCompleto
 												div(class="profile-userbuttons")
 													div(class="btn-group btn-group-justified" role="group" aria-label="...")
 														div(class="btn-group" role="group")
-																a(href="" id="#{usuario.usuario}" class="divSeguidor")
+																a(href="")
 																	i(class="icon material-icons") question_answer
 														if usuario.placa != "XXX0000"
 															div(class="btn-group" role="group")

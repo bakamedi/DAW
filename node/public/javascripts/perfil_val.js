@@ -35,8 +35,7 @@ function desabilitaImagenDiv(){
 
 $(document).ready( function(){
     $("body").on('click', 'a.divSeguidor', function(){
-        var id = $(this).attr('id');
-        alert(id);
+
     });
 });
 
@@ -44,6 +43,18 @@ function logout(){
     $.post('/logout', {}, function (data){ 
         console.log("logout: " + data);
         location.reload(true);
+    });
+}
+
+function driver(){
+    $.get('/driver', {}, function (data){ 
+        location.href='driver';
+    });
+}
+
+function siguiendo(){
+    $.get('/siguiendo',{},function (data){
+        location.href='siguiendo';
     });
 }
 
