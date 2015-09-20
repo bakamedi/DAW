@@ -1,7 +1,7 @@
 var socket = io();
 $(document).ready(function(){
-    var name = document.getElementById("perfilUsuario").innerHTML;
-    console.log(name);
+    var name = document.getElementById("TempUsuario").value;
+    //console.log(name);
     socket.emit("inicioSesion",name);
 });
 
