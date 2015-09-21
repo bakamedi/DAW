@@ -1,4 +1,8 @@
 var socket = io();
+$(window).on('beforeunload', function(){
+        console.log("close socket");
+        socket.close();
+    });
 moment().locale('es');
 $(document).ready(function(){
     var name = document.getElementById("TempUsuario").value;
@@ -81,7 +85,13 @@ $(function(){
 		}
 		if(tipo===0){//PETICION
 			text = "<strong>" +nombre+"</strong>" +" quiere que lo lleves." + timeText;
-		}
+                        if(getPageType()=="car"){
+                            var args = {timeStamp : timeStamp,
+                                        username : de,
+                                        nombre : nombre };
+                            processFollowersNotifications([ args ]);
+		        }
+                }
 		if(tipo===2){//CONFIRMACION
 			text = "<strong>" +nombre+"</strong>" +" te va a llevar." + timeText;
 		}
@@ -127,4 +137,5 @@ $(function(){
         }
         animateScroll();
     });
+    
 });

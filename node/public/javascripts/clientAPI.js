@@ -18,15 +18,17 @@ function handleJSON(url, callback){
 
 function processFollowersNotifications(jArray){
 	var i;
-	var start = '<div class="near-container"><dt>';
-        var preDist = '</dt><dd>';
-	var end = '</dd><div><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent notif-button ">Llevar</button></div><hr></div>';
+	var start = '<div class="near-container"><span class="time-text">' ;
+        var preLink = '</span><strong><a href="/inicio/';
+        var preName = '">';
+        var preButtons = '</a></strong><br><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent notif-button llevarBtn" data-user="';
+        var end = '">Llevar</button></div><hr></div>';
 	var out = "";
 	for (i=0; i<jArray.length; i++){
-	    out += start + jArray[i].name + preDist  + 'A ' + jArray[i].dist + 'm del punto de partida' + end;
+	    out += start + moment(jArray[i].timeStamp).fromNow() + preLink  + jArray[i].username + preName +  jArray[i].nombre + preButtons + jArray[i].username + end;
 	}
 	console.log(out);
-	document.getElementById('active-follower-list').innerHTML = out;
+	document.getElementById('active-follower-list').innerHTML += out;
 }
 
 function processFollowingsNotifications(jArray){

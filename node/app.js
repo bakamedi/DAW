@@ -129,6 +129,7 @@ io.on('connection', function(socket){
     });
 
     socket.on('notificacion',function (de,para,mensaje,tipo){
+      console.log("nueva notificacion");
       console.log(de);
       console.log(para);
       console.log(mensaje);

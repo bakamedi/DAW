@@ -341,7 +341,13 @@ $(document).ready( function(){
             socket.emit("notificacion", de, $(this).attr("data-user"), "", 0);
         });
 
-
+        $("body").on('click', '.llevarBtn', function(){
+            console.log('llevar');
+	    var de = $("#TempUsuario").val();
+            console.log("de: " + de);
+            console.log("para: " + $(this).attr("data-user"));
+            socket.emit("notificacion", de, $(this).attr("data-user"), "", 2);
+        });
         //Mostrar gente cerca cuando das click a una ruta
 	$("body").on('click', 'li.misRutas', function(){                
                 abortNewRoute();
@@ -349,7 +355,7 @@ $(document).ready( function(){
 		clearFollowersNotification();
                 if(getPageType() == "car"){
 		    showRuta($(this).attr('data-pts'));
-                    getFollowersNotifications();
+                    //getFollowersNotifications();
                 }else{
 		    showDestino(replaceWhitespace($(this).attr('data-name')));
                     getFollowingsNotifications(start.position.lat(), start.position.lng(), end.position.lat(), end.position.lng());
