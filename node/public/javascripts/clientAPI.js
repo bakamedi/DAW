@@ -37,7 +37,7 @@ function processFollowingsNotifications(jArray){
 	var start = '<div class="near-container"><span class="time-text">' ;
         var mid1 = '</span><dt>';
         var preCap = '</dt><dd>';
-	var preUser = 'disponibles</dd><div><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent notif-button data-user="';
+	var preUser = 'disponibles</dd><div><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent notif-button takeMe"  data-user="';
         var preRuta = '">Llevame</button><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent notif-button followingRoute" data-pts=\'';
 
         var end = '\'>Ver Ruta</button></div><hr></div>';

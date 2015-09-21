@@ -333,6 +333,12 @@ $(document).ready( function(){
             console.log('nuevadata');
             nuevaMapData();
         });
+        $("body").on('click', '.takeMe', function(){
+            console.log('takeMe');
+	    var de = document.getElementById("perfilUsuario").innerHTML;
+            socket.emit("notificacion", de, $(this).attr("data-user"), 0);
+        });
+
 
         //Mostrar gente cerca cuando das click a una ruta
 	$("body").on('click', 'li.misRutas', function(){                

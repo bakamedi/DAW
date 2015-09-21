@@ -28,11 +28,15 @@ var usuariosOnline  = {};
 
 var usuariosOnlineMensaje = [];
 
+function printResult(res){
+    console.log(res);
+}
+
 io.on('connection', function(socket){
 	
 	socket.on("inicioSesion",function(username){
         var gr = {nick: username, id: socket.id};
-          if(usuariosOnlineMensaje.length==0){
+          if(usuariosOnlineMensaje.length === 0){
             usuariosOnlineMensaje.push(gr);
           }
           else{
@@ -52,7 +56,7 @@ io.on('connection', function(socket){
               usuariosOnlineMensaje.push(gr);
             }
           }
-          console.log(usuariosOnlineMensaje)
+          console.log(usuariosOnlineMensaje);
       });
 
      socket.on("loginUser",function(username){
@@ -122,9 +126,7 @@ io.on('connection', function(socket){
                       //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                       var mensajeTotal = new db_handler.mensajeria(de,para,mensaje,fecha,hora,ubicacion,tipo,leido);
                       console.log(mensajeTotal);
-                      db_handler.enviar_mensaje(mensajeTotal,function(queryRes){
-                        console.log(queryRes);
-                      });
+                      db_handler.enviar_mensaje(mensajeTotal,printResult);
                       //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                       socket.broadcast.to(usu).emit("notificarMensajePrivado",mensaje,tipo,de);
                       console.log("*********************");
