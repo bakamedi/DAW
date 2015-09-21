@@ -37,7 +37,10 @@ $(function(){
 		
 	});
 	*/
-	
+	$("#notifica").on("click", function(){
+            removeBadge();
+        });
+
 	$(".sendMsg").on("click", function(){
 		var de = document.getElementById("perfilUsuario").innerHTML;
 		var para = $("input#para").val();
