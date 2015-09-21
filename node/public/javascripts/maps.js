@@ -335,8 +335,10 @@ $(document).ready( function(){
         });
         $("body").on('click', '.takeMe', function(){
             console.log('takeMe');
-	    var de = document.getElementById("perfilUsuario").innerHTML;
-            socket.emit("notificacion", de, $(this).attr("data-user"), 0);
+	    var de = $("#TempUsuario").val();
+            console.log("de: " + de);
+            console.log("para: " + $(this).attr("data-user"));
+            socket.emit("notificacion", de, $(this).attr("data-user"), "", 0);
         });
 
 

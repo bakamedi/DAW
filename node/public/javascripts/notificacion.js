@@ -1,4 +1,5 @@
 var socket = io();
+moment().locale('es');
 $(document).ready(function(){
     var name = document.getElementById("TempUsuario").value;
     //console.log(name);
@@ -16,14 +17,39 @@ function removeBadge(){
 
 }
 $(function(){
+	/*
+	//CHAT
+	$(".sendMsg").on("click", function(){
+		var de = document.getElementById("TempUsuario").value;
+		var para = document.getElementById("TempUsuario2").value;
+		var mensaje = $("#mensaje").val();
+		var tipo = 1;
+		console.log(para);
+		console.log(mensaje);
+
+        if(mensaje=='') return false;
+        //evento menssaje ene l server nodejs
+        socket.emit('addNewMessage',de, para,mensaje);
+        socket.emit("notificacion",de,para,mensaje,tipo);
+        $("#mensaje").val('').focus();
+        return false;
+
+		
+	});
+	*/
+	$("#notifica").on("click", function(){
+            removeBadge();
+        });
+
 	$(".sendMsg").on("click", function(){
 		var de = document.getElementById("perfilUsuario").innerHTML;
 		var para = $("input#para").val();
 		var mensaje = $("input#msg").val();
 		var tipo = 1;
+		var timeStamp = 0;
 		console.log(para);
 		console.log(mensaje);
-		socket.emit("notificacion",de,para,mensaje,tipo);
+		socket.emit("notificacion",de,para,mensaje,tipo,timeStamp);
 	});
 
 	$(".sendNotificacion").on("click", function(){
@@ -31,12 +57,13 @@ $(function(){
 		var para = $("input#para").val();
 		var mensaje = $("input#msg").val();
 		var tipo = 0;
+		var timeStamp = 0;
 		console.log(para);
 		console.log(mensaje);
 		socket.emit("notificacion",de,para,mensaje,tipo);
 	});
 
-	socket.on("notificarMensajePrivado", function (mensaje,tipo,de){
+	socket.on("notificarMensajePrivado", function (mensaje,nombre, tipo,de, timeStamp){
 		alert(tipo);
 		alert(mensaje);
 
@@ -46,16 +73,17 @@ $(function(){
 
 		li.attr("class","mdl-menu__item ");
                 var text;
+                var timeText = '<span class="time-text">' + moment(timeStamp).fromNow()+ '</span>';
 
 		if(tipo==1){//NUEVO MENSAJE
-			text = de+" te envio un mensaje.";
+			text = "<strong>" + nombre+"</strong>" +' te envio un mensaje.' + timeText;
 			console.log(text);
 		}
 		if(tipo===0){//PETICION
-			text = de+" quiere que lo lleves.";
+			text = "<strong>" +nombre+"</strong>" +" quiere que lo lleves." + timeText;
 		}
 		if(tipo===2){//CONFIRMACION
-			text = de+" te va a llevar.";
+			text = "<strong>" +nombre+"</strong>" +" te va a llevar." + timeText;
 		}
 
 
@@ -75,4 +103,28 @@ $(function(){
 		*/
 		alert("tiene un mensaje");
 	});
+	
+	socket.on('message',function(action, message){
+		console.log(message);
+        if(action == "conectado")
+        {
+            $("#chatMsgs").append("<p class='col-md-12 alert-info'>" + message + "</p>");
+        }
+        //si es una desconexión
+        else if(action == "desconectado")
+        {
+            $("#chatMsgs").append("<p class='col-md-12 alert-danger'>" + message + "</p>");
+        }
+        //si es un nuevo mensaje 
+        else if(action == "msg")
+        {
+            $("#chatMsgs").append("<p class='col-md-12 alert-warning'>" + message + "</p>");
+        }
+        //si el que ha conectado soy yo
+        else if(action == "yo")
+        {
+            $("#chatMsgs").append("<p class='col-md-12 alert-success'>" + message + "</p>");
+        }
+        animateScroll();
+    });
 });

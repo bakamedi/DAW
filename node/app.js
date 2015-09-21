@@ -31,7 +31,13 @@ var usuariosOnlineMensaje = [];
 function printResult(res){
     console.log(res);
 }
-
+function notificacionPrivadaCallback(socket, usu, mensaje, tipo, de, timeStamp){
+    db_handler.obtener_usuario(de, function(queryRes){
+        var nom = queryRes[0].nombre;
+        socket.broadcast.to(usu).emit("notificarMensajePrivado",mensaje,nom.substring(0,nom.indexOf(' ')), tipo,de, timeStamp);
+        console.log("*********************");
+    });
+}
 io.on('connection', function(socket){
 	
 	socket.on("inicioSesion",function(username){
@@ -73,9 +79,36 @@ io.on('connection', function(socket){
           io.sockets.emit("updateSidebarUsers",usuariosOnline);
     });
 
-    socket.on('addNewMEssage', function(message){
-          socket.emit('message',"msg", "Yo: " +message + ".");
-          socket.broadcast.emit("message","msg",socket.username+ "dice: "+ message);
+    socket.on('addNewMessage', function(de,para,message){
+        var i = 0;
+        var nom;
+        for(i=0;i<usuariosOnlineMensaje.length;i++){
+                console.log(usuariosOnlineMensaje[i].nick);
+                console.log(usuariosOnlineMensaje[i].id);
+                console.log("+++++++++++");
+                nom = usuariosOnlineMensaje[i].nick;
+                if(nom==para){
+                    var usu = usuariosOnlineMensaje[i].id;
+                    console.log(usu);
+                    socket.broadcast.to(usu).emit("message","msg",usuariosOnlineMensaje[i].nick+ " dice: "+ message);
+                    console.log("+++++++++++");
+                }
+        }
+        for(i=0;i<usuariosOnlineMensaje.length;i++){
+                console.log(usuariosOnlineMensaje[i].nick);
+                console.log(usuariosOnlineMensaje[i].id);
+                console.log("999999999999999999999999999999");
+                nom = usuariosOnlineMensaje[i].nick;
+                if(nom==de){
+                    var usuario = usuariosOnlineMensaje[i].id;
+                    console.log(usuario);
+                    console.log(usuariosOnlineMensaje[i].nick);
+                    socket.to(usuario).emit("message","msg", "Yo: " +message + ".");
+                    console.log("999999999999999999999999999999");
+                }
+        }
+          //socket.emit('message',"msg", "Yo: " +message + ".");
+          //socket.broadcast.emit("message","msg",socket.username+ "dice: "+ message);
     });
 
     //cuando el usuario cierra o actualiza el navegador
@@ -100,7 +133,19 @@ io.on('connection', function(socket){
       console.log(para);
       console.log(mensaje);
       console.log("-----------------------------");
+      timeStamp = Date.now();
           var i = 0;
+		  var flag = 0;
+		  var fecha = new Date();
+		  var hora = new Date();
+		  var dd = fecha.getDate();
+		  var mm = fecha.getMonth()+1; //hoy es 0!
+		  var yyyy = fecha.getFullYear();
+
+		  hora = hora.getHours() + ":" + hora.getMinutes() + ":" + hora.getSeconds();
+		  fecha = yyyy+"-"+ mm+'-'+dd;
+		  var ubicacion = "";
+		  var leido = 0;
           for(i=0;i<usuariosOnlineMensaje.length;i++){
                   console.log("++++++++++++++++++++++++++++++");
                   console.log(usuariosOnlineMensaje[i].nick);
@@ -110,28 +155,26 @@ io.on('connection', function(socket){
                       console.log("*********************");
                       var usu = usuariosOnlineMensaje[i].id;
 
-                      var fecha = new Date();
-                      var hora = new Date();
-                      var dd = fecha.getDate();
-                      var mm = fecha.getMonth()+1; //hoy es 0!
-                      var yyyy = fecha.getFullYear();
-
-                      hora = hora.getHours() + ":" + hora.getMinutes() + ":" + hora.getSeconds();
-                      fecha = yyyy+"-"+ mm+'-'+dd;
-                      var ubicacion = "";
-                      var leido = 0;
+                      
                       
                       console.log(usu);
                       //guardar en la base el mensaje
                       //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                      var mensajeTotal = new db_handler.mensajeria(de,para,mensaje,fecha,hora,ubicacion,tipo,leido);
+                      var mensajeTotal = new db_handler.mensajeria(de,para,mensaje,fecha,timeStamp,ubicacion,tipo,leido);
                       console.log(mensajeTotal);
                       db_handler.enviar_mensaje(mensajeTotal,printResult);
+                      notificacionPrivadaCallback(socket, usu, mensaje, tipo, de, timeStamp);
                       //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                      socket.broadcast.to(usu).emit("notificarMensajePrivado",mensaje,tipo,de);
-                      console.log("*********************");
+                      flag = 1;
+                      
                   }
                 console.log("++++++++++++++++++++++++++++++");
+          }
+		  if(flag === 0){
+            var mensajeT= new db_handler.mensajeria(de,para,mensaje,fecha,timeStamp,ubicacion,tipo,leido);
+            db_handler.enviar_mensaje(mensajeT,function(queryRes){
+              console.log(queryRes);
+            });
           }
     });
 
@@ -160,6 +203,13 @@ app.use(sessions({
   duration: 30 * 60 * 1000, // how long the session will stay valid in ms
   activeDuration: 1000 * 60 * 15 // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
 }));
+
+app.get('/chatPrivado/:idChat',function(req,res){
+  console.log("-----------------------------------------------------------");
+  console.log(req.carPoolSession.username);
+  console.log("-----------------------------------------------------------");
+  res.render('chatPrivado.jade',{usuario: req.carPoolSession.username, usuario2:req.params.idChat});
+});
 
 
 app.get('/chat', function (req, res) {
@@ -404,14 +454,14 @@ app.get('/pass', function (req, res){
     if(!req.carPoolSession.username)
         res.redirect('/');
     else
-        res.render('pasajero.jade');
+        res.render('pasajero.jade', {usuario: req.carPoolSession.username});
 });
 
 app.get('/driver', function (req, res){
     if(!req.carPoolSession.username)
         res.redirect('/');
     else
-        res.render('driver.jade');
+        res.render('driver.jade', {usuario: req.carPoolSession.username});
 });
 
 app.post('/nuevaRuta', function (req, res){

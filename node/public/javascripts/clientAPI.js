@@ -1,6 +1,5 @@
 var myRoutes = [];
 var myDest = [];
-moment().locale('es');
 function handleJSON(url, callback){
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
