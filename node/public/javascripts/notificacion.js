@@ -16,14 +16,36 @@ function removeBadge(){
 
 }
 $(function(){
+	/*
+	//CHAT
+	$(".sendMsg").on("click", function(){
+		var de = document.getElementById("TempUsuario").value;
+		var para = document.getElementById("TempUsuario2").value;
+		var mensaje = $("#mensaje").val();
+		var tipo = 1;
+		console.log(para);
+		console.log(mensaje);
+
+        if(mensaje=='') return false;
+        //evento menssaje ene l server nodejs
+        socket.emit('addNewMessage',de, para,mensaje);
+        socket.emit("notificacion",de,para,mensaje,tipo);
+        $("#mensaje").val('').focus();
+        return false;
+
+		
+	});
+	*/
+	
 	$(".sendMsg").on("click", function(){
 		var de = document.getElementById("perfilUsuario").innerHTML;
 		var para = $("input#para").val();
 		var mensaje = $("input#msg").val();
 		var tipo = 1;
+		var timeStamp = 0;
 		console.log(para);
 		console.log(mensaje);
-		socket.emit("notificacion",de,para,mensaje,tipo);
+		socket.emit("notificacion",de,para,mensaje,tipo,timeStamp);
 	});
 
 	$(".sendNotificacion").on("click", function(){
@@ -31,9 +53,10 @@ $(function(){
 		var para = $("input#para").val();
 		var mensaje = $("input#msg").val();
 		var tipo = 0;
+		var timeStamp = 0;
 		console.log(para);
 		console.log(mensaje);
-		socket.emit("notificacion",de,para,mensaje,tipo);
+		socket.emit("notificacion",de,para,mensaje,tipo,timeStamp);
 	});
 
 	socket.on("notificarMensajePrivado", function (mensaje,tipo,de){
@@ -75,4 +98,28 @@ $(function(){
 		*/
 		alert("tiene un mensaje");
 	});
+	
+	socket.on('message',function(action, message){
+		console.log(message);
+        if(action == "conectado")
+        {
+            $("#chatMsgs").append("<p class='col-md-12 alert-info'>" + message + "</p>");
+        }
+        //si es una desconexión
+        else if(action == "desconectado")
+        {
+            $("#chatMsgs").append("<p class='col-md-12 alert-danger'>" + message + "</p>");
+        }
+        //si es un nuevo mensaje 
+        else if(action == "msg")
+        {
+            $("#chatMsgs").append("<p class='col-md-12 alert-warning'>" + message + "</p>");
+        }
+        //si el que ha conectado soy yo
+        else if(action == "yo")
+        {
+            $("#chatMsgs").append("<p class='col-md-12 alert-success'>" + message + "</p>");
+        }
+        animateScroll();
+    });
 });

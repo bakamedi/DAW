@@ -73,9 +73,35 @@ io.on('connection', function(socket){
           io.sockets.emit("updateSidebarUsers",usuariosOnline);
     });
 
-    socket.on('addNewMEssage', function(message){
-          socket.emit('message',"msg", "Yo: " +message + ".");
-          socket.broadcast.emit("message","msg",socket.username+ "dice: "+ message);
+    socket.on('addNewMessage', function(de,para,message){
+        var i = 0;
+        for(i=0;i<usuariosOnlineMensaje.length;i++){
+                console.log(usuariosOnlineMensaje[i].nick);
+                console.log(usuariosOnlineMensaje[i].id);
+                console.log("+++++++++++");
+                var nom = usuariosOnlineMensaje[i].nick;
+                if(nom==para){
+                    var usu = usuariosOnlineMensaje[i].id;
+                    console.log(usu);
+                    socket.broadcast.to(usu).emit("message","msg",usuariosOnlineMensaje[i].nick+ " dice: "+ message);
+                    console.log("+++++++++++");
+                }
+        }
+        for(i=0;i<usuariosOnlineMensaje.length;i++){
+                console.log(usuariosOnlineMensaje[i].nick);
+                console.log(usuariosOnlineMensaje[i].id);
+                console.log("999999999999999999999999999999");
+                var nom = usuariosOnlineMensaje[i].nick;
+                if(nom==de){
+                    var usu = usuariosOnlineMensaje[i].id;
+                    console.log(usu);
+                    console.log(usuariosOnlineMensaje[i].nick);
+                    socket.to(usu).emit("message","msg", "Yo: " +message + ".");
+                    console.log("999999999999999999999999999999");
+                }
+        }
+          //socket.emit('message',"msg", "Yo: " +message + ".");
+          //socket.broadcast.emit("message","msg",socket.username+ "dice: "+ message);
     });
 
     //cuando el usuario cierra o actualiza el navegador
@@ -95,12 +121,23 @@ io.on('connection', function(socket){
       socket.broadcast.emit("refreshChat", "desconectado", "El usuario " + socket.username + " se ha desconectado del chat.");
     });
 
-    socket.on('notificacion',function (de,para,mensaje,tipo){
+    socket.on('notificacion',function (de,para,mensaje,tipo,timeStamp){
       console.log(de);
       console.log(para);
       console.log(mensaje);
       console.log("-----------------------------");
           var i = 0;
+		  var flag = 0;
+		  var fecha = new Date();
+		  var hora = new Date();
+		  var dd = fecha.getDate();
+		  var mm = fecha.getMonth()+1; //hoy es 0!
+		  var yyyy = fecha.getFullYear();
+
+		  hora = hora.getHours() + ":" + hora.getMinutes() + ":" + hora.getSeconds();
+		  fecha = yyyy+"-"+ mm+'-'+dd;
+		  var ubicacion = "";
+		  var leido = 0;
           for(i=0;i<usuariosOnlineMensaje.length;i++){
                   console.log("++++++++++++++++++++++++++++++");
                   console.log(usuariosOnlineMensaje[i].nick);
@@ -110,28 +147,26 @@ io.on('connection', function(socket){
                       console.log("*********************");
                       var usu = usuariosOnlineMensaje[i].id;
 
-                      var fecha = new Date();
-                      var hora = new Date();
-                      var dd = fecha.getDate();
-                      var mm = fecha.getMonth()+1; //hoy es 0!
-                      var yyyy = fecha.getFullYear();
-
-                      hora = hora.getHours() + ":" + hora.getMinutes() + ":" + hora.getSeconds();
-                      fecha = yyyy+"-"+ mm+'-'+dd;
-                      var ubicacion = "";
-                      var leido = 0;
+                      
                       
                       console.log(usu);
                       //guardar en la base el mensaje
                       //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-                      var mensajeTotal = new db_handler.mensajeria(de,para,mensaje,fecha,hora,ubicacion,tipo,leido);
+                      var mensajeTotal = new db_handler.mensajeria(de,para,mensaje,fecha,timeStamp,ubicacion,tipo,leido);
                       console.log(mensajeTotal);
                       db_handler.enviar_mensaje(mensajeTotal,printResult);
                       //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                       socket.broadcast.to(usu).emit("notificarMensajePrivado",mensaje,tipo,de);
                       console.log("*********************");
+					  flag = 1;
                   }
                 console.log("++++++++++++++++++++++++++++++");
+          }
+		  if(flag == 0){
+            var mensajeTotal = new db_handler.mensajeria(de,para,mensaje,fecha,timeStamp,ubicacion,tipo,leido);
+            db_handler.enviar_mensaje(mensajeTotal,function(queryRes){
+              console.log(queryRes);
+            });
           }
     });
 
@@ -160,6 +195,13 @@ app.use(sessions({
   duration: 30 * 60 * 1000, // how long the session will stay valid in ms
   activeDuration: 1000 * 60 * 15 // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
 }));
+
+app.get('/chatPrivado/:idChat',function(req,res){
+  console.log("-----------------------------------------------------------");
+  console.log(req.carPoolSession.username);
+  console.log("-----------------------------------------------------------");
+  res.render('chatPrivado.jade',{usuario: req.carPoolSession.username, usuario2:req.params.idChat});
+});
 
 
 app.get('/chat', function (req, res) {
