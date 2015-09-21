@@ -11,9 +11,12 @@ html
     link(rel="stylesheet", href="/stylesheets/main_style.css")
     script(src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true")
     script(src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
+    script(src='/socket.io/socket.io.js')
+    script(src="/javascripts/notificacion.js")
     block lowPriorityScripts
   body
     block popups
+    input(value=usuario style="display:none;" id="TempUsuario")
     div(class="mdl-layout mdl-js-layout mdl-layout--fixed-header")
       header(class="mdl-layout__header")
         div(class="mdl-layout__header-row")
@@ -22,7 +25,7 @@ html
           div(class="mdl-layout-spacer")
           nav(class="mdl-navigation mdl-layout--large-screen-only")
             div(id="notifica" data-badge="3" class="material-icons mdl-badge") announcement
-            ul(class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="notifica")
+            ul(id="notificaExtension" class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="notifica")
                 li.mdl-menu__item 
                     p <strong>Bakke</strong> quiere que lo lleves <span class="time-text">hace 2 minutos</span>                
                 li.mdl-menu__item 

@@ -1,10 +1,20 @@
 var socket = io();
 $(document).ready(function(){
-    var name = document.getElementById("perfilUsuario").innerHTML;
-    console.log(name);
+    var name = document.getElementById("TempUsuario").value;
+    //console.log(name);
     socket.emit("inicioSesion",name);
 });
+var badge_num = 0;
+function addBadge(){
+   badge_num++;
+   $("#notifica").attr("data-badge", badge_num);
 
+}
+function removeBadge(){
+   badge_num = 0;
+   $("#notifica").attr("data-badge", 0);
+
+}
 $(function(){
 	$(".sendMsg").on("click", function(){
 		var de = document.getElementById("perfilUsuario").innerHTML;
@@ -23,7 +33,7 @@ $(function(){
 		var tipo = 0;
 		console.log(para);
 		console.log(mensaje);
-		socket.emit("notificacion",de,para,mensaje,tipo)
+		socket.emit("notificacion",de,para,mensaje,tipo);
 	});
 
 	socket.on("notificarMensajePrivado", function (mensaje,tipo,de){
@@ -35,19 +45,25 @@ $(function(){
 		var p = document.createElement("p");
 
 		li.attr("class","mdl-menu__item ");
+                var text;
 
-		if(tipo==1){
-			var text = de+" te envio un mensaje.";
+		if(tipo==1){//NUEVO MENSAJE
+			text = de+" te envio un mensaje.";
 			console.log(text);
 		}
-		if(tipo==0){
-			var text = de+" quiere que lo lleves.";
+		if(tipo===0){//PETICION
+			text = de+" quiere que lo lleves.";
 		}
+		if(tipo===2){//CONFIRMACION
+			text = de+" te va a llevar.";
+		}
+
 
 		p.innerHTML = text;
 		li.append(p);
 		$("#notificaExtension").append(li);
 
+                addBadge();
 
 		/*
 		//var not = document.getElementsBy("not").setAttribute("class","glyphicon glyphicon-info-sign");;
