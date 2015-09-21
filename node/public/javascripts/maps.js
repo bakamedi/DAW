@@ -17,6 +17,7 @@ function addDefaultRoutes(){
 		myRoutes["Trabajo"] = [new google.maps.LatLng(-2.1445351790, -79.96751056), new google.maps.LatLng(-2.160446, -79.899795)];
 }*/
 function initializeMap(){
+    console.log("init map");
     directionsDisplay = new google.maps.DirectionsRenderer();
     navigator.geolocation.getCurrentPosition(function (position) {
 

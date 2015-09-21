@@ -1,14 +1,17 @@
 var socket = io();
+
 $(window).on('beforeunload', function(){
         console.log("close socket");
         socket.close();
     });
-moment().locale('es');
+
 $(document).ready(function(){
+    moment().locale('es');
     var name = document.getElementById("TempUsuario").value;
-    //console.log(name);
+    console.log("emit" + name);
     socket.emit("inicioSesion",name);
 });
+
 var badge_num = 0;
 function addBadge(){
    badge_num++;

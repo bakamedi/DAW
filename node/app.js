@@ -34,6 +34,7 @@ function printResult(res){
 function notificacionPrivadaCallback(socket, usu, mensaje, tipo, de, timeStamp){
     db_handler.obtener_usuario(de, function(queryRes){
         var nom = queryRes[0].nombre;
+        console.log("enviando notif a " + usu);
         socket.broadcast.to(usu).emit("notificarMensajePrivado",mensaje,nom.substring(0,nom.indexOf(' ')), tipo,de, timeStamp);
         console.log("*********************");
     });
@@ -49,8 +50,10 @@ io.on('connection', function(socket){
             var i = 0,bandera=0;
             for(i=0;i<usuariosOnlineMensaje.length;i++){
               var name = usuariosOnlineMensaje[i].nick;
-              if(name==username){
+              var id = usuariosOnlineMensaje[i].id;
+              if(name==username && id != socket.id){
                 //usuariosOnline.push(gr);
+                usuariosOnlineMensaje[i].id = socket.id;
                 bandera=1;
                 console.log("nuevo usuario");
               }
@@ -111,27 +114,10 @@ io.on('connection', function(socket){
           //socket.broadcast.emit("message","msg",socket.username+ "dice: "+ message);
     });
 
-    //cuando el usuario cierra o actualiza el navegador
-    socket.on("disconnect", function(){
-      //si el usuario, por ejemplo, sin estar logueado refresca la
-      //página, el typeof del socket username es undefined, y el mensaje sería
-      //El usuario undefined se ha desconectado del chat, con ésto lo evitamos
-      if(typeof(socket.username) == "undefined")
-      {
-        return;
-      }
-      //en otro caso, eliminamos al usuario
-      delete usuariosOnline[socket.username];
-      //actualizamos la lista de usuarios en el chat, zona cliente
-      io.sockets.emit("updateSidebarUsers", usuariosOnline);
-      //emitimos el mensaje global a todos los que están conectados con broadcasts
-      socket.broadcast.emit("refreshChat", "desconectado", "El usuario " + socket.username + " se ha desconectado del chat.");
-    });
-
     socket.on('notificacion',function (de,para,mensaje,tipo){
       console.log("nueva notificacion");
-      console.log(de);
-      console.log(para);
+      console.log("de: " + de);
+      console.log("para: " + para);
       console.log(mensaje);
       console.log("-----------------------------");
       timeStamp = Date.now();
