@@ -1,6 +1,8 @@
 extends layout
 
 block menuIcons
+	div(id="notifica" class="icon material-icons mdl-badge") announcement
+	div(class="mdl-tooltip" for="notifica") Notificaciones
 	div(id="followers-btn" class="icon material-icons") people
 	div(class="mdl-tooltip" for="followers-btn" onclick="siguiendo();") Siguiendo
 	div(id="walking" class="icon material-icons" onclick="driver();") directions_run
@@ -22,7 +24,9 @@ block content
 							div(class="profile-usertitle")
 								- var nombrePerfil = perfil.nombre+" "+perfil.apellido
 								div(class="profile-usertitle-name")=nombrePerfil
-								div(class="profile-usertitle-job")=perfil.usuario
+								//nuevo
+								
+								div(id="perfilUsuario" class="profile-usertitle-job")=perfil.usuario
 							div(class="profile-userbuttons")
 								button(class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent") Seguidores
 								&nbsp;
@@ -30,15 +34,13 @@ block content
 							div(class="profile-usermenu")
 								ul(class="nav")
 									li()
-										if perfil.usuario == usuario
-											a(href="/editar")
-												i(class="glyphicon glyphicon-pencil")
-												label(class="text-center") Editar
+										a(href="/editar")
+											i(class="glyphicon glyphicon-pencil")
+											label(class="text-center") Editar
 									li()
-										if perfil.usuario == usuario
-											a(href="#" onclick="habilitaImagenDiv();")
-												i(class="glyphicon glyphicon-picture text-center")
-												label(class="text-center") Editar Imagen
+										a(href="#" onclick="habilitaImagenDiv();")
+											i(class="glyphicon glyphicon-picture text-center")
+											label(class="text-center") Editar Imagen
 									if perfil.placa != "XXX0000"
 										li()
 											a(href="#")
@@ -109,7 +111,8 @@ block content
 					div(class="row")
 						//Seguidores
 						div(class="col-md-1")
-							label Seguidores/Siguiendo
+							div(class="profile-usertitle-name")
+								label Seguidores/Siguiendo
 						hr
 						each usuario in listaUsuarios
 							each seguidor in listaSeguidor
