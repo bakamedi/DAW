@@ -118,11 +118,12 @@ module.exports = {
     this.dias = dias;
     this.hora = hora;
   },
-    mensajeria: function(idUsuarioRemitente,idUsuarioRemisor,contenido,fecha,ubicacionActual,tipo,leido){
+    mensajeria: function(idUsuarioRemitente,idUsuarioRemisor,contenido,fecha,hora,ubicacionActual,tipo,leido){
       this.idUsuarioRemitente = idUsuarioRemitente;
       this.idUsuarioRemisor   = idUsuarioRemisor;
       this.contenido          = contenido;
       this.fecha              = fecha;
+	  this.hora               = hora;
       this.ubicacionActual    = ubicacionActual;
       this.tipo               = tipo;
       this.leido              = leido;
@@ -290,12 +291,13 @@ module.exports = {
     },
 
  enviar_mensaje: function(mensajeria,callback){
-       var queryStr = 'call rapidin.enviar_mensaje(:idUsuarioRemitente, :idUsuarioRemisor, :contenido, :fecha, :ubicacionActual, :tipo, :leido)';
+       var queryStr = 'call rapidin.enviar_mensaje(:idUsuarioRemitente, :idUsuarioRemisor, :contenido, :fecha, :hora, :ubicacionActual, :tipo, :leido)';
        var object = {
                idUsuarioRemitente : mensajeria.idUsuarioRemitente,
                idUsuarioRemisor   : mensajeria.idUsuarioRemisor,
                contenido          : mensajeria.contenido,
                fecha              : mensajeria.fecha,
+			   hora               : mensajeria.hora,
                ubicacionActual    : mensajeria.ubicacionActual,
                tipo               : mensajeria.tipo,
                leido              : mensajeria.leido
