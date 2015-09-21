@@ -8,8 +8,6 @@ html, body{
 
 .page-content{
         height:100vh;
-        margin:0px;
-        padding:0px;
     }
 
 #map-canvas{

@@ -349,6 +349,12 @@ $(document).ready( function(){
             console.log("para: " + $(this).attr("data-user"));
             socket.emit("notificacion", de, $(this).attr("data-user"), "", 2);
         });
+
+        $("body").on('click', '.ignoreBtn', function(){
+            console.log('ignore');
+            $(this).parent().remove();
+        });
+
         //Mostrar gente cerca cuando das click a una ruta
 	$("body").on('click', 'li.misRutas', function(){                
                 abortNewRoute();

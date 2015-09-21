@@ -142,3 +142,13 @@ $(function(){
     });
     
 });
+function openInNewTab(url){
+    var win = window.open(url, '_blank');
+    if(win){
+        //Browser has allowed it to be opened
+        win.focus();
+    }else{
+        //Broswer has blocked it
+        alert('Please allow popups for this site');
+    }
+}
