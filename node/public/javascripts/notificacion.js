@@ -1,4 +1,5 @@
 var socket = io();
+moment().locale('es');
 $(document).ready(function(){
     var name = document.getElementById("TempUsuario").value;
     //console.log(name);
@@ -56,10 +57,10 @@ $(function(){
 		var timeStamp = 0;
 		console.log(para);
 		console.log(mensaje);
-		socket.emit("notificacion",de,para,mensaje,tipo,timeStamp);
+		socket.emit("notificacion",de,para,mensaje,tipo);
 	});
 
-	socket.on("notificarMensajePrivado", function (mensaje,tipo,de){
+	socket.on("notificarMensajePrivado", function (mensaje,nombre, tipo,de, timeStamp){
 		alert(tipo);
 		alert(mensaje);
 
@@ -69,16 +70,17 @@ $(function(){
 
 		li.attr("class","mdl-menu__item ");
                 var text;
+                var timeText = '<span class="time-text">' + moment(timeStamp).fromNow()+ '</span>';
 
 		if(tipo==1){//NUEVO MENSAJE
-			text = de+" te envio un mensaje.";
+			text = "<strong>" + nombre+"</strong>" +' te envio un mensaje.' + timeText;
 			console.log(text);
 		}
 		if(tipo===0){//PETICION
-			text = de+" quiere que lo lleves.";
+			text = "<strong>" +nombre+"</strong>" +" quiere que lo lleves." + timeText;
 		}
 		if(tipo===2){//CONFIRMACION
-			text = de+" te va a llevar.";
+			text = "<strong>" +nombre+"</strong>" +" te va a llevar." + timeText;
 		}
 
 
