@@ -173,4 +173,20 @@ function justNumbers(e){
     return /\d/.test(String.fromCharCode(keynum));
 }
 
+function pasajero(){
+    $.get('/pass', {}, function (data){ 
+        location.href='pasajero';
+    });
+}
+
+function miPerfil(){
+    window.location.href = "/inicio";
+}
+
+function driver(){
+    $.get('/driver', {}, function (data){ 
+        location.href='driver';
+    });
+}
+
 window.addEventListener('load', inicializar, false);

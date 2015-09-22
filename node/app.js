@@ -441,14 +441,18 @@ app.get('/pass', function (req, res){
     if(!req.carPoolSession.username)
         res.redirect('/');
     else
-        res.render('pasajero.jade', {usuario: req.carPoolSession.username});
+      db_handler.obtener_usuario(req.carPoolSession.username,function(queryRes){
+        res.render('pasajero.jade', {usuario: req.carPoolSession.username,listaUsuario : queryRes});
+      });
 });
 
 app.get('/driver', function (req, res){
     if(!req.carPoolSession.username)
         res.redirect('/');
     else
-        res.render('driver.jade', {usuario: req.carPoolSession.username});
+      db_handler.obtener_usuario(req.carPoolSession.username,function(queryRes){
+        res.render('driver.jade', {usuario: req.carPoolSession.username,listaUsuario : queryRes});
+      });    
 });
 
 app.post('/nuevaRuta', function (req, res){

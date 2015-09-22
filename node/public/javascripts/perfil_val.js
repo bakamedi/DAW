@@ -4,6 +4,11 @@ function ponerPalabraSeguidor(){
     document.getElementById("paraMensaje").innerHTML = "Para: " + option;
 }
 
+function getPageType(){
+    return "car";
+}
+
+
 function archivo(evt) {
     var files = evt.target.files; // FileList object
     // Obtenemos la imagen del campo "file".
@@ -55,6 +60,12 @@ function driver(){
 function siguiendo(){
     $.get('/siguiendo',{},function (data){
         location.href='siguiendo';
+    });
+}
+
+function pasajero(){
+    $.get('/pass', {}, function (data){ 
+        location.href='pasajero';
     });
 }
 

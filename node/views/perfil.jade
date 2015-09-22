@@ -3,8 +3,15 @@ extends layout
 block menuIcons
 	div(id="followers-btn" class="icon material-icons") people
 	div(class="mdl-tooltip" for="followers-btn" onclick="siguiendo();") Siguiendo
-	div(id="walking" class="icon material-icons" onclick="driver();") directions_run
-	div(class="mdl-tooltip" for="walking") No tengo carro...
+
+	each perfil in listaPerfil
+		if perfil.usuario == usuarioGlobal
+			if perfil.placa != "XXX0000"
+				div(id="car" class="icon material-icons" onclick="driver();") directions_car
+				div(class="mdl-tooltip" for="car") Ando en Carro
+			else
+				div(id="walking" class="icon material-icons" onclick="pasajero();") directions_run
+				div(class="mdl-tooltip" for="walking") No tengo carro...
 
 block content
 	div(class="container")
@@ -74,6 +81,10 @@ block content
 										button(class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent") Siguiendo
 									div(class="profile-usermenu")
 										ul(class="nav")
+											li()
+												a(href="/chatPrivado/#{perfil.usuario}")
+													i(class="glyphicon glyphicon-comment text-center")
+													label(class="text-center") Enviar Mensaje..
 											if perfil.placa != "XXX0000"
 												li()
 													a(href="#")
@@ -134,7 +145,7 @@ block content
 												div(class="profile-userbuttons")
 													div(class="btn-group btn-group-justified" role="group" aria-label="...")
 														div(class="btn-group" role="group")
-																a(href="")
+																a(href="/chatPrivado/#{usuario.usuario}")
 																	i(class="icon material-icons") question_answer
 														if usuario.placa != "XXX0000"
 															div(class="btn-group" role="group")

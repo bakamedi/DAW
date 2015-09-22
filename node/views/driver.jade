@@ -10,9 +10,13 @@ block menuIcons
     onclick="nuevaMapData();") add
     div(class="mdl-tooltip" for="nuevaData") Nueva Ruta
     div(id="followers-btn" class="icon material-icons") people
-    div(class="mdl-tooltip" for="followers-btn") Siguiendo
-    div(id="walking" class="icon material-icons") directions_run
-    div(class="mdl-tooltip" for="walking") No tengo carro...
+    each usuario in listaUsuario
+        if usuario.placa != "XXX0000"
+            div(id="car" class="icon material-icons" onclick="driver();") directions_car
+            div(class="mdl-tooltip" for="car") Ando en Carro
+        else
+            div(id="walking" class="icon material-icons" onclick="pasajero();") directions_run
+            div(class="mdl-tooltip" for="walking") No tengo carro...
 
 block content
     nav(id="rutas-nav" class="columna")
