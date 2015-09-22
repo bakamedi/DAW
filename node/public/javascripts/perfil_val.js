@@ -5,7 +5,7 @@ function ponerPalabraSeguidor(){
 }
 
 function getPageType(){
-    return "car";
+    return "getPageType";
 }
 
 
